@@ -57,7 +57,7 @@
 <meta property="og:image" content="http://example.com/2021/05/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/640">
 <meta property="og:image" content="http://example.com/2021/05/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/640">
 <meta property="article:published_time" content="2021-05-13T14:41:13.000Z">
-<meta property="article:modified_time" content="2021-07-27T03:49:00.000Z">
+<meta property="article:modified_time" content="2021-09-12T02:38:34.000Z">
 <meta property="article:author" content="MengWenJu">
 <meta property="article:tag" content="计算机网络">
 <meta property="article:tag" content="TCP">
@@ -111,7 +111,7 @@
 			</ul>
 		</nav>
 		<nav>
-			共22篇文章
+			共23篇文章
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -297,7 +297,7 @@
 <li>数据链路层：数据链路层位于物理层和网络层中间，数据链路层定义了在单个链路上如何传输数据。</li>
 <li>物理层：物理层是整个OSI协议的基础，物理层数设备之间的通信提供传输媒体及互联设备，为数据传输提供可靠的环境。</li>
 </ul>
-<h2 id="2-TCP-IP协议簇"><a href="#2-TCP-IP协议簇" class="headerlink" title="2.TCP/IP协议簇"></a>2.TCP/IP协议簇</h2><p>TCP/IP又被称为<code>TCP/IP协议簇</code>，它并不特指TCP/IP协议，而是包含了许许多多的协议</p>
+<h2 id="2-TCP-IP协议簇"><a href="#2-TCP-IP协议簇" class="headerlink" title="2.TCP/IP协议簇"></a>2.TCP/IP协议簇</h2><p>TCP/IP又被称为<code>TCP/IP协议簇</code>，它并不特指TCP/IP协议，而是包含了许许多多的协议。</p>
 <p>OSI共有七层模型，在TCP/IP中，把七层简化成了四层：</p>
 <p><img src="/2021/05/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/image-20210520192532446.png" alt="image-20210520192532446"></p>
 <p>和OSI标准模型的主要区别如下：</p>
@@ -498,14 +498,16 @@
 <li><strong>篡改风险</strong>，比如强制入垃圾广告，视觉污染，用户眼容易瞎。</li>
 <li><strong>冒充风险</strong>，比如冒充淘宝网站，用户钱容易没。</li>
 </ul>
-<h2 id="2-什么是HTTPS？"><a href="#2-什么是HTTPS？" class="headerlink" title="2.什么是HTTPS？"></a>2.什么是HTTPS？</h2><p>HTTPS 在 HTTP 与 TCP 层之间加入了 <code>SSL/TLS</code> 协议。其实就是将HTTP的数据包再通过SSL/TLS加密后传输。</p>
-<p><img src="/2021/05/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/image-20210517225151846.png" alt="image-20210517225151846"></p>
+<h2 id="2-什么是HTTPS？"><a href="#2-什么是HTTPS？" class="headerlink" title="2.什么是HTTPS？"></a>2.什么是HTTPS？</h2><p>HTTPS 在 HTTP 与 TCP 层之间加入了 <code>SSL/TLS</code> 协议。其实就是将HTTP的数据包再通过<code>SSL/TLS</code>加密后传输。</p>
+<img src="/2021/05/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/image-20210517225151846.png" alt="image-20210517225151846" style="zoom:67%;">
+
 <blockquote>
 <p>什么是SSL/TLS？</p>
 </blockquote>
 <p>SSL（Secure Sockets Layer）安全套接层和TLS（Transport Layer Security）传输层安全协议其实是<strong>一套东西</strong>。</p>
 <p>网景公司在1994年提出HTTPS协议时，使用的是SSL进行加密。后来IETF（Internet Engineering Task Force）互联网工程任务组将SSL进一步标准化，于1999年公布第一版TLS协议文件TLS 1.0。目前最新版的TLS协议是TLS 1.3，于2018年公布。</p>
-<h2 id="3-HTTPS的加密流程"><a href="#3-HTTPS的加密流程" class="headerlink" title="3.HTTPS的加密流程"></a>3.HTTPS的加密流程</h2><p><img src="/2021/05/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/640" alt="img"></p>
+<h2 id="3-HTTPS的加密流程"><a href="#3-HTTPS的加密流程" class="headerlink" title="3.HTTPS的加密流程"></a>3.HTTPS的加密流程</h2><img src="/2021/05/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/640" alt="img" style="zoom: 50%;">
+
 <p>1.<strong>客户端：</strong>客户端向服务器发送请求如：<a target="_blank" rel="noopener" href="https://www.baidu.com/%EF%BC%9B">https://www.baidu.com/；</a></p>
 <p>2.<strong>服务端：</strong>服务端收到请求，返回包含私钥的CA数字证书给客户端，证书内会附带一个公钥Pub，而与之对应的私钥Private保留在服务器不会公开；</p>
 <p>3.<strong>客户端：</strong>客户端收到证书，验证证书的合法性，如果不通过，则显示HTTPS警告信息，如果通过则继续；</p>
@@ -690,7 +692,7 @@
 </blockquote>
 <p><strong>因为数据可能会网络阻塞</strong></p>
 <p><code>MSL</code> 是 Maximum Segment Lifetime，<strong>报文最大生存时间</strong>，它是任何报文在网络上存在的最长时间，超过这个时间报文将被丢弃。因为 TCP 报文基于是 IP 协议的，而 IP 头中有一个 <code>TTL</code> 字段，是 IP 数据报可以经过的最大路由数，每经过一个处理他的路由器此值就减 1，当此值为 0 则数据报将被丢弃，同时发送 ICMP 报文通知源主机。</p>
-<p>MSL 与 TTL 的区别：MSL 的单位是时间，而 TTL 是经过路由跳数。所以 <strong>MSL 应该要大于等于 TTL 消耗为 0 的时间</strong>，以确保报文已被自然消亡。</p>
+<p>MSL 与 TTL 的区别：MSL 的单位是时间，而 TTL 是经过路由数。所以 <strong>MSL 应该要大于等于 TTL 消耗为 0 的时间</strong>，以确保报文已被自然消亡。</p>
 <p>TIME_WAIT 等待 2 倍的 MSL，比较合理的解释是：网络中可能存在来自发送方的数据包，当这些发送方的数据包被接收方处理后又会向对方发送响应，所以<strong>一来一回需要等待 2 倍的时间</strong>。（给被动关闭方发送ACK，并等待FIN的时间，这个时间是为了防止没有收到对方发送的请求。）</p>
 <p>比如：如果被关闭的一方发送<code>FIN</code>请求后，主动关闭的一方会发送<code>ACK</code>请求给对方，但如果此时对方没有收到<code>ACK</code>请求，被动关闭的一方就会超时重发<code>FIN</code>请求，当主动关闭的一方收到<code>FIN</code>请求后，<strong>MSL的时间就会重置</strong>。</p>
 <p>在 Linux 系统里 <code>2MSL</code> 默认是 <code>60</code> 秒，那么一个 <code>MSL</code> 也就是 <code>30</code> 秒。<strong>Linux 系统停留在 TIME_WAIT 的时间为固定的 60 秒</strong>。</p>
@@ -702,7 +704,7 @@
 <li>保证「被动关闭连接」的一方能被正确的关闭，即保证最后的 ACK 能让被动关闭方接收，从而帮助其正常关闭</li>
 </ul>
 <p>原因一：防止旧连接的数据包</p>
-<p>假设 TIME-WAIT 没有等待时间或时间过短，被延迟的数据包抵达后会发生什么呢？</p>
+<p>假设 <code>TIME-WAIT</code> 没有等待时间或时间过短，被延迟的数据包抵达后会发生什么呢？</p>
 <img src="/2021/05/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/640" alt="图片" style="zoom:50%;">
 
 <p>如上图黄色框框服务端在关闭连接之前发送的 <code>SEQ = 301</code> 报文，被网络延迟了。</p>
@@ -712,17 +714,17 @@
 <p>假设 TIME-WAIT 没有等待时间或时间过短，断开连接会造成什么问题呢？</p>
 <img src="/2021/05/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/640" alt="图片" style="zoom:50%;">
 
-<p>如上图红色框框客户端四次挥手的最后一个 <code>ACK</code> 报文如果在网络中被丢失了，此时如果客户端 <code>TIME-WAIT</code> 过短或没有，则就直接进入了 <code>CLOSE</code> 状态了，那么服务端则会一直处在 <code>LASE-ACK</code> 状态。</p>
+<p>如上图红色框框客户端四次挥手的最后一个 <code>ACK</code> 报文如果在网络中被丢失了，此时如果客户端 <code>TIME-WAIT</code> 过短或没有，则就直接进入了 <code>CLOSE</code> 状态了，那么服务端则会一直处在 <code>LAST-ACK</code> 状态。</p>
 <p>当客户端发起建立连接的 <code>SYN</code> 请求报文后，服务端会发送 <code>RST</code> 报文给客户端，连接建立的过程就会被终止。</p>
 <p>所以客户端在 <code>TIME-WAIT</code> 状态等待 <code>2MSL</code> 时间后，就可以<strong>保证双方的连接都可以正常的关闭。</strong></p>
 <blockquote>
 <p>TIME_WAIT 过多有什么危害？</p>
 </blockquote>
-<p>果服务器有处于 TIME-WAIT 状态的 TCP，则说明是由服务器方主动发起的断开请求。</p>
+<p>如果服务器有处于 TIME-WAIT 状态的 TCP，则说明是由服务器方主动发起的断开请求。</p>
 <p>过多的 TIME-WAIT 状态主要的危害有两种：</p>
 <ul>
 <li>第一是内存资源占用；</li>
-<li>第二是对端口资源的占用，一个 TCP 连接至少消耗一个本地端口</li>
+<li>第二是对端口资源的占用，一个 TCP 连接至少消耗一个本地端口。</li>
 </ul>
 <p>第二个危害是会造成严重的后果的，因为端口资源也是有限的，一般可以开启的端口为 <code>32768～61000</code>。</p>
 <blockquote>
@@ -1098,6 +1100,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">容器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Netty</a>
               </li>
             
             <div class="clearfix"></div>

@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://example.com/2021/04/21/%E7%AE%97%E6%B3%95/image-20210507202602248.png">
 <meta property="og:image" content="http://example.com/2021/04/21/%E7%AE%97%E6%B3%95/9ce26a709147ad9ce6152d604efc1cc19a33dc5d467ed2aae5bc68463fdd2888.gif">
 <meta property="article:published_time" content="2021-04-21T02:21:13.000Z">
-<meta property="article:modified_time" content="2021-07-04T12:04:56.000Z">
+<meta property="article:modified_time" content="2021-08-24T14:48:26.000Z">
 <meta property="article:author" content="MengWenJu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2021/04/21/%E7%AE%97%E6%B3%95/image-20210507202602248.png">
@@ -85,7 +85,7 @@
 			</ul>
 		</nav>
 		<nav>
-			共22篇文章
+			共23篇文章
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -318,15 +318,9 @@
 <p>题解中的指针left是每次在while循环变化，当跳出while循环，进行下一次循环后，索引left就初始化为for循环对其的赋值。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">reverseStr</span><span class="params">(String s, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">char</span>[] arr = s.toCharArray();</span><br><span class="line">        <span class="keyword">char</span> temp = <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i += <span class="number">2</span>*k)&#123;</span><br><span class="line">                <span class="keyword">int</span> left = i;</span><br><span class="line">                <span class="keyword">int</span> j =(i + k - <span class="number">1</span>) &lt; arr.length ? i + k - <span class="number">1</span> : arr.length-<span class="number">1</span>;         </span><br><span class="line">                <span class="keyword">while</span>(left &lt; j)&#123;</span><br><span class="line">                    temp = arr[left];</span><br><span class="line">                    arr[left] = arr[j];</span><br><span class="line">                    arr[j] = temp;   </span><br><span class="line">                    left++;</span><br><span class="line">                    j--;                </span><br><span class="line">                &#125;                 </span><br><span class="line">            &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> String(arr);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-
-
 <h1 id="16、字符串的某一位"><a href="#16、字符串的某一位" class="headerlink" title="16、字符串的某一位"></a>16、字符串的某一位</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s.charAt(i);</span><br></pre></td></tr></table></figure>
 
-
-
 <h1 id="17、拼接字符串"><a href="#17、拼接字符串" class="headerlink" title="17、拼接字符串"></a>17、拼接字符串</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> s ;</span><br><span class="line">StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">sb.append(s)</span><br></pre></td></tr></table></figure>
-
-
 
 <h1 id="18、统计出现的频率"><a href="#18、统计出现的频率" class="headerlink" title="18、统计出现的频率"></a>18、统计出现的频率</h1><p>给定一个数组，统计数组中每一个数出现的次数</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Integer,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();   </span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> num : nums)&#123;</span><br><span class="line">       <span class="keyword">if</span>(map.containsKey(num))&#123;</span><br><span class="line">           map.put(num, map.get(num)+<span class="number">1</span>);</span><br><span class="line">       &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">           map.put(num, <span class="number">1</span>);</span><br><span class="line">       &#125;       </span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
@@ -700,6 +694,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">容器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Netty</a>
               </li>
             
             <div class="clearfix"></div>

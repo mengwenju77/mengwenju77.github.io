@@ -45,10 +45,9 @@
 <meta property="og:image" content="http://example.com/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210511212001649.png">
 <meta property="og:image" content="http://example.com/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210511213459310.png">
 <meta property="og:image" content="http://example.com/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210511213613459.png">
-<meta property="og:image" content="http://example.com/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210425212605790.png">
-<meta property="og:image" content="http://example.com/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210425212649979.png">
+<meta property="og:image" content="http://example.com/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210729094232967.png">
 <meta property="article:published_time" content="2021-05-09T08:38:28.000Z">
-<meta property="article:modified_time" content="2021-05-13T14:44:57.205Z">
+<meta property="article:modified_time" content="2021-08-12T07:52:16.000Z">
 <meta property="article:author" content="MengWenJu">
 <meta property="article:tag" content="多线程">
 <meta property="article:tag" content="并发">
@@ -102,7 +101,7 @@
 			</ul>
 		</nav>
 		<nav>
-			共22篇文章
+			共23篇文章
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -257,6 +256,26 @@
 <p>但这是一种假象，如果CPU调度线程的时间足够快，就造成了多线程并发执行的假象，线程数量并不等于CPU数量，单个CPU将在多个线程之间共享CPU的时间片，在给定的时间片内执行各个线程，每个线程也可以由不同CPU执行。即同一时间，CPU只能处理一条线程，只有一条线程在工作。</p>
 <p>不是重新执行，CPU切换的时候保存了线程的上下文，下面详解。</p>
 <p><img src="/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210509175813016.png" alt="image-20210509175813016"></p>
+<blockquote>
+<p>多线程的优点</p>
+</blockquote>
+<ul>
+<li>资源利用率更好</li>
+<li>程序设计在某些情况下更简单</li>
+<li>程序响应更快</li>
+</ul>
+<blockquote>
+<p>多线程的代价</p>
+</blockquote>
+<ul>
+<li>设计更复杂</li>
+<li>上下文切换的开销</li>
+<li>增加资源消耗</li>
+</ul>
+<blockquote>
+<p>多线程中的同步</p>
+</blockquote>
+<p>同步是指程序用于控制不同线程之间操作发生相对顺序的机制</p>
 <h2 id="2-并发和并行的关系？"><a href="#2-并发和并行的关系？" class="headerlink" title="2.并发和并行的关系？"></a><strong>2.并发和并行的关系？</strong></h2><p><strong>线程是CPU调度和执行的单位</strong>，进程之间相互独立。<strong>多个进程意味着多个线程。</strong></p>
 <p><code>并发</code>意味着<strong>应用程序要执行多个任务</strong>，如果计算机只有一个CPU的话，那么应用程序无法执行多个任务，但是应用程序又需要执行多个任务，所以计算机在下一个任务开始之前，先保存当前的任务信息，并没有完成当前的任务，只是把状态暂存，进行任务切换，CPU在多个任务切换，直到任务完成。</p>
 <p><img src="/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210509184218734.png" alt="image-20210509184218734"></p>
@@ -271,7 +290,7 @@
 <li><p>多线程是实现并发的一个手段。一个进程可以拥有多个线程。当有多个cpu时，多个线程是可以同时执行的，这时就是并行。如果只有一个cpu，那么多个线程可以交叉重叠执行，这时就是并发了。</p>
 </li>
 </ul>
-<h2 id="3-线程带来的安全性问题"><a href="#3-线程带来的安全性问题" class="headerlink" title="3.线程带来的安全性问题"></a><strong>3.线程带来的安全性问题</strong></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TSynchronized</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">increase</span><span class="params">()</span></span>&#123;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">1000</span>;i++) &#123;</span><br><span class="line">            increase();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"></span><br><span class="line">        TSynchronized tSynchronized = <span class="keyword">new</span> TSynchronized();</span><br><span class="line">        Thread aThread = <span class="keyword">new</span> Thread(tSynchronized);</span><br><span class="line">        Thread bThread = <span class="keyword">new</span> Thread(tSynchronized);</span><br><span class="line">        Thread1.start();</span><br><span class="line">        Thread2.start();</span><br><span class="line">        System.out.println(<span class="string">&quot;i = &quot;</span> + i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-线程带来的安全问题"><a href="#3-线程带来的安全问题" class="headerlink" title="3.线程带来的安全问题"></a><strong>3.线程带来的安全问题</strong></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TSynchronized</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">increase</span><span class="params">()</span></span>&#123;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">1000</span>;i++) &#123;</span><br><span class="line">            increase();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"></span><br><span class="line">        TSynchronized tSynchronized = <span class="keyword">new</span> TSynchronized();</span><br><span class="line">        Thread aThread = <span class="keyword">new</span> Thread(tSynchronized);</span><br><span class="line">        Thread bThread = <span class="keyword">new</span> Thread(tSynchronized);</span><br><span class="line">        Thread1.start();</span><br><span class="line">        Thread2.start();</span><br><span class="line">        System.out.println(<span class="string">&quot;i = &quot;</span> + i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>可见性问题</li>
@@ -359,6 +378,18 @@
 <p>多个线程可以同时安全调用的代码称为线程安全的，如果一段代码是线程安全的，那么这段代码就不存在<code>竞态条件</code>。仅仅当多个线程共享资源时，才会出现竞态条件。</p>
 <p>单线程就是线程数为1的单线程，单线程一定是线程安全的，因为无论变量被读取多少次，这个变量的值都不会被修改。</p>
 <h2 id="2-原子性"><a href="#2-原子性" class="headerlink" title="2.原子性"></a>2.原子性</h2><p><strong>要么全部执行，要么全部回滚</strong></p>
+<blockquote>
+<p>Java如何实现原子操作</p>
+</blockquote>
+<p>（1）使用CAS实现原子操作</p>
+<p>自旋CAS实现的基本思路就是循环进行CAS操作直到成功为止。但是CAS存在三大问题</p>
+<ul>
+<li>ABA问题：CAS在操作值的时候需要先检查下值有没有发生变化，如果没有变化则更新，如果一个值本来是A，变成了B，又变成了A，那么使用CAS进行检查时就会认为它没有变化。ABA解决的方法是使用版本号，在变量前面加上版本号，每次变量更新的时候吧版本号加一，那么A-B-A就会变成1A-2B-3A。</li>
+<li>循环时间长开销大：自旋如果长时间不成功，会给CPU带来非常大的执行开销。它的解决方法是如果JVM能够支持处理器提供的pause指令，那么效率会有一定的提升，pause指令有两个作用，第一它可以延迟流水线执行指令，是CPU不会消耗过多的执行资源，延迟的时间取决于具体实现的版本。第二它可以避免在退出循环的时候因内存顺序冲突而引起CPU流水线被清空，从而提高CPU的执行效率</li>
+<li>只能保证一个共享变量的原子操作：当对一个共享变量执行操作时，我们可以使用循环CAS的方式来保证原子操作，但是对多个共享变量操作时，循环CAS就无法保证操作的原子性，这个时候就可以用锁。</li>
+</ul>
+<p>（2）使用锁机制实现原子操作</p>
+<p>锁机制保证了只有获得锁的线程能够操作锁定的内存区域，JVM内部实现了很多种锁机制，有偏向锁，轻量级锁和互斥锁，除了偏向锁，JVM实现锁的方式都用到的循环CAS，当一个线程想进入同步块的时候使用循环CAS的方式来获取锁，当它退出同步块的时候使用循环CAS释放锁。</p>
 <h2 id="3-竞态条件"><a href="#3-竞态条件" class="headerlink" title="3.竞态条件"></a>3.竞态条件</h2><p>**两个或多个线程同时对一共享数据进行修改，从而影响程序运行的正确性时，这种就被称为竞态条件(race condition)**，线程切换是导致竞态条件出现的诱导因素。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RaceCondition</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">private</span> Signleton single = <span class="keyword">null</span>;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> Signleton <span class="title">newSingleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(single == <span class="keyword">null</span>)&#123;</span><br><span class="line">      single = <span class="keyword">new</span> Signleton();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> single;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;	</span><br></pre></td></tr></table></figure>
 
@@ -376,16 +407,26 @@
 <p>线程在进入同步代码块之前会自动获得锁，并且在退出同步代码块时<strong>自动释放锁（隐式锁）</strong>，而无论是正常退出还是通过异常路径退出，获得内置锁的唯一途径就是进入由这个锁保护的同步代码块或方法。</p>
 <p>synchronized 隐含的含义是互斥，互斥意味着等待，最多只有一个线程持有锁，当线程A想要获得线程B持有的锁时，如果线程B还没有执行结束，那么线程A只能等待或者阻塞，直到线程B释放锁，线程A才能得到锁。</p>
 <p>volatile 是一种轻量级的synchronized ，也就是一种轻量级的加锁方式，volatile 通过保证共享变量的可见性从侧面对对象进行加锁。可见性的意思就是当一个线程操作共享变量时，另外一个线程能够看见这个修改的值。volatile 的成本要比synchronized 低很多，因为volatile 不会引起上下文切换。</p>
-<p><img src="/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210511195710269.png" alt="image-20210511195710269"></p>
+<img src="/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210511195710269.png" alt="image-20210511195710269" style="zoom:80%;">
+
 <p>还可以用原子类和<code>java.util.concurrent</code>工具包下的线程安全的集合类来确保线程安全。</p>
-<h1 id="4、竞态条件和关键区域"><a href="#4、竞态条件和关键区域" class="headerlink" title="4、竞态条件和关键区域"></a>4、竞态条件和关键区域</h1><p>竞态条件是关键代码区域发生的一种特殊条件。关键区域是由多个线程同时执行的代码部分，关键区域中代码的执行顺序不同会出现不同的结果，如果多个线程执行一段关键代码，而这部分关键代码由于执行顺序不同造成不同的结果时，称这段代码<strong>包含</strong>竞态条件。</p>
+<blockquote>
+<p>volatile的内存语义</p>
+</blockquote>
+<ul>
+<li>线程A写volatile变量，实际上是线程A向接下来要读这个变量的线程发送消息</li>
+<li>线程B读volatile变量，实际上是线程B接收了某个线程通过主内存发送的消息</li>
+<li>线程A写volatile变量，线程B读volatile变量，实际上是线程A通过主内存向线程B发送消息。</li>
+</ul>
+<h1 id="4、竞态条件和关键区域（临界区）"><a href="#4、竞态条件和关键区域（临界区）" class="headerlink" title="4、竞态条件和关键区域（临界区）"></a>4、竞态条件和关键区域（临界区）</h1><p>在多个线程访问同一个资源时，如果对资源的顺序敏感，就称存在竞态条件，导致竞态条件发生的代码称为关键区域（临界区）。</p>
 <h1 id="5、并发模型和分布式系统"><a href="#5、并发模型和分布式系统" class="headerlink" title="5、并发模型和分布式系统"></a>5、并发模型和分布式系统</h1><p>并发模型和分布式系统很相似，并发模型是<code>线程</code>彼此进行通信，而在分布式系统是<code>进程</code>彼此进行通信</p>
 <h1 id="6、两个状态"><a href="#6、两个状态" class="headerlink" title="6、两个状态"></a>6、两个状态</h1><p>共享状态、独立状态</p>
 <p>并发模型的另一个重要方面是，线程是具有共享状态还是独立状态。</p>
 <p>状态即是数据，一个或者多个对象，多个线程要共享数据时，就会造成竞态条件或者死锁等问题</p>
 <p>独立的状态表明状态不会在多个线程之间共享，如果线程之间需要通信的话，它们操作不可变的变量，这是最有效避免并发问题的一种方式。</p>
 <h1 id="7、并发模型"><a href="#7、并发模型" class="headerlink" title="7、并发模型"></a>7、并发模型</h1><h2 id="1-并行-worker"><a href="#1-并行-worker" class="headerlink" title="1.并行 worker"></a>1.并行 worker</h2><p>客户端会把任务交给<code>代理人(Delegator)</code>，然后由代理人把工作分配给不同的<code>工人(worker)</code></p>
-<p><img src="/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210511204130989.png" alt="image-20210511204130989"></p>
+<img src="/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210511204130989.png" alt="image-20210511204130989" style="zoom: 80%;">
+
 <p>并行worker的核心思想是，它主要由两个进程即代理人和工人，Delegator负责接收来自客户端的任务并发任务下发，交给具体的worker进程处理，worker处理完成后把结果返回给Delegator，在Delegator接收到worker的结果后对其进行汇总，然后交给客户端。</p>
 <p><strong>并行worker的优点</strong></p>
 <ul>
@@ -396,7 +437,8 @@
 <ul>
 <li>共享状态会变得很复杂</li>
 </ul>
-<p><img src="/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210511210228237.png" alt="image-20210511210228237"></p>
+<img src="/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210511210228237.png" alt="image-20210511210228237" style="zoom:67%;">
+
 <p>多线程访问共享数据时，会丢失并发性，因为操作系统要保证只能有一个线程能够访问数据，未抢占到资源的线程会阻塞。</p>
 <ul>
 <li>无状态的worker</li>
@@ -413,9 +455,11 @@
 <p>使用流水线并发模型通常被设计为<code>非阻塞I/O</code>，也就是说当没有给worker分配任务时，worker会做其它工作。</p>
 <p>例如从网上下载文件，在执行I/O操作时，由于I/O操作非常慢，worker不会等待I/O操作完成，CPU会在等待期间做其它工作。等I/O操作完成后，将结果传递给下一个worker。</p>
 <p>在实际情况中，任务通常不会由一条流水线流动，由于程序需要完成很多事情，所以需要根据完成不同工作在不同的worker之间流动。</p>
-<p><img src="/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210511213459310.png" alt="image-20210511213459310"></p>
+<img src="/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210511213459310.png" alt="image-20210511213459310" style="zoom:67%;">
+
 <p>任务还可能需要不同流水线的worker协作完成。</p>
-<p><img src="/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210511213613459.png" alt="image-20210511213613459"></p>
+<img src="/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210511213613459.png" alt="image-20210511213613459" style="zoom:67%;">
+
 <p><strong>流水线设计的优点</strong></p>
 <ul>
 <li>不会存在共享的状态</li>
@@ -464,8 +508,21 @@
 <li>实现某些与时间相关的功能，如定时执行、周期执行等。</li>
 <li>隔离线程环境。比如，交易服务和搜索服务在同一台服务器上，分别开启两个线程池，交易线程的资源消耗明显要大；因此，通过配置独立的线程池，将较慢的交易服务与搜索服务隔开，避免服务线程互相影响。</li>
 </ul>
-<h1 id="9、线程状态"><a href="#9、线程状态" class="headerlink" title="9、线程状态"></a>9、线程状态</h1><p><img src="/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210425212605790.png" alt="image-20210425212605790"></p>
-<p><img src="/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210425212649979.png" alt="image-20210425212649979"></p>
+<h1 id="9、线程状态"><a href="#9、线程状态" class="headerlink" title="9、线程状态"></a>9、线程状态</h1><blockquote>
+<p>状态</p>
+</blockquote>
+<ul>
+<li>new（新建）</li>
+<li>runnable（可运行）</li>
+<li>blocked（阻塞）</li>
+<li>waiting（等待）</li>
+<li>time waiting（定时等待）</li>
+<li>terminated（终止）</li>
+</ul>
+<blockquote>
+<p>状态转换</p>
+</blockquote>
+<p><img src="/2021/05/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210729094232967.png" alt="image-20210729094232967"></p>
 <h1 id="10、线程休眠"><a href="#10、线程休眠" class="headerlink" title="10、线程休眠"></a>10、线程休眠</h1><p>选定给定的休眠时间，调用线程的sleep()方法</p>
 <ul>
 <li>线程休眠不会释放锁</li>
@@ -496,7 +553,8 @@
 
 
 
-
+<h1 id="15、happens-before"><a href="#15、happens-before" class="headerlink" title="15、happens-before"></a>15、happens-before</h1><p>通过happens-before概念来描述操作之间的内存可见性，如果一个操作（运行结果）对另外一个操作可见，那么这两个操作之间必须存在happens-before关系。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这两个操作可以是在同一个线程，也可以在不同线程之间。</span><br></pre></td></tr></table></figure>
 
 
 
@@ -1115,6 +1173,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">容器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Netty</a>
               </li>
             
             <div class="clearfix"></div>
