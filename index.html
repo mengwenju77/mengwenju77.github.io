@@ -83,15 +83,24 @@
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/01/31/hexo%E6%93%8D%E4%BD%9C/">hexo相关</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <hr>
-<h2 id="hexo相关"><a href="#hexo相关" class="headerlink" title="hexo相关"></a>hexo相关</h2><p>hexo clean<br>rm -rf .deploy_git&#x2F;<br>git config –global core.autocrlf false<br>hexo g<br>hexo d</p>
+        <p>hexo clean<br>rm -rf .deploy_git&#x2F;<br>git config –global core.autocrlf false<br>hexo g<br>hexo d</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/01/31/hexo%E6%93%8D%E4%BD%9C/" data-id="cls1ush4y000090sd70xvcxm7" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/01/31/hexo%E6%93%8D%E4%BD%9C/" data-id="cls1ush4y000090sd70xvcxm7" data-title="hexo相关" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -113,10 +122,19 @@
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/01/31/%E7%AE%97%E6%B3%95/">算法</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <hr>
-<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h1 id="一、二分法"><a href="#一、二分法" class="headerlink" title="一、二分法"></a>一、二分法</h1><h2 id="1-基础场景"><a href="#1-基础场景" class="headerlink" title="1 基础场景"></a>1 基础场景</h2><p>场景1：在<strong>非降序</strong>数组中查找某个值的下标；</p>
+        <h1 id="一、二分法"><a href="#一、二分法" class="headerlink" title="一、二分法"></a>一、二分法</h1><h2 id="1-基础场景"><a href="#1-基础场景" class="headerlink" title="1 基础场景"></a>1 基础场景</h2><p>场景1：在<strong>非降序</strong>数组中查找某个值的下标；</p>
 <p>场景2：在<strong>非降序</strong>数组中查找某个值的起止位置。</p>
 <h2 id="2-常规代码"><a href="#2-常规代码" class="headerlink" title="2 常规代码"></a>2 常规代码</h2><p>场景1：在非降序数组中查找某个值的下标</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">search</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> target)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> left = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> right = nums.<span class="built_in">size</span>(); <span class="comment">// 此时left和right的取值可以理解为是“左闭右开”区间：[left，right)</span></span><br><span class="line">    <span class="keyword">while</span>(left &lt; right) <span class="comment">// 1.写成&lt;的原因：前面定义的取值范围是[left，right)。2. 此条件的终止条件是：left == right</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> mid = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] == target) <span class="comment">// 找到了</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &lt; target) <span class="comment">// 说明目标值在mid的右方，那么需要变更左边界</span></span><br><span class="line">        &#123;</span><br><span class="line">            left = mid + <span class="number">1</span>; <span class="comment">// 加1的原因：区间是左闭右开，走到此分支说明target的索引肯定大于mid</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &gt; target) <span class="comment">//说明目标值在mid的左方，那么需要变更右边界</span></span><br><span class="line">        &#123;</span><br><span class="line">            right = mid; <span class="comment">//不加1的原因：区间是左闭右开，right = mid，实际搜索的区间是[left， right-1]</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 循环结束，终止条件为 left == right，即while外面left == right，走到这里说明没提前返回mid</span></span><br><span class="line">    <span class="comment">// 区间要么在最左边，要么在最右边</span></span><br><span class="line">    <span class="keyword">if</span>(left &gt;= nums.<span class="built_in">size</span>()) <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">// 最右边，left的另一个含义：left左边有nums.size()个值不符合要求</span></span><br><span class="line">    <span class="keyword">return</span> nums[right] == target ? right : <span class="number">-1</span>;  <span class="comment">//最左边</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -239,7 +257,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/01/31/%E7%AE%97%E6%B3%95/" data-id="cls1ush55000190sd8r04gise" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/01/31/%E7%AE%97%E6%B3%95/" data-id="cls1ush55000190sd8r04gise" data-title="算法" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -282,11 +300,11 @@
       <ul>
         
           <li>
-            <a href="/2024/01/31/hexo%E6%93%8D%E4%BD%9C/">(no title)</a>
+            <a href="/2024/01/31/hexo%E6%93%8D%E4%BD%9C/">hexo相关</a>
           </li>
         
           <li>
-            <a href="/2024/01/31/%E7%AE%97%E6%B3%95/">(no title)</a>
+            <a href="/2024/01/31/%E7%AE%97%E6%B3%95/">算法</a>
           </li>
         
       </ul>
