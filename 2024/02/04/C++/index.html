@@ -14,7 +14,7 @@
 <meta property="og:description" content="1 引用引用：引用并非对象，它只是为已存在的对象起的另外一个名字。引用类型 引用另外一种类型，因此必须被初始化。 123int ival &#x3D; 1024; &#x2F;&#x2F; 定义一个变量，值为1024int &amp;refVal &#x3D; ival; &#x2F;&#x2F; refVal 指向ival(是ival的另一个名字)，即定义了一个refVal与已存在的对象ival绑定int &amp;refVal; &#x2F;&#x2F; 错误，此处定义">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-02-04T12:31:36.025Z">
-<meta property="article:modified_time" content="2024-02-04T12:32:59.302Z">
+<meta property="article:modified_time" content="2024-02-22T13:11:21.313Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -106,7 +106,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> &amp;refVal3 = refval; <span class="comment">//正确，以引用refval作为初始值，实际上是以与引用refval绑定的对象refVal作为初始值，也就是refVal3绑定到了对象ival上</span></span><br><span class="line"><span class="type">int</span> i = refVal; <span class="comment">// 利用与refVal绑定的对象的值初始化i的值，即i 被初始化为ival的值</span></span><br></pre></td></tr></table></figure>
 <p>引用的类型必须与其所引用的对象的类型一致</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> dval = <span class="number">3.14</span>; <span class="comment">//定义了一个double类型的对象</span></span><br><span class="line"><span class="type">int</span> &amp;refVal5 = dval; <span class="comment">//错误。引用的类型必须与其所引用的对象的类型一致</span></span><br></pre></td></tr></table></figure>
-<p><strong>引用的类型必须与其所引用的对象的类型一致</strong>  –&gt; 有两个例外<br>第一个例外<br>const的引用</p>
+<p><strong>引用的类型必须与其所引用的对象的类型一致</strong>  –&gt; 有两个例外<br>第一个例外：<br>const的引用</p>
 <p>第二个例外</p>
 
       
@@ -121,6 +121,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2024/02/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          计算机网络
+        
+      </div>
+    </a>
   
   
     <a href="/2024/01/31/hexo%E6%93%8D%E4%BD%9C/" id="article-nav-older" class="article-nav-link-wrap">
@@ -161,6 +170,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2024/02/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+          </li>
         
           <li>
             <a href="/2024/02/04/C++/">C++</a>

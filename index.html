@@ -73,6 +73,59 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-计算机网络" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="article-date">
+  <time class="dt-published" datetime="2024-02-22T13:42:55.852Z" itemprop="datePublished">2024-02-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="零、网络的全貌"><a href="#零、网络的全貌" class="headerlink" title="零、网络的全貌"></a>零、网络的全貌</h1><img src="../imgs/${fiilename}/image-20240222214915174.png" alt="image-20240222214915174"  />
+
+<p>从浏览器到web服务器</p>
+<p>（1）浏览器向web服务器发送请求</p>
+<p>（2）web服务器根据请求向浏览器回复响应</p>
+<p><strong>从在浏览器按下发送键到收到服务器响应这一过程发生了什么？</strong></p>
+<h1 id="一、web浏览器"><a href="#一、web浏览器" class="headerlink" title="一、web浏览器"></a>一、web浏览器</h1><p><strong>在浏览器输入网址（URL）–&gt; 浏览器将数据委托操作系统发出去</strong></p>
+<h2 id="1-生成HTTP请求消息"><a href="#1-生成HTTP请求消息" class="headerlink" title="1 生成HTTP请求消息"></a>1 生成HTTP请求消息</h2><p><img src="/../imgs/$%7Bfiilename%7D/image-20240222220843937.png" alt="image-20240222220843937"></p>
+<h2 id="1-1-从输入网址开始"><a href="#1-1-从输入网址开始" class="headerlink" title="1.1 从输入网址开始"></a>1.1 从输入网址开始</h2><p>网址，准确的说应该是URL（Uniform Resource Locator，统一资源定位符）</p>
+<p>比如百度官网：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<p>此处是以 https: 开头的，实际上还有其它开头，如 “ftp:”  “file:”  “mailto” 等。下图是几种常见的URL</p>
+<p><img src="/../imgs/$%7Bfiilename%7D/image-20240222221715764.png" alt="image-20240222221715764"></p>
+<p>对于不同的开头，它后面的写法也不相同。比如上图中</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" data-id="clsxb9yn00000x0sd7dajeoyl" data-title="计算机网络" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-C++" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/02/04/C++/" class="article-date">
@@ -104,7 +157,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> &amp;refVal3 = refval; <span class="comment">//正确，以引用refval作为初始值，实际上是以与引用refval绑定的对象refVal作为初始值，也就是refVal3绑定到了对象ival上</span></span><br><span class="line"><span class="type">int</span> i = refVal; <span class="comment">// 利用与refVal绑定的对象的值初始化i的值，即i 被初始化为ival的值</span></span><br></pre></td></tr></table></figure>
 <p>引用的类型必须与其所引用的对象的类型一致</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> dval = <span class="number">3.14</span>; <span class="comment">//定义了一个double类型的对象</span></span><br><span class="line"><span class="type">int</span> &amp;refVal5 = dval; <span class="comment">//错误。引用的类型必须与其所引用的对象的类型一致</span></span><br></pre></td></tr></table></figure>
-<p><strong>引用的类型必须与其所引用的对象的类型一致</strong>  –&gt; 有两个例外<br>第一个例外<br>const的引用</p>
+<p><strong>引用的类型必须与其所引用的对象的类型一致</strong>  –&gt; 有两个例外<br>第一个例外：<br>const的引用</p>
 <p>第二个例外</p>
 
       
@@ -313,13 +366,7 @@
 
 
 
-
-
-
-
-
-
-<p>​	</p>
+<h2 id="2-打家劫舍系列"><a href="#2-打家劫舍系列" class="headerlink" title="2 打家劫舍系列"></a>2 打家劫舍系列</h2><p>​	</p>
 <h1 id="函数使用方法"><a href="#函数使用方法" class="headerlink" title="#函数使用方法"></a>#函数使用方法</h1><p>1.在vector末尾插入另一个vector的元素</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; a;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; b;</span><br><span class="line"><span class="comment">//实现把b的所有元素插入到a的末尾</span></span><br><span class="line">a.<span class="built_in">insert</span>(a.<span class="built_in">end</span>(), b.<span class="built_in">begin</span>(), b.<span class="built_in">end</span>());</span><br></pre></td></tr></table></figure>
 
@@ -369,6 +416,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2024/02/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+          </li>
         
           <li>
             <a href="/2024/02/04/C++/">C++</a>
