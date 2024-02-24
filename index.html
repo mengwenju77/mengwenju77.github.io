@@ -109,7 +109,129 @@
 
 <p>此处是以 https: 开头的，实际上还有其它开头，如 “ftp:”  “file:”  “mailto” 等。下图是几种常见的URL</p>
 <p><img src="/../imgs/$%7Bfiilename%7D/image-20240222221715764.png" alt="image-20240222221715764"></p>
-<p>对于不同的开头，它后面的写法也不相同。比如上图中</p>
+<p>对于不同的开头，它后面的写法也不相同。比如上图中访问 HTTP服务器和访问FTP服务器的方式是服务器域名+文件的路径名，而发送电子邮件时则包含收件人的邮箱地址。</p>
+<p>这些开头的文字可以理解问访问时使用的协议类型。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HTTP：Hypertext Transfer Prorocol, 超文本传输协议</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="1-2-浏览器先要解析URL"><a href="#1-2-浏览器先要解析URL" class="headerlink" title="1.2 浏览器先要解析URL"></a>1.2 浏览器先要解析URL</h2><p>URL的格式随着协议不同而不同，以访问web服务器为例：</p>
+<p><img src="/../imgs/$%7Bfiilename%7D/image-20240224105925444.png" alt="image-20240224105925444"></p>
+<p>上图表示浏览器要访问 <a target="_blank" rel="noopener" href="http://www.lab.glasscom.com/">www.lab.glasscom.com</a> 这个web服务器下的 &#x2F;dir1&#x2F;file1.html文件。</p>
+<p><img src="/../imgs/$%7Bfiilename%7D/image-20240224110301148.png" alt="image-20240224110301148"></p>
+<h2 id="1-3-文件名省略的情况"><a href="#1-3-文件名省略的情况" class="headerlink" title="1.3 文件名省略的情况"></a>1.3 文件名省略的情况</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.lab.glasscom.com/dir1/file1.html </span><br></pre></td></tr></table></figure>
+
+<p>上面是一个典型的URL，但是有时也会有文件名省略的情况，比如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(a) http://www.lab.glasscom.com/dir1/</span><br></pre></td></tr></table></figure>
+
+<p>(a) 这种URL的写法是以 &#x2F; 作为结尾，可以这样理解：以 “&#x2F;“ 结尾的URL表示&#x2F;dir1&#x2F;后面本该有的文件名被省略了。那么服务器应该访问哪个文件呢？</p>
+<p>其实，这种一般会访问事先设置好的文件，这种设置根据服务器的不同而不同，大多数情况是 index.html 和default.html 之类的文件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(b) http://www.lab.glasscom.com/</span><br></pre></td></tr></table></figure>
+
+<p>(b) 这种也是以”&#x2F;“ 结尾的，它表示访问一个 “&#x2F;“ 的目录，由于省略了文件名，所以默认访问index.html 和default.html 之类的文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(c) http://www.lab.glasscom.com</span><br></pre></td></tr></table></figure>
+
+<p>(c) 连”&#x2F;“都省略了，这时会默认访问根目录下事先设置好的默认文件，也就是 &#x2F;index.html 和 &#x2F;default.html 之类的文件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(d) http://www.lab.glasscom.com/whatisthis</span><br></pre></td></tr></table></figure>
+
+<p>(d)这种情况的处理方式是：如果服务器上存在 whatisthis这个文件，则将其作为文件来处理；如果服务器上存在 whatisthis 这个文件夹，则将其作为文件夹来处理。</p>
+<p>ps：无法创建名字是whatisthis的文件和文件夹，所以上面这种方式并不会产生歧义。</p>
+<p><img src="/../imgs/$%7Bfiilename%7D/image-20240224113148681.png" alt="image-20240224113148681"></p>
+<h2 id="1-4-HTTP协议的基本思路"><a href="#1-4-HTTP协议的基本思路" class="headerlink" title="1.4 HTTP协议的基本思路"></a>1.4 HTTP协议的基本思路</h2><p><img src="/../imgs/$%7Bfiilename%7D/image-20240224114522554.png" alt="image-20240224114522554"></p>
+<p>HTTP协议定义了客户端与服务器的交互消息内容和步骤。其思路是：</p>
+<ul>
+<li>客户端向服务器发送请求消息。请求消息中包含“对什么”“进行什么样的操作”<ul>
+<li>对什么：就是URI（Uniform Resource Identifier, 统一资源标识符）。URI一般是一个存放网页的数据的文件名或者是一个CGI程序。也可以使用http:开头的URL作为URI。可以理解为，这里可以写各种访问目标，而这些访问目标就称为URI。</li>
+<li>进行什么样的操作：就是方法，表示让web服务器完成什么样的操作。例如，读取URI表示的数据，或者将客户端输入的数据发给URI表示的程序等。</li>
+</ul>
+</li>
+</ul>
+<p>HTTP的主要方法如下：</p>
+<p><img src="/../imgs/$%7Bfiilename%7D/image-20240224122810742.png" alt="image-20240224122810742"></p>
+<p>​		常用的方法是GET和POST</p>
+<p>​		GET：当访问web服务器上的数据时，一般使用的是GET方法。服务器收到请求后，根据URI查找数据，并将数据放到响应消息中发给客户端、</p>
+<p>​		POST：当在表单（网页中的文本框等能够输入数据的地方，如淘宝中的搜索框）中填写数据并将其发给web服务器时，一般使用的是POST方法。POST方法					会指向web服务器中运行的一个应用程序名的文件名。然后在请求消息中除了传递URI和方法外还需要传递需要输入给web服务器的数据，也就是用					户框的填的内容。web服务器收到消息后，会将请求消息中的数据发给URI执行的应用程序，应用程序执行结束后将结果发给web服务器，web服务					器再将结果放到响应消息后发给客户端。</p>
+<ul>
+<li><p>服务器向客户端回复响应。服务器根据URI和方法判断“对什么”“进行什么样的操作”。完成操作后将结果放在响应消息中，响应消息的开头有一个状态码，用来表示执行的结果是成功还是失败。状态码后面就是头字段和网页数据。客户端收到响应消息后，在浏览器会从消息中读取所需的数据并显示在屏幕上。</p>
+<p>常用的状态码如下：</p>
+<table>
+<thead>
+<tr>
+<th align="left">状态码</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1**</td>
+<td>信息，服务器收到请求，需要请求者继续执行操作</td>
+</tr>
+<tr>
+<td align="left">2**</td>
+<td>成功，操作被成功接收并处理</td>
+</tr>
+<tr>
+<td align="left">3**</td>
+<td>重定向，需要进一步的操作以完成请求</td>
+</tr>
+<tr>
+<td align="left">4**</td>
+<td>客户端错误，请求包含语法错误或无法完成请求</td>
+</tr>
+<tr>
+<td align="left">5**</td>
+<td>服务器错误，服务器在处理请求的过程中发生了错误</td>
+</tr>
+<tr>
+<td align="left">200</td>
+<td>请求成功</td>
+</tr>
+<tr>
+<td align="left">201</td>
+<td>已创建，成功请求并创建了新的资源</td>
+</tr>
+<tr>
+<td align="left">202</td>
+<td>已接受，已接受请求，但未处理完成</td>
+</tr>
+<tr>
+<td align="left">301</td>
+<td>永久重定向，请求的资源被永久移到新URL，今后任何新的请求都应使用新的URL代替</td>
+</tr>
+<tr>
+<td align="left">302</td>
+<td>暂时重定向，资源只是临时被移动，客户端仍使用原有的URL</td>
+</tr>
+<tr>
+<td align="left">400</td>
+<td>客户端请求的语法错误，服务器无法理解</td>
+</tr>
+<tr>
+<td align="left">401</td>
+<td>请求要求用户的身份认证</td>
+</tr>
+<tr>
+<td align="left">403</td>
+<td>服务器理解客户端的请求，但是拒绝执行的请求</td>
+</tr>
+<tr>
+<td align="left">404</td>
+<td>服务器无法根据客户端的请求找到资源</td>
+</tr>
+<tr>
+<td align="left">500</td>
+<td>服务器内部错误，无法完成请求服务器内部错误，无法完成请求</td>
+</tr>
+<tr>
+<td align="left">501</td>
+<td>服务器不支持请求的功能，无法完成请求</td>
+</tr>
+<tr>
+<td align="left">503</td>
+<td>由于超载或系统维护，服务器暂时无法处理客户端的请求</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
 
       
     </div>
