@@ -231,8 +231,39 @@
 </ul>
 <h3 id="1-5-生成HTTP请求消息"><a href="#1-5-生成HTTP请求消息" class="headerlink" title="1.5 生成HTTP请求消息"></a>1.5 生成HTTP请求消息</h3><p>浏览器对URL进行解析之后，浏览器就确定了web服务器和文件名，知道应该要访问的目标在哪里了，接下来浏览器会使用HTTP协议来访问web服务器。首先要根据web服务器和文件名生成HTTP请求消息。HTTP消息的格式如下：</p>
 <p><img src="/../imgs/$%7Bfiilename%7D/image-20240224131140699.png" alt="image-20240224131140699"></p>
-<p>请求的第一行为请求行。请求行的开头是方法，方法可以告诉服务器它应该进行什么样的操作，重点是确定使用哪种方法。确定的关键是在于浏览器的工作状态：比如在搜索框中输入网址，会使用GET方法，点击超链接也会使用GET方法，在表单中点击 ”提交“会使用POST方法。</p>
+<p><strong>请求的第一行为请求行。</strong></p>
+<ul>
+<li><p>请求行的开头是方法，方法可以告诉服务器它应该进行什么样的操作，重点是确定使用哪种方法。确定的关键是在于浏览器的工作状态：比如在搜索框中输入网址，会使用GET方法，点击超链接也会使用GET方法，在表单中点击 ”提交“会使用POST方法。</p>
+</li>
+<li><p>方法之后加一个空格，后面再跟上URI，URI的一般格式为文件和程序的路径： &#x2F;&lt;目录名&gt;&#x2F;…&#x2F;&lt;文件名&gt;，而从浏览器输入的URL中已经包含路径了，所以从URL复制就可以了。</p>
+</li>
+<li><p>第一行的末尾需要添加上HTTP的版本号，这是为了表示该消息是基于哪个版本的HTTP发出的。</p>
+</li>
+</ul>
+<p><strong>请求从第二行开始为消息头</strong></p>
+<ul>
+<li>消息头是为了存放额外信息，长度为几行到几十行不等</li>
+</ul>
+<p><strong>消息头后加一行空行</strong></p>
+<p><strong>空行后是消息体</strong></p>
+<ul>
+<li>在使用GET方法时，仅通过方法和URI，服务器就能知道客户端想让服务器执行什么操作，所以此场景下消息体不需要填写内容。</li>
+<li>当使用POST方法时，需要将表单中填写的信息放到消息体中。</li>
+</ul>
+<p><strong>消息体之后整个消息就结束了</strong></p>
+<h3 id="1-6-发送请求后会收到响应"><a href="#1-6-发送请求后会收到响应" class="headerlink" title="1.6 发送请求后会收到响应"></a>1.6 发送请求后会收到响应</h3><p>响应消息的格式及基本思路和请求消息基本是一致的，差别只在第一行。</p>
+<p><strong>第一行的内容为状态码和响应短语，用来表示请求的执行结果是成功还是出错</strong></p>
+<ul>
+<li>状态码是一个数字，用来向<strong>程序</strong>告知执行的结果</li>
+<li>响应短语是一段文字，用来向<strong>人类</strong>告知执行的结果</li>
+</ul>
+<p>如果网页中只有文字，到这里就结束了。</p>
+<p>如果网页中包含图片，会在网页中的相应位置嵌入表示图片相关的标签的控制信息，浏览器会在显示文字的时候搜索相关的标签，当遇到图片相关标签时，会在屏幕上预留相应的空间，然后再次访问web服务器，向服务器请求标签所表示的图片，收到响应后将图片显示在预留的空间上。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">标签：编写网页所使用的HTML语言中规定的控制信息。例如，当需要在网页中插入图片时，需要在相应位置嵌入形如&lt;img src = <span class="string">&quot;imalel.jpg&quot;</span>&gt;的标签。</span><br></pre></td></tr></table></figure>
 
+
+
+<h2 id="2-向DNS服务器查询Web服务器的IP地址"><a href="#2-向DNS服务器查询Web服务器的IP地址" class="headerlink" title="2 向DNS服务器查询Web服务器的IP地址"></a>2 向DNS服务器查询Web服务器的IP地址</h2>
       
     </div>
     <footer class="article-footer">
