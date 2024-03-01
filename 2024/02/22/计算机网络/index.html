@@ -25,8 +25,12 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240226194908071.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240226200346659.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240226200949365.png">
+<meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240301214900330.png">
+<meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240301220432973.png">
+<meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240301221859624.png">
+<meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240301222651408.png">
 <meta property="article:published_time" content="2024-02-22T13:42:55.852Z">
-<meta property="article:modified_time" content="2024-02-26T13:07:28.558Z">
+<meta property="article:modified_time" content="2024-03-01T14:32:36.396Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240224125924309.png">
@@ -294,7 +298,61 @@
 <p>根据子网掩码和IP地址主体，就能得到网络号（网段）和主机号，可以理解为<strong>子网掩码就是分隔网络号和主机号的</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.1.1/255.255.255.0  //表示其中192.168.1 就是网络号，最后的0是主机号</span><br><span class="line">192.168.1.1/255.255.0.0  //其中192.168 就是网络号，最后两个0是主机号</span><br><span class="line">192.168.2.2/255.255.0.0  //根据子网掩码判断和192.168.1.1/255.255.0.0 属于同一网段</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-2-域名和IP地址并用的理由"><a href="#2-2-域名和IP地址并用的理由" class="headerlink" title="2.2 域名和IP地址并用的理由"></a>2.2 域名和IP地址并用的理由</h3>
+<h3 id="2-2-域名和IP地址并用的理由"><a href="#2-2-域名和IP地址并用的理由" class="headerlink" title="2.2 域名和IP地址并用的理由"></a>2.2 域名和IP地址并用的理由</h3><p><strong>知道了IP地址就知道了网络上的哪一台计算机，那还需要域名吗？</strong></p>
+<p>如果IP地址和域名只知道其一，会发生下面的情况：</p>
+<ul>
+<li>已知IP地址：实际上，在浏览器中输入IP也是可以搜索的，但是IP太长，那么多的网址，记不住。</li>
+<li>已知域名：互联网中大量的路由器根据IP地址判断下一步应该往哪里发，如果使用域名，域名的大小最短也是几十个字节，传输时会耗费大量的时间，就算提升路由器的性能，但与此同时，消息转发数量也在增加，因此，只用域名转发消息不可行。</li>
+</ul>
+<p>那么，目前已知域名，怎么得到IP地址呢？</p>
+<h3 id="2-3-通过解析器向DNS发出查询请求"><a href="#2-3-通过解析器向DNS发出查询请求" class="headerlink" title="2.3 通过解析器向DNS发出查询请求"></a>2.3 通过解析器向DNS发出查询请求</h3><p>根据域名查询IP地址的方法很简单：</p>
+<ul>
+<li>浏览器向DNS服务器发送查询请求，请求携带域名（前提是要查询的域名在DNS服务器上注册，才能够查到）；</li>
+<li>DNS服务器回复响应消息，响应携带IP地址</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DNS：Domain Name System, 域名服务系统</span><br></pre></td></tr></table></figure>
+
+<p><strong>那么，浏览器是如何向DNS发送查询请求的呢？</strong></p>
+<p>先了解两个概念：</p>
+<ul>
+<li><strong>解析器</strong>：对于DNS服务器，我们的计算机上一定有DNS客户端，相当于DNS客户端的部分被称作DNS解析器，简称解析器，解析器实际上是一段程序，位于操作系统的Socket库中。</li>
+<li><strong>域名解析</strong>：通过DNS服务器将域名解析成IP的操作称为域名解析</li>
+</ul>
+<p>解析器的用法如下图：</p>
+<p><img src="/../imgs/$%7Bfiilename%7D/image-20240301214900330.png" alt="image-20240301214900330"></p>
+<p>Socket库中的程序都是标准组件，只需要在应用程序（浏览器）中调用就可以了：在编写应用程序时，像上图那样写上解析器的程序名和域名，就完成了调用。</p>
+<ul>
+<li><p>浏览器调用解析器后，解析器会向DNS服务器发送查询消息，然后DNS服务器回复响应，响应内容包含IP地址，解析器取出IP地址，写入浏览器指定的内存中</p>
+</li>
+<li><p>接下来，浏览器在向HTTP发送请求消息时，会从该内存中取出IP地址，并将它与HTTP请求消息一起交给操作系统就可以了。</p>
+</li>
+</ul>
+<h3 id="2-4-解析器的工作原理"><a href="#2-4-解析器的工作原理" class="headerlink" title="2.4 解析器的工作原理"></a>2.4 解析器的工作原理</h3><p><img src="/../imgs/$%7Bfiilename%7D/image-20240301220432973.png" alt="image-20240301220432973"></p>
+<ul>
+<li><p>浏览器应用代码调用解析器时，流程会走到解析器内部</p>
+</li>
+<li><p>解析器生成要发送给DNS服务器的消息，并委托操作系统发送（解析器本身并不仅具备网络收发数据消息功能）</p>
+</li>
+<li><p>解析器收到DNS服务器的响应消息后，取出消息中的IP地址，存放到内存中</p>
+</li>
+<li><p>将代表该内存的变量返回给浏览器</p>
+</li>
+</ul>
+<p><strong>解析器是如何知道DNS服务器的IP地址呢？</strong></p>
+<p>这个是事先设置好的</p>
+<p><img src="/../imgs/$%7Bfiilename%7D/image-20240301221859624.png" alt="image-20240301221859624"></p>
+<h3 id="2-5-DNS服务器的基本工作"><a href="#2-5-DNS服务器的基本工作" class="headerlink" title="2.5 DNS服务器的基本工作"></a>2.5 DNS服务器的基本工作</h3><p><img src="/../imgs/$%7Bfiilename%7D/image-20240301222651408.png" alt="image-20240301222651408"></p>
+<p>DNS服务器的基本工作：</p>
+<ul>
+<li>接收DNS客户端的请求消息。请求消息包含：<ul>
+<li>域名：服务器、邮件服务器（邮件地址中@后面的部分）的名称</li>
+<li>Class：最早的DNS服务器考虑到了互联网之外的其它网络中的应用，Class就是用来识别网络的信息，如今Class的值永远是IN（代表互联网）</li>
+<li>记录类型：表示域名对应何种类型的记录。A：表示域名对应的是IP地址，MX：表示域名对应的是邮件服务器</li>
+</ul>
+</li>
+<li>根据请求消息返回响应</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
