@@ -6,15 +6,15 @@
   
   <title>C++ | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="1 引用引用：引用并非对象，它只是为已存在的对象起的另外一个名字。引用类型 引用另外一种类型，因此必须被初始化。 123int ival &#x3D; 1024; &#x2F;&#x2F; 定义一个变量，值为1024int &amp;refVal &#x3D; ival; &#x2F;&#x2F; refVal 指向ival(是ival的另一个名字)，即定义了一个refVal与已存在的对象ival绑定int &amp;refVal; &#x2F;&#x2F; 错误，此处定义">
+  <meta name="description" content="1 在main执行之前和之后执行的代码可能是什么？main函数执行之前执行的代码  全局对象初始化，在main之前调用构造函数  123456789101112131415161718192021class A&amp;#123;public:    A()    &amp;#123;        cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;    &amp;#125;&amp;#125;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++">
 <meta property="og:url" content="http://example.com/2024/02/04/C++/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1 引用引用：引用并非对象，它只是为已存在的对象起的另外一个名字。引用类型 引用另外一种类型，因此必须被初始化。 123int ival &#x3D; 1024; &#x2F;&#x2F; 定义一个变量，值为1024int &amp;refVal &#x3D; ival; &#x2F;&#x2F; refVal 指向ival(是ival的另一个名字)，即定义了一个refVal与已存在的对象ival绑定int &amp;refVal; &#x2F;&#x2F; 错误，此处定义">
+<meta property="og:description" content="1 在main执行之前和之后执行的代码可能是什么？main函数执行之前执行的代码  全局对象初始化，在main之前调用构造函数  123456789101112131415161718192021class A&amp;#123;public:    A()    &amp;#123;        cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;    &amp;#125;&amp;#125;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-02-04T12:31:36.025Z">
-<meta property="article:modified_time" content="2024-02-22T13:11:21.313Z">
+<meta property="article:modified_time" content="2024-03-04T08:20:43.403Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -97,17 +97,102 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <hr>
-<h1 id="1-引用"><a href="#1-引用" class="headerlink" title="1 引用"></a>1 引用</h1><p>引用：引用并非对象，它只是为已存在的对象起的另外一个名字。引用类型 引用另外一种类型，因此必须被初始化。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> ival = <span class="number">1024</span>; <span class="comment">// 定义一个变量，值为1024</span></span><br><span class="line"><span class="type">int</span> &amp;refVal = ival; <span class="comment">// refVal 指向ival(是ival的另一个名字)，即定义了一个refVal与已存在的对象ival绑定</span></span><br><span class="line"><span class="type">int</span> &amp;refVal; <span class="comment">// 错误，此处定义了一个引用类型，它相当于要给某个对象起另外一个名字(refVal)，但此时并没有对象，可以理解为不知道给谁起名字。</span></span><br></pre></td></tr></table></figure>
-<p>定义一个引用后，对其进行的所有的操作都是在与之绑定的对象上进行的，例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">refVal = <span class="number">2</span>; <span class="comment">//把2赋值给refVal指向的对象，相当于赋值给了ival</span></span><br><span class="line"><span class="type">int</span> ii = refVal; <span class="comment">// 与 ii = ival的执行结果一样</span></span><br></pre></td></tr></table></figure>
-<p>为引用赋值，实际上是把值赋给了与引用绑定的对象的值。获取引用的值，实际上是获取与引用绑定的对象的值。以引用作为初始值，实际上是以与引用绑定的对象作为初始值</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> &amp;refVal3 = refval; <span class="comment">//正确，以引用refval作为初始值，实际上是以与引用refval绑定的对象refVal作为初始值，也就是refVal3绑定到了对象ival上</span></span><br><span class="line"><span class="type">int</span> i = refVal; <span class="comment">// 利用与refVal绑定的对象的值初始化i的值，即i 被初始化为ival的值</span></span><br></pre></td></tr></table></figure>
-<p>引用的类型必须与其所引用的对象的类型一致</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> dval = <span class="number">3.14</span>; <span class="comment">//定义了一个double类型的对象</span></span><br><span class="line"><span class="type">int</span> &amp;refVal5 = dval; <span class="comment">//错误。引用的类型必须与其所引用的对象的类型一致</span></span><br></pre></td></tr></table></figure>
-<p><strong>引用的类型必须与其所引用的对象的类型一致</strong>  –&gt; 有两个例外<br>第一个例外：<br>const的引用</p>
-<p>第二个例外</p>
+        <h1 id="1-在main执行之前和之后执行的代码可能是什么？"><a href="#1-在main执行之前和之后执行的代码可能是什么？" class="headerlink" title="1 在main执行之前和之后执行的代码可能是什么？"></a>1 在main执行之前和之后执行的代码可能是什么？</h1><p><strong>main函数执行之前执行的代码</strong></p>
+<ul>
+<li>全局对象初始化，在main之前调用构造函数</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">A</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">A a;　　<span class="comment">//调用构造函数</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;　</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出结果</span></span><br><span class="line">A</span><br><span class="line">main</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>将main函数的参数argc、argv传给main函数，才算真正调用main函数</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123; 函数体 &#125;  <span class="comment">//写法1</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span> </span>&#123; 函数体 &#125; <span class="comment">//写法2</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>__attribute__((constructor))</code></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">__attribute__((constructor)) <span class="function"><span class="type">void</span> <span class="title">beforeMainToRun</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//执行结果</span></span><br><span class="line">beforeMainToRun  </span><br><span class="line">main</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>其它，暂时不理解…</li>
+</ul>
+<p><strong>main函数执行之后执行的代码</strong></p>
+<ul>
+<li>可以注册一个<code>atexit</code>函数，注册的函数会在main之后运行</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">atexit</span>(func);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//执行结果</span></span><br><span class="line">main</span><br><span class="line">func</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>__attribute__((destructor))</code></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">__attribute__((destructor)) <span class="function"><span class="type">void</span> <span class="title">afterMainToRun</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>其它，如全局对象的析构函数，不理解…</li>
+</ul>
+<h1 id="2-结构体内存对齐问题？"><a href="#2-结构体内存对齐问题？" class="headerlink" title="2 结构体内存对齐问题？"></a>2 结构体内存对齐问题？</h1><ul>
+<li>结构体内成员按照声明顺序存储，第一个成员地址和整个结构体地址相同。</li>
+<li>未特殊说明时，按结构体中size最大的成员对齐（若有double成员，按8字节对齐（补全））最终的结构体所占的内存就是size最大的成员的倍数</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Info</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a; <span class="comment">//4字节</span></span><br><span class="line">    <span class="type">int</span> b; <span class="comment">//4字节</span></span><br><span class="line">    <span class="type">double</span> c; <span class="comment">//8字节</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Info1</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a; <span class="comment">//4字节</span></span><br><span class="line">    <span class="type">double</span> c; <span class="comment">//8字节</span></span><br><span class="line">    <span class="type">int</span> b; <span class="comment">//4字节</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Info2</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a; <span class="comment">//4字节</span></span><br><span class="line">    <span class="type">double</span> c; <span class="comment">//8字节</span></span><br><span class="line">    <span class="type">int</span> b; <span class="comment">//4字节</span></span><br><span class="line">    <span class="type">char</span> d; <span class="comment">//1字节</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Info3</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a; <span class="comment">//4字节</span></span><br><span class="line">    <span class="type">double</span> c; <span class="comment">//8字节</span></span><br><span class="line">    <span class="type">int</span> b; <span class="comment">//4字节</span></span><br><span class="line">    <span class="type">char</span> d[<span class="number">9</span>]; <span class="comment">//9字节</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Info4</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a; <span class="comment">//4字节</span></span><br><span class="line">    <span class="type">double</span> c; <span class="comment">//8字节</span></span><br><span class="line">    <span class="type">int</span> b; <span class="comment">//4字节</span></span><br><span class="line">    <span class="type">char</span> d[<span class="number">13</span>]; <span class="comment">//9字节</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;sizeof(Info): &quot;</span> &lt;&lt; <span class="built_in">sizeof</span>(Info) &lt;&lt; endl; <span class="comment">// 16 --&gt; (4+4)+8</span></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;sizeof(Info1): &quot;</span> &lt;&lt; <span class="built_in">sizeof</span>(Info1) &lt;&lt; endl; <span class="comment">// 24 --&gt; 8+8+8</span></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;sizeof(Info2): &quot;</span> &lt;&lt; <span class="built_in">sizeof</span>(Info2) &lt;&lt; endl; <span class="comment">// 24 --&gt; 8+8+8</span></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;sizeof(Info2:a+b+c+d): &quot;</span>&lt;&lt;<span class="built_in">sizeof</span>(Info2::a) + <span class="built_in">sizeof</span>(Info2::b) + <span class="built_in">sizeof</span>(Info2::c) +  <span class="built_in">sizeof</span>(Info2::d)&lt;&lt;endl;<span class="comment">// 17</span></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;sizeof(Info3): &quot;</span> &lt;&lt; <span class="built_in">sizeof</span>(Info3) &lt;&lt; endl; <span class="comment">// 32 --&gt; 8+8+8+8</span></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;sizeof(Info4): &quot;</span> &lt;&lt; <span class="built_in">sizeof</span>(Info4) &lt;&lt; endl; <span class="comment">// 40 --&gt; 8+8+8+8+8</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果</span></span><br><span class="line"><span class="built_in">sizeof</span>(Info): <span class="number">16</span></span><br><span class="line"><span class="built_in">sizeof</span>(Info1): <span class="number">24</span>        </span><br><span class="line"><span class="built_in">sizeof</span>(Info2): <span class="number">24</span>        </span><br><span class="line"><span class="built_in">sizeof</span>(Info2:a+b+c+d): <span class="number">17</span></span><br><span class="line"><span class="built_in">sizeof</span>(Info3): <span class="number">32</span>        </span><br><span class="line"><span class="built_in">sizeof</span>(Info4): <span class="number">40</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>C++11以后引入两个关键字 <code>alignas</code>与 <code>alignof</code>。其中<code>alignof</code>可以计算出类型的对齐方式，<code>alignas</code>可以指定结构体的对齐方式。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Info</span> &#123;</span><br><span class="line">  <span class="type">int</span> a;</span><br><span class="line">  <span class="type">double</span> b;</span><br><span class="line">  <span class="type">int</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// alignas生效的情况：设置的值大于等于size最大成员所占的字节数</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">alignas</span>(<span class="number">16</span>) Info2 &#123;</span><br><span class="line">  <span class="type">int</span> a;</span><br><span class="line">  <span class="type">double</span> b;</span><br><span class="line">  <span class="type">int</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// alignas失效的情况：设置的值小size最大成员所占的字节数</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">alignas</span>(<span class="number">4</span>) Info3 &#123;</span><br><span class="line">  <span class="type">int</span> a;</span><br><span class="line">  <span class="type">double</span> b;</span><br><span class="line">  <span class="type">int</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    </span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">sizeof</span>(Info) &lt;&lt; std::endl;   <span class="comment">// 24  8 + 8 + 8</span></span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">alignof</span>(Info) &lt;&lt; std::endl;  <span class="comment">// 8</span></span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">sizeof</span>(Info2) &lt;&lt; std::endl;   <span class="comment">// 32  16 + 16</span></span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">alignof</span>(Info2) &lt;&lt; std::endl;  <span class="comment">// 16</span></span><br><span class="line">    </span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">sizeof</span>(Info3) &lt;&lt; std::endl;   <span class="comment">// 24  8 + 8 + 8</span></span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">alignof</span>(Info3) &lt;&lt; std::endl;  <span class="comment">// 8</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果</span></span><br><span class="line"><span class="number">24</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">32</span></span><br><span class="line"><span class="number">16</span></span><br><span class="line"><span class="number">24</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       
     </div>

@@ -14,7 +14,7 @@
 <meta property="og:description" content="一、二分法1 基础场景场景1：在非降序数组中查找某个值的下标； 场景2：在非降序数组中查找某个值的起止位置。 2 常规代码场景1：在非降序数组中查找某个值的下标 12345678910111213141516171819202122232425int search(vector&lt;int&gt;&amp; nums, int target)&amp;#123;    int left &#x3D; 0;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-01-31T13:28:47.831Z">
-<meta property="article:modified_time" content="2024-03-01T08:59:33.388Z">
+<meta property="article:modified_time" content="2024-03-04T06:25:38.409Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -167,7 +167,7 @@
 <ul>
 <li>构造差分数组</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 已知原始数组为nums</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; diffArray;</span><br><span class="line">diffArray[<span class="number">0</span>] = nums[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt; nums.<span class="built_in">size</span>(); i++)</span><br><span class="line">&#123;</span><br><span class="line">    diffArray[i] = nums[i] - nums[i - <span class="number">1</span>]; <span class="comment">//得到差分数组</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 已知原始数组为nums</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; diffArray;</span><br><span class="line">diffArray[<span class="number">0</span>] = nums[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt; nums.<span class="built_in">size</span>(); i++)</span><br><span class="line">&#123;</span><br><span class="line">    diffArray[i] = nums[i] - nums[i - <span class="number">1</span>]; <span class="comment">//得到差分数组　</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>根据差分数组可反推原数组</li>
