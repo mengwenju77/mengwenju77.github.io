@@ -712,61 +712,126 @@
 <ul>
 <li>C++11以后引入两个关键字 <code>alignas</code>与 <code>alignof</code>。其中<code>alignof</code>可以计算出类型的对齐方式，<code>alignas</code>可以指定结构体的对齐方式。</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Info</span> &#123;</span><br><span class="line">  <span class="type">int</span> a;</span><br><span class="line">  <span class="type">double</span> b;</span><br><span class="line">  <span class="type">int</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// alignas生效的情况：设置的值大于等于size最大成员所占的字节数</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">alignas</span>(<span class="number">16</span>) Info2 &#123;</span><br><span class="line">  <span class="type">int</span> a;</span><br><span class="line">  <span class="type">double</span> b;</span><br><span class="line">  <span class="type">int</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// alignas失效的情况：设置的值小size最大成员所占的字节数</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">alignas</span>(<span class="number">4</span>) Info3 &#123;</span><br><span class="line">  <span class="type">int</span> a;</span><br><span class="line">  <span class="type">double</span> b;</span><br><span class="line">  <span class="type">int</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    </span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">sizeof</span>(Info) &lt;&lt; std::endl;   <span class="comment">// 24  8 + 8 + 8</span></span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">alignof</span>(Info) &lt;&lt; std::endl;  <span class="comment">// 8</span></span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">sizeof</span>(Info2) &lt;&lt; std::endl;   <span class="comment">// 32  16 + 16</span></span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">alignof</span>(Info2) &lt;&lt; std::endl;  <span class="comment">// 16</span></span><br><span class="line">    </span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">sizeof</span>(Info3) &lt;&lt; std::endl;   <span class="comment">// 24  8 + 8 + 8</span></span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">alignof</span>(Info3) &lt;&lt; std::endl;  <span class="comment">// 8</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果</span></span><br><span class="line"><span class="number">24</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">32</span></span><br><span class="line"><span class="number">16</span></span><br><span class="line"><span class="number">24</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Info</span> &#123;</span><br><span class="line">  <span class="type">int</span> a;</span><br><span class="line">  <span class="type">double</span> b;</span><br><span class="line">  <span class="type">int</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// alignas生效的情况：设置的值大于等于size最大成员所占的字节数</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">alignas</span>(<span class="number">16</span>) Info2 &#123;</span><br><span class="line">  <span class="type">int</span> a;</span><br><span class="line">  <span class="type">double</span> b;</span><br><span class="line">  <span class="type">int</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// alignas失效的情况：设置的值小size最大成员所占的字节数</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">alignas</span>(<span class="number">4</span>) Info3 &#123;</span><br><span class="line">  <span class="type">int</span> a;</span><br><span class="line">  <span class="type">double</span> b;</span><br><span class="line">  <span class="type">int</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    </span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">sizeof</span>(Info) &lt;&lt; std::endl;   <span class="comment">// 24  8 + 8 + 8</span></span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">alignof</span>(Info) &lt;&lt; std::endl;  <span class="comment">// 8</span></span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">sizeof</span>(Info2) &lt;&lt; std::endl;   <span class="comment">// 32  16 + 16</span></span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">alignof</span>(Info2) &lt;&lt; std::endl;  <span class="comment">// 16</span></span><br><span class="line">    </span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">sizeof</span>(Info3) &lt;&lt; std::endl;   <span class="comment">// 24  8 + 8 + 8</span></span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">alignof</span>(Info3) &lt;&lt; std::endl;  <span class="comment">// 8</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果</span></span><br><span class="line"><span class="number">24</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">32</span></span><br><span class="line"><span class="number">16</span></span><br><span class="line"><span class="number">24</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 
+<h1 id="3-指针和引用的区别"><a href="#3-指针和引用的区别" class="headerlink" title="3 指针和引用的区别"></a>3 指针和引用的区别</h1><ul>
+<li>指针是一个变量，存储的是一个地址；引用跟原来的变量实质上是同一个东西，是原变量的别名</li>
+<li>指针可以为空，而引用在定义的时候必须初始化（因为引用是原变量的别名，如果没有初始化，那么引用是给谁起的名字呢？）</li>
+<li>指针可以有多级，引用只有一级（指针是一个内存中的对象，向其它对象一样也有自己的地址，那么就可以有指针指向这个地址，即指向指针的指针）</li>
+<li>指针在初始化之后可以改变指向，而引用在初始化之后不可改变（指针可以在初始化的时候指向某个地址，后面可以改变指向，指向另外一个地址）</li>
+<li>sizeof指针得到的是本指针的大小，sizeof引用得到的是引用所指向变量的大小</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">(<span class="type">int</span> *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">　　<span class="type">int</span> a=<span class="number">1</span>;</span><br><span class="line">　　p=&amp;a;</span><br><span class="line">　　cout&lt;&lt;p&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;*p&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> *p=<span class="literal">NULL</span>;</span><br><span class="line">    <span class="built_in">test</span>(p);</span><br><span class="line">    <span class="keyword">if</span>(p==<span class="literal">NULL</span>)</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;指针p为NULL&quot;</span>&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//运行结果为：</span></span><br><span class="line"><span class="comment">//0x61fddc 1</span></span><br><span class="line"><span class="comment">//指针p为NULL</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">testPTR</span><span class="params">(<span class="type">int</span>* p)</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">12</span>;</span><br><span class="line">	p = &amp;a;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">testREFF</span><span class="params">(<span class="type">int</span>&amp; p)</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">12</span>;</span><br><span class="line">	p = a;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line">	<span class="type">int</span>* b = &amp;a;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;before: &quot;</span> &lt;&lt;  b &lt;&lt; endl; <span class="comment">// before: 0x61fe14</span></span><br><span class="line">	<span class="built_in">testPTR</span>(b); <span class="comment">//相当于值传递，函数外实际上没改变指针</span></span><br><span class="line">	cout &lt;&lt; a &lt;&lt; endl;<span class="comment">// 10</span></span><br><span class="line">	cout &lt;&lt; *b &lt;&lt; endl;<span class="comment">// 10</span></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;after: &quot;</span> &lt;&lt;  b &lt;&lt; endl; <span class="comment">// after: 0x61fe14</span></span><br><span class="line"></span><br><span class="line">	a = <span class="number">10</span>;</span><br><span class="line">	<span class="built_in">testREFF</span>(a);</span><br><span class="line">	cout &lt;&lt; a &lt;&lt; endl;<span class="comment">//12</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 
+<h1 id="4-在传递函数参数时，什么时候该使用指针，什么时候该使用引用呢？"><a href="#4-在传递函数参数时，什么时候该使用指针，什么时候该使用引用呢？" class="headerlink" title="4 在传递函数参数时，什么时候该使用指针，什么时候该使用引用呢？"></a>4 在传递函数参数时，什么时候该使用指针，什么时候该使用引用呢？</h1><ul>
+<li>需要返回函数内局部变量的内存的时候用指针。使用指针传参需要开辟内存，用完要记得释放指针，不然会内存泄漏。而返回局部变量的引用是没有意义的</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span>* <span class="title">createArray</span><span class="params">(<span class="type">int</span> size)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span>* myArray = <span class="keyword">new</span> <span class="type">int</span>[size];  <span class="comment">// 在堆上分配内存</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; ++i) &#123;</span><br><span class="line">        myArray[i] = i * i;  <span class="comment">// 初始化数组</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 返回一个指向堆内存的指针</span></span><br><span class="line">    <span class="keyword">return</span> myArray;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span>* squareArray = <span class="built_in">createArray</span>(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; ++i) &#123;</span><br><span class="line">        std::cout &lt;&lt; squareArray[i] &lt;&lt; <span class="string">&#x27; &#x27;</span>;  <span class="comment">// 输出数组</span></span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">delete</span>[] squareArray;  <span class="comment">// 释放数组所占的内存</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出</span></span><br><span class="line"><span class="number">0</span> <span class="number">1</span> <span class="number">4</span> <span class="number">9</span> <span class="number">16</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>类对象作为参数传递的时候使用引用，这是C++类对象传递的标准方式，传引用有以下特点：<ul>
+<li><strong>避免拷贝</strong>：使用引用可以避免当对象作为参数传递时的潜在的拷贝操作，特别是对于大型对象，这可以显著提高性能。</li>
+<li><strong>保持对原始对象的修改</strong>：如果需要在函数内部修改类对象并反映到外部的原始对象，使用引用允许你直接在原始对象上操作，而不是在其副本上操作。</li>
+<li><strong>语义清晰</strong>：当通过引用传递参数时，它告诉使用函数的开发者，这个函数可能会修改传入的对象。</li>
+</ul>
+</li>
+<li>对栈空间大小比较敏感（比如递归）的时候使用引用。使用引用传递不需要创建临时变量，开销要更小</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">recursiveFunction</span><span class="params">(<span class="type">const</span> std::vector&lt;<span class="type">int</span>&gt;&amp; vec, <span class="type">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (index &lt; <span class="number">0</span> || index &gt;= vec.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="keyword">return</span>; <span class="comment">// 基线条件</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 做一些处理...</span></span><br><span class="line">    <span class="built_in">recursiveFunction</span>(vec, index + <span class="number">1</span>); <span class="comment">// 递归调用</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">largeVector</span><span class="params">(<span class="number">1000</span>, <span class="number">42</span>)</span></span>; <span class="comment">// 大型向量</span></span><br><span class="line">    <span class="built_in">recursiveFunction</span>(largeVector, <span class="number">0</span>); <span class="comment">// 通过引用传递</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
+<h1 id="5-堆和栈的区别"><a href="#5-堆和栈的区别" class="headerlink" title="5 堆和栈的区别"></a>5 堆和栈的区别</h1><ul>
+<li>申请方式不同<ul>
+<li>栈是由系统自动分配</li>
+<li>堆是自己申请的，比如new对象 int myArray &#x3D; new int[size];</li>
+</ul>
+</li>
+<li>申请大小限制不同<ul>
+<li>栈顶和栈底是之前预设好的，栈是向栈底扩展，大小固定，可以通过ulimit -a查看，由ulimit -s修改。</li>
+<li>堆向高地址扩展，是不连续的内存区域，大小可以灵活调整。</li>
+</ul>
+</li>
+<li>申请效率不同。<ul>
+<li>栈由系统分配，速度快，不会有碎片。</li>
+<li>堆由程序员分配，速度慢，且会有碎片。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>堆</th>
+<th>栈</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>管理方式</strong></td>
+<td>堆中资源由程序员控制（容易产生memory leak）</td>
+<td>栈资源由编译器自动管理，无需手工控制</td>
+</tr>
+<tr>
+<td><strong>内存管理机制</strong></td>
+<td>系统有一个记录空闲内存地址的链表，当系统收到程序申请时，遍历该链表，寻找第一个空间大于申请空间的堆结点，删 除空闲结点链表中的该结点，并将该结点空间分配给程序（大多数系统会在这块内存空间首地址记录本次分配的大小，这样delete才能正确释放本内存空间，另外系统会将多余的部分重新放入空闲链表中）</td>
+<td>只要栈的剩余空间大于所申请空间，系统为程序提供内存，否则报异常提示栈溢出。（这一块理解一下链表和队列的区别，不连续空间和连续空间的区别，应该就比较好理解这两种机制的区别了）</td>
+</tr>
+<tr>
+<td><strong>空间大小</strong></td>
+<td>堆是不连续的内存区域（因为系统是用链表来存储空闲内存地址，自然不是连续的），堆大小受限于计算机系统中有效的虚拟内存（32bit 系统理论上是4G），所以堆的空间比较灵活，比较大</td>
+<td>栈是一块连续的内存区域，大小是操作系统预定好的，windows下栈大小是2M（也有是1M，在 编译时确定，VC中可设置）</td>
+</tr>
+<tr>
+<td><strong>碎片问题</strong></td>
+<td>对于堆，频繁的new&#x2F;delete会造成大量碎片，使程序效率降低</td>
+<td>对于栈，它是有点类似于数据结构上的一个先进后出的栈，进出一一对应，不会产生碎片。（看到这里我突然明白了为什么面试官在问我堆和栈的区别之前先问了我栈和队列的区别）</td>
+</tr>
+<tr>
+<td><strong>生长方向</strong></td>
+<td>堆向上，向高地址方向增长。</td>
+<td>栈向下，向低地址方向增长。</td>
+</tr>
+<tr>
+<td><strong>分配方式</strong></td>
+<td>堆都是动态分配（没有静态分配的堆）</td>
+<td>栈有静态分配和动态分配，静态分配由编译器完成（如局部变量分配），动态分配由alloca函数分配，但栈的动态分配的资源由编译器进行释放，无需程序员实现。</td>
+</tr>
+<tr>
+<td><strong>分配效率</strong></td>
+<td>堆由C&#x2F;C++函数库提供，机制很复杂。所以堆的效率比栈低很多。</td>
+<td>栈是其系统提供的数据结构，计算机在底层对栈提供支持，分配专门 寄存器存放栈地址，栈操作有专门指令。</td>
+</tr>
+</tbody></table>
+<p><strong>形象的比喻</strong></p>
+<p>栈就像我们去饭馆里吃饭，只管点菜（发出申请）、付钱、和吃（使用），吃饱了就走，不必理会切菜、洗菜等准备工作和洗碗、刷锅等扫尾工作，他的好处是快捷，但是自由度小。</p>
+<p>堆就像是自己动手做喜欢吃的菜肴，比较麻烦，但是比较符合自己的口味，而且自由度大。</p>
+<h1 id="6-堆快还是栈快"><a href="#6-堆快还是栈快" class="headerlink" title="6 堆快还是栈快"></a>6 堆快还是栈快</h1><p>栈快</p>
+<ul>
+<li><p>操作系统会在底层对栈提供支持，会分配专门的寄存器存放栈的地址，栈的入栈出栈操作也十分简单，并且有专门的指令执行，所以栈的效率较高也比较快。</p>
+</li>
+<li><p>而堆的操作是由C&#x2F;C++函数库提供的，在分配堆内存的时候需要一定的算法寻找合适大小的内存。并且获取堆的内容需要两次访问，第一次访问指针，第二次根据指针保存的地址访问内存，因此堆比较慢。</p>
+</li>
+</ul>
+<h1 id="7-区别以下指针类型？"><a href="#7-区别以下指针类型？" class="headerlink" title="7 区别以下指针类型？"></a>7 区别以下指针类型？</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *p[<span class="number">10</span>] <span class="comment">//指针数组，强调数组概念，一共有10个变量，每个数组元素都是一个指向 int 类型数据的指针</span></span><br><span class="line"><span class="built_in">int</span> (*p)[<span class="number">10</span>] <span class="comment">//数组指针，强调指针概念，只有一个变量，是指针类型， 它指向一个具有10个整数的数组</span></span><br><span class="line"><span class="function"><span class="type">int</span> *<span class="title">p</span><span class="params">(<span class="type">int</span>)</span> <span class="comment">// 函数声明，函数名是p，参数类型是int类型，返回值是int*类型</span></span></span><br><span class="line"><span class="function"><span class="title">int</span> <span class="params">(*p)</span><span class="params">(<span class="type">int</span>)</span> <span class="comment">// 函数指针，强调是指针，该指针指向的函数具有int类型参数，返回值也是int类型</span></span></span><br></pre></td></tr></table></figure>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<h1 id="8-new-delete-与-malloc-free的异同"><a href="#8-new-delete-与-malloc-free的异同" class="headerlink" title="8 new &#x2F; delete 与 malloc &#x2F; free的异同"></a>8 new &#x2F; delete 与 malloc &#x2F; free的异同</h1><p>相同点：</p>
+<ul>
+<li>都可用于内存的动态申请和释放</li>
+</ul>
+<p>不同点：</p>
+<ul>
+<li>前者是C++运算符，后者是C&#x2F;C++语言标准库函数</li>
+<li>后者需要库文件支持，前者不用</li>
+<li>new自动计算要分配的空间大小，malloc需要手工计算</li>
+<li>new是类型安全的，malloc不是。</li>
+</ul>
+<h1 id="9-new和delete是如何实现的？"><a href="#9-new和delete是如何实现的？" class="headerlink" title="9 new和delete是如何实现的？"></a>9 new和delete是如何实现的？</h1>
       
     </div>
     <footer class="article-footer">
