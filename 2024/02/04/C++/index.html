@@ -16,7 +16,7 @@
 <meta property="og:description" content="1 在main执行之前和之后执行的代码可能是什么？main函数执行之前执行的代码  全局对象初始化，在main之前调用构造函数  123456789101112131415161718192021class A&amp;#123;public:    A()    &amp;#123;        cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;    &amp;#125;&amp;#125;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-02-04T12:31:36.025Z">
-<meta property="article:modified_time" content="2024-03-05T09:08:18.427Z">
+<meta property="article:modified_time" content="2024-03-11T13:15:58.215Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -403,7 +403,7 @@
 <h1 id="16-strlen和sizeof的区别"><a href="#16-strlen和sizeof的区别" class="headerlink" title="16 strlen和sizeof的区别"></a>16 strlen和sizeof的区别</h1><ul>
 <li><code>sizeof</code>是运算符不是函数，<code>strlen</code>是字符处理的库函数</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sizeof用法</span></span><br><span class="line"><span class="comment">// sizeof运算符返回一条表达式或一个类型名字所占的字节数</span></span><br><span class="line"><span class="built_in">sizeof</span>(type)  </span><br><span class="line"><span class="keyword">sizeof</span> express   <span class="comment">// 返回表达式结果类型的大小</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> a, *p;</span><br><span class="line">    cout &lt;&lt; <span class="built_in">sizeof</span>(<span class="type">char</span>) &lt;&lt; endl; <span class="comment">// 1</span></span><br><span class="line">    cout &lt;&lt; <span class="keyword">sizeof</span> a &lt;&lt; endl; <span class="comment">// 1</span></span><br><span class="line">    cout &lt;&lt; <span class="keyword">sizeof</span> p &lt;&lt; endl; <span class="comment">// 8  指针p的大小</span></span><br><span class="line">    cout &lt;&lt; <span class="keyword">sizeof</span> *p &lt;&lt; endl; <span class="comment">// 1  p所指向的对象的类型大小，即char的大小</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment">// strlen用法</span></span><br><span class="line"><span class="comment">// strlen 是一个用来计算字符串长度的函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *str = <span class="string">&quot;Hello!&quot;</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">sizeof</span>(str)); <span class="comment">//8</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(str)); <span class="comment">//6 取的是这个字符串的长度，不包含结尾的 \0。大小是6</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sizeof用法</span></span><br><span class="line"><span class="comment">// sizeof运算符返回一条表达式或一个类型名字所占的字节数</span></span><br><span class="line"><span class="built_in">sizeof</span>(type)  </span><br><span class="line"><span class="keyword">sizeof</span> express   <span class="comment">// 返回表达式结果类型的大小</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> a, *p;</span><br><span class="line">    cout &lt;&lt; <span class="built_in">sizeof</span>(<span class="type">char</span>) &lt;&lt; endl; <span class="comment">// 1</span></span><br><span class="line">    cout &lt;&lt; <span class="keyword">sizeof</span> a &lt;&lt; endl; <span class="comment">// 1</span></span><br><span class="line">    cout &lt;&lt; <span class="keyword">sizeof</span> p &lt;&lt; endl; <span class="comment">// 8  指针p的大小</span></span><br><span class="line">    cout &lt;&lt; <span class="keyword">sizeof</span> *p &lt;&lt; endl; <span class="comment">// 1  p所指向的对象的类型大小，即char的大小</span></span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="comment">// strlen用法</span></span><br><span class="line"><span class="comment">// strlen 是一个用来计算字符串长度的函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *str = <span class="string">&quot;Hello!&quot;</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">sizeof</span>(str)); <span class="comment">//8</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(str)); <span class="comment">//6 取的是这个字符串的长度，不包含结尾的 \0。大小是6</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><p><code>sizeof</code>参数可以是任何数据类型或者数据；<code>strlen</code> 的参数只能是字符指针</p>
@@ -432,6 +432,70 @@
 <li><code>&amp;a</code> 是取地址操作符，用于获取变量 <code>a</code> 的内存地址。</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">5</span>;</span><br><span class="line"><span class="comment">// a是变量名，值为5</span></span><br><span class="line"><span class="comment">// &amp;a是a在内存中的地址</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="20-C-中struct和class的区别"><a href="#20-C-中struct和class的区别" class="headerlink" title="20 C++中struct和class的区别"></a>20 C++中struct和class的区别</h1><p><strong>相同点</strong></p>
+<ul>
+<li>两者都拥有成员函数、公有和私有部分</li>
+<li>任何可以使用class完成的工作，同样可以使用struct完成</li>
+</ul>
+<p><strong>不同点</strong></p>
+<ul>
+<li>两者中如果不对成员不指定公私有，struct默认是公有的，class则默认是私有的</li>
+<li>class默认是private继承， 而struct默认是public继承</li>
+</ul>
+<h1 id="21define宏定义和const的区别"><a href="#21define宏定义和const的区别" class="headerlink" title="21define宏定义和const的区别"></a>21define宏定义和const的区别</h1><p><strong>编译阶段</strong></p>
+<ul>
+<li>define是在编译的<strong>预处理</strong>阶段起作用，而const是在编译、运行的时候起作用</li>
+</ul>
+<p><strong>安全性</strong></p>
+<ul>
+<li>define只做替换，不做类型检查和计算，也不求解，容易产生错误，一般最好加上一个大括号包含住全部的内容，要不然很容易出错</li>
+<li>const常量有数据类型，编译器可以对其进行类型安全检查</li>
+</ul>
+<p><strong>内存占用</strong></p>
+<ul>
+<li>define只是将宏名称进行替换，在内存中会产生多分相同的备份。const在程序运行中只有一份备份</li>
+</ul>
+<h1 id="22-C-的顶层const和底层const"><a href="#22-C-的顶层const和底层const" class="headerlink" title="22 C++的顶层const和底层const"></a>22 C++的顶层const和底层const</h1><ul>
+<li>顶层const：指针本身是一个常量（常量指针，就是 * 号的右边），指针本身不能修改指向别的地址，但是所指的对象的值可以修改</li>
+<li>底层const：指针所指的对象是一个常量（指针常量，就是 * 号的左边），指针所指的对象不能修改，但是指针可以指向别的地址</li>
+</ul>
+<p>举个例子</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
