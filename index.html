@@ -1327,18 +1327,18 @@
 
 
 
-<h1 id="8-new-delete-与-malloc-free的异同（不理解）"><a href="#8-new-delete-与-malloc-free的异同（不理解）" class="headerlink" title="8 new &#x2F; delete 与 malloc &#x2F; free的异同（不理解）"></a>8 new &#x2F; delete 与 malloc &#x2F; free的异同（不理解）</h1><p>相同点：</p>
+<h1 id="8-new-delete-与-malloc-free的异同"><a href="#8-new-delete-与-malloc-free的异同" class="headerlink" title="8 new &#x2F; delete 与 malloc &#x2F; free的异同"></a>8 new &#x2F; delete 与 malloc &#x2F; free的异同</h1><p>相同点：</p>
 <ul>
 <li>都可用于内存的动态申请和释放</li>
 </ul>
 <p>不同点：</p>
 <ul>
-<li>前者是C++运算符，后者是C&#x2F;C++语言标准库函数</li>
-<li>后者需要库文件支持，前者不用</li>
-<li>new自动计算要分配的空间大小，malloc需要手工计算</li>
-<li>new是类型安全的，malloc不是。</li>
+<li>new &#x2F; delete是C++运算符，malloc &#x2F; free是C&#x2F;C++语言标准库函数</li>
+<li>new会先调用operator new函数，申请足够的内存（通常底层使用malloc实现）。然后调用类型的构造函数，初始化成员变量，最后返回自定义类型指针。delete先调用析构函数，然后调用operator delete函数释放内存（通常底层使用free实现）。malloc&#x2F;free是库函数，只能动态的申请和释放内存，无法强制要求其做自定义类型对象构造和析构工作。</li>
+<li>使用new操作符申请内存分配时无须指定内存块的大小，编译器会根据类型信息自行计算。而malloc则需要显式地指出所需内存的尺寸。</li>
+<li>new操作符内存分配成功时，返回的是对象类型的指针，类型严格与对象匹配，无须进行类型转换，所以new是类型安全的。而malloc内存分配成功则是返回void * ，需要通过强制类型转换将void*指针转换成我们需要的类型。</li>
 </ul>
-<h1 id="9-new和delete是如何实现的？（不理解）"><a href="#9-new和delete是如何实现的？（不理解）" class="headerlink" title="9 new和delete是如何实现的？（不理解）"></a>9 new和delete是如何实现的？（不理解）</h1><ul>
+<h1 id="9-new和delete是如何实现的？"><a href="#9-new和delete是如何实现的？" class="headerlink" title="9 new和delete是如何实现的？"></a>9 new和delete是如何实现的？</h1><ul>
 <li>new的实现过程是：<ul>
 <li>首先调用名为<strong>operator new</strong>的标准库函数，分配足够大的原始为类型化的内存，以保存指定类型的一个对象；</li>
 <li>接下来运行该类型的一个构造函数，用指定初始化构造对象；</li>
@@ -1346,17 +1346,18 @@
 </ul>
 </li>
 <li>delete的实现过程是：<ul>
-<li>对指针指向的对象运行适当的析构函数；</li>
+<li>对指针指向的对象运行适当的析构函数；（编译器会自动选择合适的析构函数，析构函数可以被重载，但不建议）</li>
 <li>然后通过调用名为<strong>operator delete</strong>的标准库函数释放该对象所用内存</li>
 </ul>
 </li>
 </ul>
-<h1 id="10-malloc和new的区别？（不理解）"><a href="#10-malloc和new的区别？（不理解）" class="headerlink" title="10 malloc和new的区别？（不理解）"></a>10 malloc和new的区别？（不理解）</h1><ul>
-<li>malloc和free是标准库函数，支持覆盖；new和delete是运算符，支持重载。</li>
+<h1 id="10-malloc和new的区别？"><a href="#10-malloc和new的区别？" class="headerlink" title="10 malloc和new的区别？"></a>10 malloc和new的区别？</h1><ul>
+<li>malloc和free是标准库函数，支持重写；new和delete是运算符，支持重载。</li>
 <li>malloc仅仅分配内存空间，free仅仅回收空间，不具备调用构造函数和析构函数功能，用malloc分配空间存储类的对象存在风险；new和delete除了分配回收功能外，还会调用构造函数和析构函数。</li>
 <li>malloc和free返回的是void类型指针（必须进行类型转换），new和delete返回的是具体类型指针。</li>
 </ul>
-<h1 id="11-既然有了malloc-free，C-中为什么还需要new-delete呢？直接用malloc-free不好吗？"><a href="#11-既然有了malloc-free，C-中为什么还需要new-delete呢？直接用malloc-free不好吗？" class="headerlink" title="11 既然有了malloc&#x2F;free，C++中为什么还需要new&#x2F;delete呢？直接用malloc&#x2F;free不好吗？"></a>11 既然有了malloc&#x2F;free，C++中为什么还需要new&#x2F;delete呢？直接用malloc&#x2F;free不好吗？</h1><h1 id="12-被free回收的内存是立即返还给操作系统吗？"><a href="#12-被free回收的内存是立即返还给操作系统吗？" class="headerlink" title="12 被free回收的内存是立即返还给操作系统吗？"></a>12 被free回收的内存是立即返还给操作系统吗？</h1><p>不是的，内存通常会被添加到可用内存池中，并由程序的内存管理系统维护。</p>
+<h1 id="11-既然有了malloc-free，C-中为什么还需要new-delete呢？直接用malloc-free不好吗？"><a href="#11-既然有了malloc-free，C-中为什么还需要new-delete呢？直接用malloc-free不好吗？" class="headerlink" title="11 既然有了malloc&#x2F;free，C++中为什么还需要new&#x2F;delete呢？直接用malloc&#x2F;free不好吗？"></a>11 既然有了malloc&#x2F;free，C++中为什么还需要new&#x2F;delete呢？直接用malloc&#x2F;free不好吗？</h1><p>在对非基本数据类型使用的时候，创建对象需要调用构造函数，销毁对象需要调用析构函数，而malloc&#x2F;free不具备调用构造函数&#x2F;析构函数的功能，所以需要new&#x2F;delete来调用构造&#x2F;析构函数</p>
+<h1 id="12-被free回收的内存是立即返还给操作系统吗？"><a href="#12-被free回收的内存是立即返还给操作系统吗？" class="headerlink" title="12 被free回收的内存是立即返还给操作系统吗？"></a>12 被free回收的内存是立即返还给操作系统吗？</h1><p>不是的，内存通常会被添加到可用内存池中，并由程序的内存管理系统维护。</p>
 <p>这些内存可能在之后的内存分配中再次被使用，以避免频繁地向操作系统请求内存。</p>
 <p>当程序结束时，这些内存才会被彻底返回给操作系统。</p>
 <p>同时，ptmalloc会尝试把小块的内存合并，避免过多的内存碎片</p>
@@ -1406,7 +1407,7 @@
 <h1 id="16-strlen和sizeof的区别"><a href="#16-strlen和sizeof的区别" class="headerlink" title="16 strlen和sizeof的区别"></a>16 strlen和sizeof的区别</h1><ul>
 <li><code>sizeof</code>是运算符不是函数，<code>strlen</code>是字符处理的库函数</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sizeof用法</span></span><br><span class="line"><span class="comment">// sizeof运算符返回一条表达式或一个类型名字所占的字节数</span></span><br><span class="line"><span class="built_in">sizeof</span>(type)  </span><br><span class="line"><span class="keyword">sizeof</span> express   <span class="comment">// 返回表达式结果类型的大小</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> a, *p;</span><br><span class="line">    cout &lt;&lt; <span class="built_in">sizeof</span>(<span class="type">char</span>) &lt;&lt; endl; <span class="comment">// 1</span></span><br><span class="line">    cout &lt;&lt; <span class="keyword">sizeof</span> a &lt;&lt; endl; <span class="comment">// 1</span></span><br><span class="line">    cout &lt;&lt; <span class="keyword">sizeof</span> p &lt;&lt; endl; <span class="comment">// 8  指针p的大小</span></span><br><span class="line">    cout &lt;&lt; <span class="keyword">sizeof</span> *p &lt;&lt; endl; <span class="comment">// 1  p所指向的对象的类型大小，即char的大小</span></span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="comment">// strlen用法</span></span><br><span class="line"><span class="comment">// strlen 是一个用来计算字符串长度的函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *str = <span class="string">&quot;Hello!&quot;</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">sizeof</span>(str)); <span class="comment">//8</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(str)); <span class="comment">//6 取的是这个字符串的长度，不包含结尾的 \0。大小是6</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sizeof用法</span></span><br><span class="line"><span class="comment">// sizeof运算符返回一条表达式或一个类型名字所占的字节数</span></span><br><span class="line"><span class="built_in">sizeof</span>(type)  </span><br><span class="line"><span class="keyword">sizeof</span> express   <span class="comment">// 返回表达式结果类型的大小</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> a, *p;</span><br><span class="line">    cout &lt;&lt; <span class="built_in">sizeof</span>(<span class="type">char</span>) &lt;&lt; endl; <span class="comment">// 1</span></span><br><span class="line">    cout &lt;&lt; <span class="keyword">sizeof</span> a &lt;&lt; endl; <span class="comment">// 1</span></span><br><span class="line">    cout &lt;&lt; <span class="keyword">sizeof</span> p &lt;&lt; endl; <span class="comment">// 8  指针p的大小</span></span><br><span class="line">    cout &lt;&lt; <span class="keyword">sizeof</span> *p &lt;&lt; endl; <span class="comment">// 1  p所指向的对象的类型大小，即char的大小</span></span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="comment">// strlen用法</span></span><br><span class="line"><span class="comment">// strlen 是一个用来计算字符串长度的函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *str = <span class="string">&quot;Hello!&quot;</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">sizeof</span>(str)); <span class="comment">//8</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(str)); <span class="comment">//6 取的是这个字符串的长度，不包含结尾的 \0。大小是6</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">sizeof</span>(<span class="string">&quot;Hello!&quot;</span>)); <span class="comment">// 7 ，包含结尾的\0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><p><code>sizeof</code>参数可以是任何数据类型或者数据；<code>strlen</code> 的参数只能是字符指针</p>
@@ -1469,7 +1470,10 @@
 <ul>
 <li>类的所有对象共用一份数据</li>
 <li>在编译阶段分配内存</li>
-<li>在类内声明，类外初始化</li>
+<li>在类内声明，类外初始化<ul>
+<li>原因：因为静态成员属于整个类，而不属于某个对象，如果在类内进行初始化，会导致每个对象都包含该静态成员，这是矛盾的</li>
+</ul>
+</li>
 </ul>
 <p>static成员函数：</p>
 <ul>
@@ -1507,7 +1511,7 @@
 
 <h1 id="27-深拷贝和浅拷贝的区别"><a href="#27-深拷贝和浅拷贝的区别" class="headerlink" title="27 深拷贝和浅拷贝的区别"></a>27 深拷贝和浅拷贝的区别</h1><p>在有指针的情况下，</p>
 <ul>
-<li><p>浅拷贝只是增加了一个指针指向已经存在的内容，</p>
+<li><p>浅拷贝只是增加了一个指针指向已经存在的内容</p>
 </li>
 <li><p>深拷贝就是增加一个指针，并且申请一块新的内存，使这个增加的指针指向这个新的内存</p>
 </li>
@@ -1533,16 +1537,16 @@
 <li>assign(begin, end);</li>
 <li>assign(n, elem);</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; v;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        v.<span class="built_in">push_back</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printVector_Int</span>(v);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用操作符 = 赋值</span></span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; v1;  </span><br><span class="line">    v1 = v; <span class="comment">// 0 1 2 3 4 5 6 7 8 9 </span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// assign(begin, end)赋值</span></span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; v2;</span><br><span class="line">    v2.<span class="built_in">assign</span>(v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>()); <span class="comment">// 0 1 2 3 4 5 6 7 8 9 </span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// assign(n, elem)赋值</span></span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; v3;</span><br><span class="line">    v3.<span class="built_in">assign</span>(<span class="number">10</span>, <span class="number">100</span>);  <span class="comment">// 100 100 100 100 100 100 100 100 100 100</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; v;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        v.<span class="built_in">push_back</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printVector_Int</span>(v);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用操作符 = 赋值</span></span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; v1;  </span><br><span class="line">    v1 = v; <span class="comment">// 0 1 2 3 4 5 6 7 8 9 </span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// assign(begin, end)赋值</span></span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; v2;</span><br><span class="line">    v2.<span class="built_in">assign</span>(v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>()); <span class="comment">// 0 1 2 3 4 5 6 7 8 9 </span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// assign(n, elem)赋值</span></span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; v3;</span><br><span class="line">    v3.<span class="built_in">assign</span>(<span class="number">10</span>, <span class="number">100</span>);  <span class="comment">// 100 100 100 100 100 100 100 100 100 100</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
 <h2 id="容量和大小"><a href="#容量和大小" class="headerlink" title="容量和大小"></a>容量和大小</h2><ul>
-<li><code>empty();</code>		&#x2F;&#x2F; 判断容器是否为空</li>
-<li><code>capactiy()</code>    &#x2F;&#x2F; 容器的容量</li>
-<li><code>size()</code>           &#x2F;&#x2F; 返回容器中元素的个数</li>
-<li><code>resize(num)</code>  &#x2F;&#x2F; 重新指定容器的长度为num，如果容器变长，则以默认值填充新位置，如果容器变短，则末尾超出容器长度num的元素被删除</li>
-<li><code>resize(int num, elem)</code>  &#x2F;&#x2F; 重新指定容器的长度为num，如果容器变长，则以elem值填充新位置，如果容器变短，则末尾超出容器长度num的元素被删除</li>
+<li><code>empty();</code>		判断容器是否为空</li>
+<li><code>capactiy()</code>     容器的容量</li>
+<li><code>size()</code>            返回容器中元素的个数</li>
+<li><code>resize(num)</code>   重新指定容器的长度为num，如果容器变长，则以默认值填充新位置，如果容器变短，则末尾超出容器长度num的元素被删除</li>
+<li><code>resize(int num, elem)</code>   重新指定容器的长度为num，如果容器变长，则以elem值填充新位置，如果容器变短，则末尾超出容器长度num的元素被删除</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; v;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        v.<span class="built_in">push_back</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// empty();	// 判断容器是否为空</span></span><br><span class="line">    cout &lt;&lt; v.<span class="built_in">empty</span>() &lt;&lt; endl;  <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// capacity()  // 返回容器的容量</span></span><br><span class="line">    cout &lt;&lt; v.<span class="built_in">capacity</span>() &lt;&lt; endl;  <span class="comment">// 10</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重新指定容器的长度为num，如果容器变长，则以默认值填充新位置，如果容器变短，则末尾超出容器长度num的元素被删除</span></span><br><span class="line">    v.<span class="built_in">resize</span>(<span class="number">5</span>);</span><br><span class="line">    cout &lt;&lt; v.<span class="built_in">capacity</span>() &lt;&lt; endl;  <span class="comment">// 16</span></span><br><span class="line">    cout &lt;&lt; v.<span class="built_in">size</span>() &lt;&lt; endl;  <span class="comment">// 5</span></span><br><span class="line">    <span class="built_in">printVector_Int</span>(v); <span class="comment">// 0 1 2 3 4</span></span><br><span class="line"></span><br><span class="line">    v.<span class="built_in">resize</span>(<span class="number">8</span>);</span><br><span class="line">    cout &lt;&lt; v.<span class="built_in">capacity</span>() &lt;&lt; endl;  <span class="comment">// 16</span></span><br><span class="line">    cout &lt;&lt; v.<span class="built_in">size</span>() &lt;&lt; endl;  <span class="comment">// 8</span></span><br><span class="line">    <span class="built_in">printVector_Int</span>(v); <span class="comment">// 0 1 2 3 4 0 0 0</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 重新指定容器的长度为num，如果容器变长，则以elem值填充新位置，如果容器变短，则末尾超出容器长度num的元素被删除</span></span><br><span class="line">    v.<span class="built_in">resize</span>(<span class="number">10</span>, <span class="number">1</span>);</span><br><span class="line">    cout &lt;&lt; v.<span class="built_in">capacity</span>() &lt;&lt; endl;  <span class="comment">// 16</span></span><br><span class="line">    cout &lt;&lt; v.<span class="built_in">size</span>() &lt;&lt; endl;  <span class="comment">// 8</span></span><br><span class="line">    <span class="built_in">printVector_Int</span>(v); <span class="comment">// 0 1 2 3 4 0 0 0 1 1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -1718,7 +1722,106 @@
 
 
 
-<h1 id="41-静态变量什么时候初始化"><a href="#41-静态变量什么时候初始化" class="headerlink" title="41 静态变量什么时候初始化"></a>41 静态变量什么时候初始化</h1>
+<h1 id="41-静态变量什么时候初始化"><a href="#41-静态变量什么时候初始化" class="headerlink" title="41 静态变量什么时候初始化"></a>41 静态变量什么时候初始化</h1><ul>
+<li>全局变量、文件域中的静态变量、类中的成员静态变量在main函数执行前初始化；</li>
+<li>局部变量中的静态变量在第一次调用时初始化。</li>
+</ul>
+<h1 id="42-数据类型所占的字节数"><a href="#42-数据类型所占的字节数" class="headerlink" title="42 数据类型所占的字节数"></a>42 数据类型所占的字节数</h1><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>32位操作系统（字节数）</th>
+<th>64位操作系统（字节数）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>char</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>short</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>int</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>long</td>
+<td>4</td>
+<td>8</td>
+</tr>
+<tr>
+<td>long long</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>char*</td>
+<td>4</td>
+<td>8</td>
+</tr>
+<tr>
+<td>float</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>double</td>
+<td>8</td>
+<td>8</td>
+</tr>
+</tbody></table>
+<h1 id="43-const关键字的作用有哪些"><a href="#43-const关键字的作用有哪些" class="headerlink" title="43 const关键字的作用有哪些?"></a>43 const关键字的作用有哪些?</h1><ul>
+<li>修饰变量。防止一个变量的值被改变</li>
+<li>修饰指针。对指针来说，如果指针本身为const，那么指针便不能改变其指向</li>
+<li>修饰形参。在一个函数声明中，const可以修饰形参，表示该参数在函数中不能被改变</li>
+</ul>
+<h1 id="44-什么是类的继承"><a href="#44-什么是类的继承" class="headerlink" title="44 什么是类的继承"></a>44 什么是类的继承</h1><ul>
+<li>继承就是一个类继承了另一个类的属性和方法，这个新的类包含了上一个类的成员属性和方法，被称为子类或者派生类，被继承了类被称为父类或者基类</li>
+<li>子类对象可以当作父类对象使用</li>
+</ul>
+<p>如果子类中自己定义了析构函数，那么在销毁对象时会调用自己的析构函数。</p>
+<p>如果子类中没有定义析构函数，那么子类会自动继承父类的析构函数，这样，子类在销毁对象时会先调用自己的析构函数，再调用父类的析构函数</p>
+<h1 id="45-多态的底层原理"><a href="#45-多态的底层原理" class="headerlink" title="45 多态的底层原理"></a>45 多态的底层原理</h1><h1 id="46-值传递、指针传递、引用传递的区别和效率"><a href="#46-值传递、指针传递、引用传递的区别和效率" class="headerlink" title="46 值传递、指针传递、引用传递的区别和效率"></a>46 值传递、指针传递、引用传递的区别和效率</h1><ul>
+<li>值传递：有一个形参向函数所属的栈拷贝数据的过程，如果值传递的对象是类对象 或是大的结构体对象，将耗费一定的时间和空间。（传值）</li>
+<li>指针传递：同样有一个形参向函数所属的栈拷贝数据的过程，但拷贝的数据是一个固定为4字节的地址。（传值，传递的是地址值）</li>
+<li>引用传递：同样有上述的数据拷贝过程，但其是针对地址的，相当于为该数据所在的地址起了一个别名。（传地址）</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 值传递</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">valuePass</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">    x = <span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> num = <span class="number">50</span>;</span><br><span class="line">    <span class="built_in">valuePass</span>(num);</span><br><span class="line">    cout &lt;&lt; num;  <span class="comment">// 输出为 50，因为值传递不会改变原始变量的值</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 指针传递</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">pointerPass</span><span class="params">(<span class="type">int</span>* x)</span> </span>&#123;</span><br><span class="line">    *x = <span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> num = <span class="number">50</span>;</span><br><span class="line">    <span class="built_in">pointerPass</span>(&amp;num);</span><br><span class="line">    cout &lt;&lt; num;  <span class="comment">// 输出为 100，因为指针传递会改变原始变量的值</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 引用传递</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">referencePass</span><span class="params">(<span class="type">int</span>&amp; x)</span> </span>&#123;</span><br><span class="line">    x = <span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> num = <span class="number">50</span>;</span><br><span class="line">    <span class="built_in">referencePass</span>(num);</span><br><span class="line">    cout &lt;&lt; num;  <span class="comment">// 输出为 100，因为引用传递会改变原始变量的值</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在值传递中，函数得到参数的一个副本，在函数内部对副本的修改不会影响原始变量。而在引用传递和指针传递中，函数得到的是原始变量的引用或指针，因此函数内部对变量的修改会影响原始变量的值。</p>
+<h1 id="47-形参与实参？"><a href="#47-形参与实参？" class="headerlink" title="47 形参与实参？"></a>47 形参与实参？</h1><ul>
+<li>形参变量只有在被调用时才分配内存单元，在调用结束时， 即刻释放所分配的内存单元。因此，形参只有在函数内部有效。 函数调用结束返回主调函数后则不能再使用该形参变量。</li>
+<li>实参和形参在数量上，类型上，顺序上应严格一致</li>
+<li>当形参和实参不是指针类型时，在该函数运行时，形参和实参是不同的变量，他们在内存中位于不同的位置，形参将实参的内容复制一份，在该函数运行结束的时候形参被释放，而实参内容不会改变。</li>
+</ul>
+<h1 id="48-创建对象时内存区发生了什么"><a href="#48-创建对象时内存区发生了什么" class="headerlink" title="48 创建对象时内存区发生了什么"></a>48 创建对象时内存区发生了什么</h1><p>C++中利用<code>new</code>操作符在堆区开辟内存</p>
+<p>堆区开辟的数据，由程序员手动开辟，手动释放，释放利用操作符<code>delete</code></p>
+<p>语法：<code>new 数据类型</code></p>
+<p>利用<code>new</code>创建的数据，会返回该数据类型对应类型的<strong>指针</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> *a = <span class="keyword">new</span> <span class="built_in">int</span>(<span class="number">10</span>);    <span class="comment">// 创建一个整型变量，返回一个整型指针。在堆区开辟一块内存，用于存放10，在栈种开辟一块内存，存放指针，指向堆区的内存</span></span><br><span class="line">    cout &lt;&lt; *a &lt;&lt; endl; <span class="comment">// 10， 对指针解引用，堆区内存种的值</span></span><br><span class="line">    cout &lt;&lt; a &lt;&lt; endl; <span class="comment">// 0x1e1600，	指针保存的值，即指针所指向的堆中的地址</span></span><br><span class="line">	cout &lt;&lt; &amp;a &lt;&lt; endl; <span class="comment">// 0x61fe18， 指针本身在栈中的地址</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">delete</span> a;	<span class="comment">// delete 释放的是堆中的内存</span></span><br><span class="line">    cout &lt;&lt; &amp;a &lt;&lt; endl; <span class="comment">// 0x61fe18， 指针本身在栈中所栈的内存没有变，也没有释放，</span></span><br><span class="line">    cout &lt;&lt; a &lt;&lt; endl; <span class="comment">// 0x1e1600， 指针所指向的堆中的内存地址没有变，只是现在被释放了</span></span><br><span class="line">    </span><br><span class="line">    a =<span class="literal">nullptr</span>;</span><br><span class="line">    cout &lt;&lt; a &lt;&lt; endl; <span class="comment">// 0  ，现在指针所指向的堆中的内存为0</span></span><br><span class="line">    cout &lt;&lt; &amp;a &lt;&lt; endl; <span class="comment">// 0x61fe18， 指针所在的栈中的内存没有变，也没有释放，栈中的内存会在程序运行结束后系统自动释放</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="49-类成员初始化方式？"><a href="#49-类成员初始化方式？" class="headerlink" title="49 类成员初始化方式？"></a>49 类成员初始化方式？</h1><ul>
+<li>赋值初始化，即构造函数内赋值， C++的赋值操作是会产生临时对象的。临时对象的出现会降低程序的效率</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    <span class="type">int</span> y;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyClass</span>(<span class="type">int</span> a, <span class="type">int</span> b) &#123;</span><br><span class="line">        x = a;</span><br><span class="line">        y = b;</span><br><span class="line">        <span class="comment">// Constructor body</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>列表初始化，纯粹的初始化操作</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    <span class="type">int</span> y;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyClass</span>(<span class="type">int</span> a, <span class="type">int</span> b) : <span class="built_in">x</span>(a), <span class="built_in">y</span>(b) &#123;</span><br><span class="line">        <span class="comment">// Constructor body</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="50-string和char"><a href="#50-string和char" class="headerlink" title="50 string和char*"></a>50 string和char*</h1><p>string继承自basic_string,其实是对char进行了封装，封装的string包含了char*数组，容量，长度等等属性</p>
+<p>string可以进行动态扩展，在每次扩展的时候另外申请一块原空间大小两倍的空间（2*n），然后将原字符串拷贝过去，并加上新增的内容。</p>
+
       
 
       
