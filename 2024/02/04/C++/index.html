@@ -16,7 +16,7 @@
 <meta property="og:description" content="1 在main执行之前和之后执行的代码可能是什么？main函数执行之前执行的代码  全局对象初始化，在main之前调用构造函数  123456789101112131415161718192021class A&amp;#123;public:    A()    &amp;#123;        cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;    &amp;#125;&amp;#125;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-02-04T12:31:36.025Z">
-<meta property="article:modified_time" content="2024-03-21T11:36:28.004Z">
+<meta property="article:modified_time" content="2024-03-22T10:12:12.310Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -805,12 +805,12 @@
 
 
 <h1 id="49-类成员初始化方式？"><a href="#49-类成员初始化方式？" class="headerlink" title="49 类成员初始化方式？"></a>49 类成员初始化方式？</h1><ul>
-<li>赋值初始化，即构造函数内赋值， C++的赋值操作是会产生临时对象的。临时对象的出现会降低程序的效率</li>
+<li>赋值初始化，即构造函数内赋值，如果<code>x</code>和<code>y</code>是内置类型，二者没区别，如果是其它自定义类类型，在进入构造函数之前，会先调用该类的默认构造函数，再进行一次赋值的操作</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    <span class="type">int</span> y;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyClass</span>(<span class="type">int</span> a, <span class="type">int</span> b) &#123;</span><br><span class="line">        x = a;</span><br><span class="line">        y = b;</span><br><span class="line">        <span class="comment">// Constructor body</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>列表初始化，纯粹的初始化操作</li>
+<li>列表初始化，纯粹的赋值操作</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    <span class="type">int</span> y;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyClass</span>(<span class="type">int</span> a, <span class="type">int</span> b) : <span class="built_in">x</span>(a), <span class="built_in">y</span>(b) &#123;</span><br><span class="line">        <span class="comment">// Constructor body</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
@@ -818,7 +818,82 @@
 
 <h1 id="50-string和char"><a href="#50-string和char" class="headerlink" title="50 string和char*"></a>50 string和char*</h1><p>string继承自basic_string,其实是对char进行了封装，封装的string包含了char*数组，容量，长度等等属性</p>
 <p>string可以进行动态扩展，在每次扩展的时候另外申请一块原空间大小两倍的空间（2*n），然后将原字符串拷贝过去，并加上新增的内容。</p>
+<h1 id="51-什么是内存泄露，如何避免"><a href="#51-什么是内存泄露，如何避免" class="headerlink" title="51 什么是内存泄露，如何避免"></a>51 什么是内存泄露，如何避免</h1><p><strong>内存泄漏：</strong></p>
+<p>一般常说的内存泄漏是指堆内存的泄漏。如果程序中分配了内存空间但未释放，这些内存空间将被程序持有，直到程序结束时才会被释放，这可能导致系统中的可用内存逐渐减少，最终耗尽系统资源。这称为内存泄漏。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">memoryLeakExample</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> *ptr = <span class="keyword">new</span> <span class="built_in">int</span>(<span class="number">5</span>); <span class="comment">// 分配内存空间</span></span><br><span class="line">    <span class="comment">// 这里发生了某些条件下的提前返回或异常，导致未释放内存</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>使用 <code>new</code> 运算符为 <code>ptr</code> 分配了内存，但在函数返回之前未使用 <code>delete</code> 运算符释放这块内存。如果函数在中间的某个点提前返回，那么这块内存将无法被释放，从而导致内存泄漏。</p>
+<p><strong>避免内存泄漏</strong></p>
+<ul>
+<li>对象数组的释放一定要用<code>delete []</code></li>
+<li>有<code>new</code>就有<code>delete</code>，有<code>malloc</code>就有<code>free</code>，保证它们一定成对出现</li>
+</ul>
+<h1 id="52-面向对象的三大特征"><a href="#52-面向对象的三大特征" class="headerlink" title="52 面向对象的三大特征"></a>52 面向对象的三大特征</h1><p>封装、继承、多态</p>
+<p><strong>封装</strong></p>
+<p>封装是指将对象的状态（数据）和行为（方法）捆绑在一起，通过接口对外部提供访问权限。对象的内部细节对外部是隐藏的，外部程序只能通过对象的公共接口来与对象进行交互。封装可以帮助保护对象的数据，防止外部直接访问对象的内部数据，提高了代码的可维护性和可重用性。</p>
+<p><strong>继承</strong></p>
+<p>让某种类型对象获得另一个类型对象的属性和方法。它可以使用现有类的所有功能，并且可以增加新的成员变量和成员函数</p>
+<p>常见的继承有三种方式</p>
+<p><strong>多态</strong></p>
+<p>多态是指同一操作作用于不同的对象，可以产生不同的行为。即一个函数在不同的对象上拥有不同的行为。</p>
+<p>多态有两种形式：</p>
+<ul>
+<li><p>静态多态，重载：是指函数名相同，参数列表不同</p>
+</li>
+<li><p>动态多态，覆盖（重写）：是指子类重新定义父类的虚函数。</p>
+</li>
+</ul>
+<h1 id="53-成员初始化列表的概念，为什么用它会快一些？"><a href="#53-成员初始化列表的概念，为什么用它会快一些？" class="headerlink" title="53 成员初始化列表的概念，为什么用它会快一些？"></a>53 成员初始化列表的概念，为什么用它会快一些？</h1><p><strong>概念</strong></p>
+<p>在类的构造函数中，不存在函数体内对成员赋值，而是在函数名的后面、花括号的前面使用<code>:</code>和成员初始化列表对成员赋值</p>
+<p><strong>效率</strong></p>
+<p>对于内置类型，效率没有差别</p>
+<p>对于其它类型，使用成员初始化列表会少一次调用构造函数的过程，而在函数体内使用直接赋值会多一次调用</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">A</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;default constructor&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">A</span>(<span class="type">int</span> a)</span><br><span class="line">    &#123;</span><br><span class="line">        value = a;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;a: &quot;</span> &lt;&lt; a &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> value;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">B</span>():<span class="built_in">a</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        b = <span class="built_in">A</span>(<span class="number">2</span>);</span><br><span class="line">        c = <span class="number">3</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    A a;</span><br><span class="line">    A b;</span><br><span class="line">    <span class="type">int</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    B b;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出结果</span></span><br><span class="line">a: <span class="number">1</span></span><br><span class="line"><span class="keyword">default</span> constructor</span><br><span class="line">a: <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>对于<code>a</code>，使用成员列表初始化，对a直接赋值</p>
+</li>
+<li><p>对于<code>b</code>，在进入构造函数之前，会先调用一次默认构造函数，进入构造函数后所做的事其实是一次赋值操作(对象已存在)</p>
+</li>
+<li><p>对于<code>c</code>，为基本类型，直接对<code>c</code>进行赋值</p>
+</li>
+</ul>
+<h1 id="54-C-函数调用的压栈过程"><a href="#54-C-函数调用的压栈过程" class="headerlink" title="54 C++函数调用的压栈过程"></a>54 C++函数调用的压栈过程</h1><p><strong>代码层面</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">f</span><span class="params">(<span class="type">int</span> n)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; n &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> n;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">int</span> param1, <span class="type">int</span> param2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> var1 = param1;</span><br><span class="line">	<span class="type">int</span> var2 = param2;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;var1=%d,var2=%d&quot;</span>, <span class="built_in">f</span>(var1), <span class="built_in">f</span>(var2));<span class="comment">//如果将printf换为cout进行输出，输出结果则刚好相反</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">func</span>(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果</span></span><br><span class="line"><span class="comment">//2</span></span><br><span class="line"><span class="comment">//1</span></span><br><span class="line"><span class="comment">//var1=1,var2=2</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>（1）当函数入口函数main函数开始执行时，编译器会将我们操作系统的运行状态，main函数的返回地址、main的参数、mian函数中的变量、进行依次压栈；</p>
+<p>（2）当main函数开始调用func()函数时，编译器此时会将main函数的运行状态进行压栈，再将func()函数的返回地址、func()函数的参数从右到左、func()定义变量依次压栈；</p>
+<p>（3）当func()调用f()的时候，编译器此时会将func()函数的运行状态进行压栈，再f()将的返回地址、f()函数的参数从右到左、f()定义变量依次压栈</p>
+<p>从代码的输出结果可以看出，函数f(var1)、f(var2)依次入栈，而后先执行f(var2)，再执行f(var1)，最后打印整个字符串，将栈中的变量依次弹出，最后主函数返回。</p>
+<p><strong>文字描述</strong></p>
+<p>函数的调用过程</p>
+<p>（1）从栈空间分配存储空间</p>
+<p>（2）从实参的存储空间复制值到形参栈空间</p>
+<p>（3）进行运算</p>
+<p>形参在函数未调用之前都是没有分配存储空间的，在函数调用结束之后，形参弹出栈空间，清除形参空间。</p>
+<p>数组作为参数的函数调用方式是地址传递，形参和实参都指向相同的内存空间，调用完成后，形参指针被销毁，但是所指向的内存空间依然存在，不会被销毁也不能被销毁。</p>
+<p>当函数有多个返回值的时候，不能用普通的 return 的方式实现，需要通过传回地址的形式进行，即地址&#x2F;指针传递。</p>
+<h1 id="55-coredump怎么调试"><a href="#55-coredump怎么调试" class="headerlink" title="55 coredump怎么调试"></a>55 coredump怎么调试</h1><p>core文件会包含了程序运行时的内存，寄存器状态，堆栈指针，内存管理信息还有各种函数调用堆栈信息</p>
+<p><strong>产生coredump的情况：</strong></p>
+<ul>
+<li><p>数组越界</p>
+</li>
+<li><p>使用空指针</p>
+</li>
+<li><p>堆栈溢出（使用大量的局部变量）</p>
+</li>
+</ul>
+<p><strong>使用gdb进行调试：</strong></p>
+<ul>
+<li>l(list) ，显示源代码，并且可以看到对应的行号；</li>
+<li>b(break)x, x是行号，表示在对应的行号位置设置断点；</li>
+<li>p(print)x, x是变量名，表示打印变量x的值</li>
+<li>r(run), 表示继续执行到断点的位置</li>
+<li>n(next),表示执行下一步</li>
+<li>c(continue),表示继续执行</li>
+<li>q(quit)，表示退出gdb</li>
+</ul>
+<h1 id="56-移动构造函数"><a href="#56-移动构造函数" class="headerlink" title="56 移动构造函数"></a>56 移动构造函数</h1>
       
 
       
