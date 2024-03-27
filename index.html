@@ -1504,7 +1504,7 @@
 <li>两者中如果不对成员不指定公私有，struct默认是公有的，class则默认是私有的</li>
 <li>class默认是private继承， 而struct默认是public继承</li>
 </ul>
-<h1 id="21-printf函数的实现原理是"><a href="#21-printf函数的实现原理是" class="headerlink" title="21 printf函数的实现原理是"></a>21 printf函数的实现原理是</h1><h1 id="22-C-的顶层const和底层const"><a href="#22-C-的顶层const和底层const" class="headerlink" title="22 C++的顶层const和底层const"></a>22 C++的顶层const和底层const</h1><ul>
+<h1 id="21-printf函数的实现原理"><a href="#21-printf函数的实现原理" class="headerlink" title="21 printf函数的实现原理"></a>21 printf函数的实现原理</h1><h1 id="22-C-的顶层const和底层const"><a href="#22-C-的顶层const和底层const" class="headerlink" title="22 C++的顶层const和底层const"></a>22 C++的顶层const和底层const</h1><ul>
 <li>顶层const：指针本身是一个常量（常量指针，就是 * 号的右边），指针本身不能修改指向别的地址，但是所指的对象的值可以修改</li>
 <li>底层const：指针所指的对象是一个常量（指针常量，就是 * 号的左边），指针所指的对象不能修改，但是指针可以指向别的地址</li>
 </ul>
@@ -1857,8 +1857,29 @@
 
 
 
-<h1 id="50-string和char"><a href="#50-string和char" class="headerlink" title="50 string和char*"></a>50 string和char*</h1><p>string继承自basic_string,其实是对char进行了封装，封装的string包含了char*数组，容量，长度等等属性</p>
+<h1 id="50-const-char-与string之间的关系"><a href="#50-const-char-与string之间的关系" class="headerlink" title="50 const char* 与string之间的关系"></a>50 const char* 与string之间的关系</h1><p>string 是c++标准库里面其中一个，封装了对字符串的操作，实际操作过程我们可以用const char*给string类初始化</p>
 <p>string可以进行动态扩展，在每次扩展的时候另外申请一块原空间大小两倍的空间（2*n），然后将原字符串拷贝过去，并加上新增的内容。</p>
+<p>转换方式如下：转成char* 的时候都是用char* 指向一个字符数组，转成 const char*的时候，就是一个字符串</p>
+<p><strong>string 转 const char</strong>*：使用<code>c_str()</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">string s = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* c = s.<span class="built_in">c_str</span>();</span><br></pre></td></tr></table></figure>
+
+<p><em><em>const char</em> 转string</em>*：直接转</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">char</span>* c = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line"><span class="function">string <span class="title">s</span><span class="params">(c)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>string 转 char</strong>*</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">string s = <span class="string">&quot;abc&quot;</span>; </span><br><span class="line"><span class="type">char</span>* c;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> len = s.<span class="built_in">length</span>();</span><br><span class="line">c = <span class="keyword">new</span> <span class="type">char</span>[len + <span class="number">1</span>];</span><br><span class="line"><span class="built_in">strcpy</span>(c, s.<span class="built_in">c_str</span>());</span><br></pre></td></tr></table></figure>
+
+<p><strong>char*转 string</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span>* c = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line"><span class="function">string <span class="title">s</span><span class="params">(c)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><em><em>const char</em> 转 char</em>**</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">char</span>* cpc = <span class="string">&quot;abc&quot;</span>; </span><br><span class="line"><span class="type">char</span>* pc = <span class="keyword">new</span> <span class="type">char</span>[<span class="built_in">strlen</span>(cpc)+<span class="number">1</span>]; </span><br><span class="line"><span class="built_in">strcpy</span>(pc,cpc);</span><br></pre></td></tr></table></figure>
+
+<p><em><em>char</em> 转 const char</em>**</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span>* pc = “abc”; </span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* cpc = pc;</span><br></pre></td></tr></table></figure>
+
+
+
 <h1 id="51-什么是内存泄露，如何避免"><a href="#51-什么是内存泄露，如何避免" class="headerlink" title="51 什么是内存泄露，如何避免"></a>51 什么是内存泄露，如何避免</h1><p><strong>内存泄漏：</strong></p>
 <p>一般常说的内存泄漏是指堆内存的泄漏。如果程序中分配了内存空间但未释放，这些内存空间将被程序持有，直到程序结束时才会被释放，这可能导致系统中的可用内存逐渐减少，最终耗尽系统资源。这称为内存泄漏。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">memoryLeakExample</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> *ptr = <span class="keyword">new</span> <span class="built_in">int</span>(<span class="number">5</span>); <span class="comment">// 分配内存空间</span></span><br><span class="line">    <span class="comment">// 这里发生了某些条件下的提前返回或异常，导致未释放内存</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -2045,7 +2066,7 @@
 <li>如果返回值 &#x3D; 0 ，则表示  str1 &#x3D; str2；</li>
 </ul>
 <p>实例：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="type">char</span> str1[<span class="number">15</span>];</span><br><span class="line">   <span class="type">char</span> str2[<span class="number">15</span>];</span><br><span class="line">   <span class="type">int</span> ret;</span><br><span class="line"></span><br><span class="line">   <span class="built_in">memcpy</span>(str1, <span class="string">&quot;abcdef&quot;</span>, <span class="number">6</span>);</span><br><span class="line">   <span class="built_in">memcpy</span>(str2, <span class="string">&quot;ABCDEF&quot;</span>, <span class="number">6</span>);</span><br><span class="line"></span><br><span class="line">   ret = <span class="built_in">memcmp</span>(str1, str2, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span>(ret &gt; <span class="number">0</span>)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;str2 小于 str1&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">else</span> <span class="keyword">if</span>(ret &lt; <span class="number">0</span>) </span><br><span class="line">   &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;str1 小于 str2&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">else</span> </span><br><span class="line">   &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;str1 等于 str2&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">return</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出结果</span></span><br><span class="line">str2 小于 str1</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="type">char</span> str1[<span class="number">15</span>];</span><br><span class="line">   <span class="type">char</span> str2[<span class="number">15</span>];</span><br><span class="line">   <span class="type">int</span> ret;</span><br><span class="line"></span><br><span class="line">   <span class="built_in">memcpy</span>(str1, <span class="string">&quot;abcdef&quot;</span>, <span class="number">6</span>);</span><br><span class="line">   <span class="built_in">memcpy</span>(str2, <span class="string">&quot;ABCDEF&quot;</span>, <span class="number">6</span>);</span><br><span class="line"></span><br><span class="line">   ret = <span class="built_in">memcmp</span>(str1, str2, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span>(ret &gt; <span class="number">0</span>)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;str2 小于 str1&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">else</span> <span class="keyword">if</span>(ret &lt; <span class="number">0</span>) </span><br><span class="line">   &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;str1 小于 str2&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">else</span> </span><br><span class="line">   &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;str1 等于 str2&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">return</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出结果</span></span><br><span class="line">str2 小于 str1</span><br></pre></td></tr></table></figure>
 
 <p><strong>memset</strong></p>
 <p>作用：memset是一个初始化函数，作用是将某一块内存中的值设置为指定的值</p>
@@ -2077,7 +2098,196 @@
 
 
 
-<h1 id="68-函数调用过程栈的变化，返回值和参数变量哪个先入栈"><a href="#68-函数调用过程栈的变化，返回值和参数变量哪个先入栈" class="headerlink" title="68 函数调用过程栈的变化，返回值和参数变量哪个先入栈"></a>68 函数调用过程栈的变化，返回值和参数变量哪个先入栈</h1><h1 id="69-define"><a href="#69-define" class="headerlink" title="69 define"></a>69 define</h1>
+<h1 id="68-函数调用过程栈的变化，返回值和参数变量哪个先入栈"><a href="#68-函数调用过程栈的变化，返回值和参数变量哪个先入栈" class="headerlink" title="68 函数调用过程栈的变化，返回值和参数变量哪个先入栈"></a>68 函数调用过程栈的变化，返回值和参数变量哪个先入栈</h1><h1 id="69-重载运算符是什么"><a href="#69-重载运算符是什么" class="headerlink" title="69 重载运算符是什么"></a>69 重载运算符是什么</h1><p><strong>定义：</strong></p>
+<p>重载运算符是通过对运算符的重新定义，使得其支持特定数据类型的运算操作。C++ 自带的运算符，最初只定义了一些基本类型的运算规则。当我们要在用户自定义的数据类型上使用这些运算符时，就需要定义运算符在这些特定类型上的运算方式</p>
+<ul>
+<li>引入重载运算符，是为了实现类的多态性</li>
+</ul>
+<p><strong>限制：</strong></p>
+<ul>
+<li>只能对现有的运算符进行重载，不能自行定义新的运算符</li>
+<li>以下运算符不能被重载：<code>::</code>（作用域解析），<code>.</code>（成员访问），<code>.*</code>（通过成员指针的成员访问），<code>?:</code>（三目运算符）。</li>
+</ul>
+<p><strong>实现：</strong></p>
+<p>有两种重载方式：重载为成员函数或非成员函数</p>
+<ul>
+<li>重载为成员函数：<code>Box operator+(const Box&amp;);</code>，隐含一个指向当前成员的<code>this</code>指针作为参数</li>
+<li>重载为非成员函数：<code>Box operator+(const Box&amp;, const Box&amp;);</code></li>
+</ul>
+<h1 id="70-当程序中有函数重载时，函数的匹配原则和顺序是什么？"><a href="#70-当程序中有函数重载时，函数的匹配原则和顺序是什么？" class="headerlink" title="70 当程序中有函数重载时，函数的匹配原则和顺序是什么？"></a>70 当程序中有函数重载时，函数的匹配原则和顺序是什么？</h1><ol>
+<li><p>确定候选函数。候选函数有两个特征：</p>
+<ul>
+<li>与被调用的函数同名</li>
+<li>其声明在调用点可见</li>
+</ul>
+</li>
+<li><p>确定可行函数：考察本地函数调用提供的实参，然后从候选参数中选出能被这些实参调用的函数，可行函数也具备两个特征</p>
+<ul>
+<li>形参数量与提供的实参数量相同</li>
+<li>每个实参类型与形参的类型相同，或者能转换成对应的形参的类型</li>
+</ul>
+</li>
+<li><p>最佳匹配：逐一检查函数调用提供的实参，寻找实参类型和形参类型最匹配的那个参数。编译器将实参类型到形参类型的转化划分成几个等级（从 1 到 5 匹配度逐步降低）</p>
+<ul>
+<li>精确匹配，包括以下情况(它们具有相同且最高的匹配度)：<ul>
+<li>实参类型和形参类型相同。</li>
+<li>实参从数组类型或函数类型转换成对应的指针类型</li>
+<li>向实参添加顶层const或者从实参中删除顶层const（形参的顶层cosnt是可以直接忽略掉的）</li>
+</ul>
+</li>
+<li>通过const转化实现匹配(底层const的转换)</li>
+<li>通过类型提升实现的匹配</li>
+<li>通过算术类型转换实现的匹配</li>
+<li>通过类类型转换实现的匹配</li>
+</ul>
+</li>
+</ol>
+<h1 id="71-全局变量和static变量的区别"><a href="#71-全局变量和static变量的区别" class="headerlink" title="71 全局变量和static变量的区别"></a>71 全局变量和static变量的区别</h1><p>全局变量（外部变量）的说明之前再加上<code>static</code>就构成了静态的全局变量。全局变量本身就是静态存储方式，静态全局变量也是静态存储方式。</p>
+<p><strong>作用域不同：</strong></p>
+<ul>
+<li>全局变量：全局变量在整个程序文件内可见和可用，其他文件如果使用 extern 关键字声明后也可以访问。</li>
+<li>静态变量：静态变量可以有多种作用域：<ul>
+<li>当静态变量定义在函数内部时，它在函数调用结束后不会被销毁，但作用域只限于该函数内部。</li>
+<li>当静态变量定义在全局范围内时，它与全局变量类似，但作用域仅限于定义它的文件，可以避免在其他源文件中引起错误</li>
+</ul>
+</li>
+</ul>
+<h1 id="72-普通函数和static函数的区别"><a href="#72-普通函数和static函数的区别" class="headerlink" title="72 普通函数和static函数的区别"></a>72 普通函数和static函数的区别</h1><p><strong>作用域不同</strong></p>
+<ul>
+<li>用static修饰的函数，本限定在本源码文件中，不能被本源码文件以外的代码文件调用</li>
+<li>而普通的函数，默认是extern的，也就是说，可以被其它代码文件调用该函数。</li>
+</ul>
+<p><strong>存在位置</strong></p>
+<p>static函数在内存中只有一份，普通函数在每个被调用中维持一份拷贝。程序的局部变量存在于（堆栈）中，全局变量存在于（静态区）中，动态申请数据存在于（堆）</p>
+<h1 id="73-普通成员与static成员的区别是什么？"><a href="#73-普通成员与static成员的区别是什么？" class="headerlink" title="73 普通成员与static成员的区别是什么？"></a>73 普通成员与static成员的区别是什么？</h1><p><strong>生命周期</strong></p>
+<ul>
+<li>静态成员变量从类被加载开始到类被卸载，一直存在；</li>
+<li>普通成员变量只有在类创建对象后才开始存在，对象结束，它的生命期结束；</li>
+</ul>
+<p><strong>共享方式</strong></p>
+<ul>
+<li>静态成员变量是全类共享；普通成员变量是每个对象单独享用的；</li>
+</ul>
+<p><strong>定义位置</strong></p>
+<ul>
+<li>普通成员变量存储在栈或堆中（存在于包含它们的对象中，取决于对象是怎么创建的，如果对象是作为局部对象创建，存在栈上，如果是通过new创建，存在堆上），而静态成员变量存储在静态全局区；</li>
+</ul>
+<p><strong>初始化位置</strong></p>
+<ul>
+<li>普通成员在类内初始化</li>
+<li>静态成员变量在类外初始化</li>
+</ul>
+<p><strong>默认实参</strong></p>
+<ul>
+<li>可以使用静态成员变量作为默认实参</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">static</span> <span class="type">int</span> defaultValue;  <span class="comment">// 静态成员变量</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">myFunction</span><span class="params">(<span class="type">int</span> x = defaultValue)</span> </span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;The value is: &quot;</span> &lt;&lt; x &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> MyClass::defaultValue = <span class="number">100</span>;  <span class="comment">// 静态成员变量的定义和初始化</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    MyClass obj1;</span><br><span class="line">    MyClass obj2;</span><br><span class="line"></span><br><span class="line">    obj1.<span class="built_in">myFunction</span>();  <span class="comment">// 将使用静态成员变量的默认值</span></span><br><span class="line">    obj2.<span class="built_in">myFunction</span>(<span class="number">200</span>);  <span class="comment">// 显式提供参数值</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出结果：</span></span><br><span class="line">The value is: <span class="number">100</span></span><br><span class="line">The value is: <span class="number">200</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="74-ifdef-endif代表着什么？"><a href="#74-ifdef-endif代表着什么？" class="headerlink" title="74 ifdef endif代表着什么？"></a>74 ifdef endif代表着什么？</h1><p>一般情况下，源程序中所有的行都参加编译。但是有时希望对其中一部分内容只在满足一定条件才进行编译，也就是对一部分内容指定编译的条件，这就是“条件编译”。有时，希望当满足某条件时对一组语句进行编译，而当条件不满足时则编译另一组语句。</p>
+<p>形式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#ifdef 标识符  </span></span><br><span class="line">程序段1  </span><br><span class="line"><span class="comment">#else  </span></span><br><span class="line">程序段2  </span><br><span class="line"><span class="comment">#endif</span></span><br></pre></td></tr></table></figure>
+
+<p>它的作用是：当标识符已经被定义过(一般是用#define命令定义)，则对程序段1进行编译，否则编译程序段2。 其中#else部分也可以没有</p>
+<p>常见的预处理指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#空指令，无任何效果</span></span><br><span class="line"><span class="comment">#include包含一个源代码文件</span></span><br><span class="line"><span class="comment">#define定义宏</span></span><br><span class="line"><span class="comment">#undef取消已定义的宏</span></span><br><span class="line"><span class="comment">#if如果给定条件为真，则编译下面代码</span></span><br><span class="line"><span class="comment">#ifdef如果宏已经定义，则编译下面代码</span></span><br><span class="line"><span class="comment">#ifndef如果宏没有定义，则编译下面代码</span></span><br><span class="line"><span class="comment">#elif如果前面的#if给定条件不为真，当前条件为真，则编译下面代码</span></span><br><span class="line"><span class="comment">#endif结束一个#if……#else条件编译块</span></span><br><span class="line"><span class="comment">#error停止编译并显示错误信息</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="75-隐式转换，如何消除隐式转换？"><a href="#75-隐式转换，如何消除隐式转换？" class="headerlink" title="75 隐式转换，如何消除隐式转换？"></a>75 隐式转换，如何消除隐式转换？</h1><ul>
+<li><p>C++的基本类型中并非完全的对立，部分数据类型之间是可以进行隐式转换的。所谓隐式转换，是指不需要用户干预，编译器私下进行的类型转换行为。</p>
+</li>
+<li><p>C++面向对象的多态特性，就是通过父类的类型实现对子类的封装。通过隐式转换，可以直接将一个子类的对象使用父类的类型进行返回。再比如，数值和布尔类型的转换，整数和浮点数的转换等。</p>
+</li>
+<li><p>基本数据类型的转换以取值范围作为转换基础（保证精度不丢失）。隐式转换发生在从小-&gt;大的转换中。比如从char转换为int。从int-&gt;long。自定义对象 子类对象可以隐式的转换为父类对象。</p>
+</li>
+<li><p>C++中提供了explicit关键字，在构造函数声明的时候加上explicit关键字，能够禁止隐式转换。</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">explicit</span> <span class="title">Entity</span><span class="params">(<span class="type">const</span> <span class="type">int</span> age)</span> : m_age(age)&#123;</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="76-C-如何处理多个异常的？"><a href="#76-C-如何处理多个异常的？" class="headerlink" title="76 C++如何处理多个异常的？"></a>76 C++如何处理多个异常的？</h1><p><strong>C++中的异常情况：</strong></p>
+<ul>
+<li>语法错误（编译错误）：比如变量未定义、括号不匹配、关键字拼写错误等等编译器在编译时能发现的错误，这类错误可以及时被编译器发现，而且可以及时知道出错的位置及原因，方便改正。</li>
+<li>运行时错误：比如数组下标越界、系统内存不足等等。这类错误不易被程序员发现，它能通过编译且能进入运行，但运行时会出错，导致程序崩溃。为了有效处理程序运行时错误，C++中引入异常处理机制来解决此问题。</li>
+</ul>
+<p><strong>C++异常处理机制：</strong></p>
+<p>异常处理基本思想：执行一个函数的过程中发现异常，可以不用在本函数内立即进行处理， 而是抛出该异常，让函数的调用者直接或间接处理这个问题。 C++异常处理机制由3个模块组成：try(检查)、throw(抛出)、catch(捕获) 抛出异常的语句格式为：throw 表达式；如果try块中程序段发现了异常则抛出异常。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> </span><br><span class="line">&#123; </span><br><span class="line">可能抛出异常的语句；（检查） </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">catch</span>（类型名[形参名]）<span class="comment">//捕获特定类型的异常 </span></span><br><span class="line">&#123; </span><br><span class="line"><span class="comment">//处理1； </span></span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">catch</span>（类型名[形参名]）<span class="comment">//捕获特定类型的异常 </span></span><br><span class="line">&#123; </span><br><span class="line"><span class="comment">//处理2； </span></span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">catch</span>（…）<span class="comment">//捕获所有类型的异常 </span></span><br><span class="line">&#123; </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="77-如何在不使用额外空间的情况下，交换两个数？有几种方法"><a href="#77-如何在不使用额外空间的情况下，交换两个数？有几种方法" class="headerlink" title="77 如何在不使用额外空间的情况下，交换两个数？有几种方法"></a>77 如何在不使用额外空间的情况下，交换两个数？有几种方法</h1><p>算术：有溢出风险</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = x + y;</span><br><span class="line">y = x - y;</span><br><span class="line">x = x - y;</span><br></pre></td></tr></table></figure>
+
+<p>异或：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = x ^ y; </span><br><span class="line">y = x ^ y;</span><br><span class="line">x = x ^ y;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="78-strcpy和memcpy的区别"><a href="#78-strcpy和memcpy的区别" class="headerlink" title="78 strcpy和memcpy的区别"></a>78 strcpy和memcpy的区别</h1><p><strong>复制内容不同</strong></p>
+<p>strcpy只能复制字符串，而memcpy可以复制任意内容，例如字符数组、整型、结构体、类等</p>
+<p><strong>复制的方法不同</strong></p>
+<p>strcpy不需要指定长度，它遇到被复制字符的串结束符”\0”才结束，所以容易溢出。memcpy则是根据其第3个参数决定复制的长度</p>
+<p><strong>memcpy</strong></p>
+<p>声明：<code>void *memcpy(void*dest, const void *src, size_t n);</code></p>
+<p>作用：由src指向地址为起始地址的连续n个字节的数据复制到以dest指向地址为起始地址的空间内。</p>
+<p>实例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将字符串复制到数组 dest 中</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="type">const</span> <span class="type">char</span> src[<span class="number">50</span>] = <span class="string">&quot;http://www.runoob.com&quot;</span>;</span><br><span class="line">   <span class="type">char</span> dest[<span class="number">50</span>];</span><br><span class="line"> </span><br><span class="line">   <span class="built_in">memcpy</span>(dest, src, <span class="built_in">strlen</span>(src)+<span class="number">1</span>);  <span class="comment">// +1 是因为src是c语言风格字符串，以&#x27;\0&#x27;结尾，这样可以保证完整复制</span></span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">&quot;dest = %s\n&quot;</span>, dest);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出结果：</span></span><br><span class="line">dest = http:<span class="comment">//www.runoob.com</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>strcpy</strong></p>
+<p>声明：<code>char* strcpy(char* dest, const char* src);</code></p>
+<p>作用：把 <strong>src</strong> 所指向的字符串复制到 <strong>dest</strong>。</p>
+<p>注意：如果目标数组<code>dest</code>不够大，而源字符串的长度又太长，可能会造成缓冲溢出的情况。</p>
+<p>个人理解：使用的时候相当于先把<code>dest</code>清空，再把<code>src</code>的内容复制到<code>dest</code>上，直到遇到<code>src</code>的<code>&#39;\0&#39;</code>为止</p>
+<p>实例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> src[] = <span class="string">&quot;a&quot;</span>;</span><br><span class="line">    <span class="type">char</span> dest[] = <span class="string">&quot;bbb&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s \n&quot;</span>, src); <span class="comment">// a</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s \n&quot;</span>, dest); <span class="comment">// bbb</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">strcpy</span>(dest, src);</span><br><span class="line">   </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s \n&quot;</span>, src); <span class="comment">// a</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s \n&quot;</span>, dest); <span class="comment">// a</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="79-如果有一个空类，它会默认添加哪些函数"><a href="#79-如果有一个空类，它会默认添加哪些函数" class="headerlink" title="79 如果有一个空类，它会默认添加哪些函数"></a>79 如果有一个空类，它会默认添加哪些函数</h1><ul>
+<li>缺省构造函数：<code>Empty(); </code></li>
+<li>拷贝构造函数：<code>Empty(const Empty&amp;);</code></li>
+<li>析构函数：<code>~Empty();</code></li>
+<li>赋值运算符：<code>Empty&amp; operator=( const Empty&amp; );</code></li>
+</ul>
+<h1 id="80-C-中标准库是什么"><a href="#80-C-中标准库是什么" class="headerlink" title="80 C++中标准库是什么"></a>80 C++中标准库是什么</h1><p>C++ 标准库可以分为两部分：</p>
+<p><strong>标准函数库</strong>：这个库是由通用的、独立的、不属于任何类的函数组成的。函数库继承自 C 语言。</p>
+<ul>
+<li>输入&#x2F;输出 I&#x2F;O</li>
+<li>字符串和字符处理</li>
+<li>数学</li>
+<li>时间、日期和本地化</li>
+<li>动态分配</li>
+<li>其他</li>
+<li>宽字符函数</li>
+</ul>
+<p><strong>面向对象类库</strong>：这个库是类及其相关函数的集合。</p>
+<ul>
+<li>标准的 C++ I&#x2F;O 类</li>
+<li>String 类</li>
+<li>数值类</li>
+<li>STL 容器类</li>
+<li>STL 算法</li>
+<li>STL 函数对象</li>
+<li>STL 迭代器</li>
+<li>STL 分配器</li>
+<li>本地化库</li>
+<li>异常处理类</li>
+<li>杂项支持库</li>
+</ul>
+<h1 id="81-静态绑定和动态绑定"><a href="#81-静态绑定和动态绑定" class="headerlink" title="81 静态绑定和动态绑定"></a>81 静态绑定和动态绑定</h1><h1 id="82-如何设计一个计算仅单个子类的对象个数？"><a href="#82-如何设计一个计算仅单个子类的对象个数？" class="headerlink" title="82 如何设计一个计算仅单个子类的对象个数？"></a>82 如何设计一个计算仅单个子类的对象个数？</h1><p>1、为类设计一个static静态变量count作为计数器；</p>
+<p>2、类定义结束后初始化count;</p>
+<p>3、在构造函数中对count进行+1;</p>
+<p>4、 设计拷贝构造函数，在进行拷贝构造函数中进行count +1，操作；</p>
+<p>5、设计赋值构造函数，在进行赋值函数中对count+1操作；</p>
+<p>6、在析构函数中对count进行-1；</p>
+<h1 id="83-成员初始化列表会在什么时候用到？它的调用过程是什么？"><a href="#83-成员初始化列表会在什么时候用到？它的调用过程是什么？" class="headerlink" title="83 成员初始化列表会在什么时候用到？它的调用过程是什么？"></a>83 成员初始化列表会在什么时候用到？它的调用过程是什么？</h1>
       
 
       
