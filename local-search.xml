@@ -43,11 +43,11 @@
   
   
   <entry>
-    <title>hexo相关</title>
-    <link href="/2024/01/31/hexo%E6%93%8D%E4%BD%9C/"/>
-    <url>/2024/01/31/hexo%E6%93%8D%E4%BD%9C/</url>
+    <title>hexo</title>
+    <link href="/2024/01/31/hexo/"/>
+    <url>/2024/01/31/hexo/</url>
     
-    <content type="html"><![CDATA[<p><strong>生成及上传</strong></p><p>hexo clean<br>rm -rf .deploy_git&#x2F;<br>git config –global core.autocrlf false<br>hexo g<br>hexo d</p><p><strong>图片插入之后上传</strong></p><p>..&#x2F;..&#x2F;source&#x2F;imgs&#x2F;${fiilename}</p><p><img src="/../imgs/$%7Bfiilename%7D/image-20240201204311056.png" alt="image-20240201204311056"></p>]]></content>
+    <content type="html"><![CDATA[<p><strong>生成及上传</strong></p><p>hexo clean<br>rm -rf .deploy_git&#x2F;<br>git config –global core.autocrlf false<br>hexo g<br>hexo d</p><p><strong>图片插入之后上传</strong></p><p>..&#x2F;..&#x2F;source&#x2F;imgs&#x2F;${fiilename}</p><p><img src="/../imgs/$%7Bfiilename%7D/image-20240201204311056.png" alt="image-20240201204311056"></p><p>主题：</p><p><a href="https://hexo.fluid-dev.com/docs/">https://hexo.fluid-dev.com/docs/</a></p>]]></content>
     
     
     
