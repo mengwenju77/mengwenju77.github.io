@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165247530.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165431867.png">
 <meta property="article:published_time" content="2024-03-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-03-28T06:14:34.989Z">
+<meta property="article:modified_time" content="2024-03-28T08:12:06.030Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165000175.png">
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          21k words
+          23k words
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          176 mins
+          193 mins
         
       </span>
     
@@ -287,7 +287,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-03-28T14:14:34+08:00
+                    Last updated on 2024-03-28T16:12:06+08:00
                   
                   
 
@@ -649,7 +649,44 @@
 <li>static成员函数只能访问static成员变量，访问不了非静态成员变量</li>
 <li>类的所有对象都可以访问static成员函数</li>
 </ul>
-<h1 id="24-程序运行的几个阶段"><a href="#24-程序运行的几个阶段" class="headerlink" title="24 程序运行的几个阶段"></a>24 程序运行的几个阶段</h1><p>预处理–编译–汇编–链接</p>
+<h1 id="24-C-从代码到可执行程序经历了什么"><a href="#24-C-从代码到可执行程序经历了什么" class="headerlink" title="24 C++从代码到可执行程序经历了什么"></a>24 C++从代码到可执行程序经历了什么</h1><p><strong>预编译</strong></p>
+<p>主要处理源代码文件中的以“#”开头的预编译指令。处理规则见下：</p>
+<ul>
+<li>删除所有的#define，展开所有的宏定义。</li>
+<li>处理所有的条件预编译指令，如“#if”、“#endif”、“#ifdef”、“#elif”和“#else”。</li>
+<li>处理“#include”预编译指令，将文件内容替换到它的位置，这个过程是递归进行的，文件中包含其他文件。</li>
+<li>删除所有的注释，“&#x2F;&#x2F;”和“&#x2F;**&#x2F;”。</li>
+<li>保留所有的#pragma 编译器指令，编译器需要用到他们，如：#pragma once 是为了防止有文件被重复引用。</li>
+<li>添加行号和文件标识，便于编译时编译器产生调试用的行号信息，和编译时产生编译错误或警告是 能够显示行号。</li>
+</ul>
+<p><strong>编译</strong></p>
+<p>把预编译之后生成的xxx.i或xxx.ii文件，进行一系列词法分析、语法分析、语义分析及优化后，生成相应的汇编代码文件。</p>
+<ul>
+<li>词法分析：利用类似于“有限状态机”的算法，将源代码程序输入到扫描机中，将其中的字符序列分割成一系列的记号。</li>
+<li>语法分析：语法分析器对由扫描器产生的记号，进行语法分析，产生语法树。由语法分析器输出的 语法树是一种以表达式为节点的树。</li>
+<li>语义分析：语法分析器只是完成了对表达式语法层面的分析，语义分析器则对表达式是否有意义进 行判断，其分析的语义是静态语义——在编译期能分期的语义，相对应的动态语义是在运行期才能确定 的语义。</li>
+<li>优化：源代码级别的一个优化过程。</li>
+<li>目标代码生成：由代码生成器将中间代码转换成目标机器代码，生成一系列的代码序列——汇编语言 表示。</li>
+<li>目标代码优化：目标代码优化器对上述的目标机器代码进行优化：寻找合适的寻址方式、使用位移 来替代乘法运算、删除多余的指令等。</li>
+</ul>
+<p><strong>汇编</strong></p>
+<p>将汇编代码转变成机器可以执行的指令(机器码文件)。 汇编器的汇编过程相对于编译器来说更简单，没 有复杂的语法，也没有语义，更不需要做指令优化，只是根据汇编指令和机器指令的对照表一一翻译过 来，汇编过程有汇编器as完成。经汇编之后，产生目标文件(与可执行文件格式几乎一样)xxx.o(Linux 下)、xxx.obj(Window下)。</p>
+<p><strong>链接</strong></p>
+<p>将不同的源文件产生的目标文件进行链接，从而形成一个可以执行的程序。链接分为静态链接和动态链接：</p>
+<ul>
+<li>静态链接</li>
+</ul>
+<p>函数和数据被编译进一个二进制文件。在使用静态库的情况下，在编译链接可执行文件时，链接器从库中复制这些函数和数据并把它们和应用程序的其它模块组合起来创建最终的可执行文件。</p>
+<p>空间浪费：因为每个可执行程序中对所有需要的目标文件都要有一份副本，所以如果多个程序对同一个目标文件都有依赖，会出现同一个目标文件都在内存存在多个副本；</p>
+<p>更新困难：每当库函数的代码修改了，这个时候就需要重新进行编译链接形成可执行程序。</p>
+<p>运行速度快：但是静态链接的优点就是，在可执行程序中已经具备了所有执行程序所需要的任何东西，在执行的时候运行速度快</p>
+<ul>
+<li>动态链接</li>
+</ul>
+<p>动态链接的基本思想是把程序按照模块拆分成各个相对独立部分，在程序运行时才将它们链接在一起形成一个完整的程序，而不是像静态链接一样把所有程序模块都链接成一个单独的可执行文件。</p>
+<p>共享库：就是即使需要每个程序都依赖同一个库，但是该库不会像静态链接那样在内存中存在多分，副本，而是这多个程序在执行时共享同一份副本；</p>
+<p>更新方便：更新时只需要替换原来的目标文件，而无需将所有的程序再重新链接一遍。当程序下一次运行时，新版本的目标文件会被自动加载到内存并且链接起来，程序就完成了升级的目标。</p>
+<p>性能损耗：因为把链接推迟到了程序运行时，所以每次执行程序都需要进行链接，所以性能会有一定损失。</p>
 <h1 id="25-构造函数与析构函数"><a href="#25-构造函数与析构函数" class="headerlink" title="25 构造函数与析构函数"></a>25 构造函数与析构函数</h1><p><strong>构造函数：</strong>主要作用在于创建对象时为对象的成员属性赋值，构造函数由编译器自动调用，无须手动调用</p>
 <p><strong>析构函数：</strong>主要作用在于对象销毁前系统自动调用，执行一些清理工作</p>
 <p><strong>构造函数的语法：</strong><code>类名()&#123;&#125;</code></p>
@@ -809,12 +846,18 @@
 
 
 
-<h1 id="34-友元"><a href="#34-友元" class="headerlink" title="34 友元"></a>34 友元</h1><p>友元的目的就是让一个函数或者类访问另一个类中私有成员</p>
-<p>友元的三种实现</p>
+<h1 id="34-友元"><a href="#34-友元" class="headerlink" title="34 友元"></a>34 友元</h1><p>友元的目的就是让一个函数或者类访问另一个类中私有成员，实现数据共享，节省开销</p>
+<p>友元的三种实现：</p>
 <ul>
 <li>全局函数做友元</li>
 <li>类做友元</li>
 <li>成员函数做友元</li>
+</ul>
+<p>注意点：</p>
+<ul>
+<li>友元关系不能被继承</li>
+<li>友元关系是单向的，不具有交换性。若类B是类A的友元，类A不一定是类B的友元，要看在类中是否有相应的声明。</li>
+<li>友元关系不具有传递性。若类B是类A的友元，类C是B的友元，类C不一定是类A的友元，同样要看类中是否有相应的申明</li>
 </ul>
 <p><strong>全局函数做友元：</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Building</span><br>&#123;<br><span class="hljs-function"><span class="hljs-keyword">friend</span> <span class="hljs-type">void</span> <span class="hljs-title">func</span><span class="hljs-params">(Building * build)</span></span>;  <span class="hljs-comment">// 将func声明为友元函数</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Building</span>()<br>    &#123;<br>        livingRoom = <span class="hljs-string">&quot;living_room&quot;</span>;<br>        bedRoom = <span class="hljs-string">&quot;bed_room&quot;</span>;<br>    &#125;<br><br><span class="hljs-keyword">public</span>:<br>    string livingRoom;<br><br><span class="hljs-keyword">private</span>:<br>    string bedRoom;<br><br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func</span><span class="hljs-params">(Building * build)</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;visit &quot;</span> &lt;&lt; build-&gt;livingRoom &lt;&lt; endl;<br>    cout &lt;&lt; <span class="hljs-string">&quot;visit &quot;</span> &lt;&lt; build-&gt;bedRoom &lt;&lt; endl; <span class="hljs-comment">// 报错，不可访问， 如果想让全局函数func访问Building类的私有成员，需要将func设置为友元函数</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span><br><span class="hljs-function"></span>&#123;<br>    Building build;<br>    <span class="hljs-built_in">func</span>(&amp;build);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -1489,6 +1532,37 @@
 <p>在32位平台下，无论指针的类型是什么，sizeof（指针名）都是4，在64位平台下，无论指针的类型是什么，sizeof（指针名）都是8。</p>
 <p><strong>传参</strong></p>
 <p>作为参数时，数组名退化为常量指针</p>
+<h1 id="88-如何阻止一个类被实例化？有哪些方法？"><a href="#88-如何阻止一个类被实例化？有哪些方法？" class="headerlink" title="88 如何阻止一个类被实例化？有哪些方法？"></a>88 如何阻止一个类被实例化？有哪些方法？</h1><ul>
+<li>将类定义为抽象基类，抽象类是不能被实例化的，只能被继承</li>
+<li>将构造函数声明为private</li>
+<li>抛出异常</li>
+</ul>
+<h1 id="89-如何禁止程序自动生成拷贝构造函数？"><a href="#89-如何禁止程序自动生成拷贝构造函数？" class="headerlink" title="89 如何禁止程序自动生成拷贝构造函数？"></a>89 如何禁止程序自动生成拷贝构造函数？</h1><p><strong>将这些函数声明为删除的函数，在函数参数的后面加上</strong>&#x3D;delete<strong>来指示出我们定义的删除的函数</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyClass</span><br>&#123;  <br><span class="hljs-keyword">public</span>:  <br>    <span class="hljs-comment">// 禁用默认的拷贝构造函数  </span><br>    <span class="hljs-built_in">MyClass</span>(<span class="hljs-type">const</span> MyClass&amp;) = <span class="hljs-keyword">delete</span>;  <br>      <br>    <span class="hljs-comment">// 禁用默认的拷贝赋值函数  </span><br>    MyClass&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-type">const</span> MyClass&amp;) = <span class="hljs-keyword">delete</span>;  <br>  <br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p><strong>将这些函数声明为</strong>private**,并且不提供函数定义，如果只声明不定义，会产生链接错误，也就无法生成拷贝构造函数了**</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyClass</span> <br>&#123;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-built_in">MyClass</span>(<span class="hljs-type">const</span> MyClass&amp;);  <span class="hljs-comment">// 声明私有拷贝构造函数  </span><br>    MyClass&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-type">const</span> MyClass&amp;);  <span class="hljs-comment">// 声明私有赋值运算符  </span><br>    <span class="hljs-comment">// 其他成员和方法  </span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="90-strcpy函数和strncpy函数的区别？哪个函数更安全？"><a href="#90-strcpy函数和strncpy函数的区别？哪个函数更安全？" class="headerlink" title="90 strcpy函数和strncpy函数的区别？哪个函数更安全？"></a>90 strcpy函数和strncpy函数的区别？哪个函数更安全？</h1><h1 id="91-C-的四种强制转换reinterpret-cast-const-cast-static-cast-dynamic-cast"><a href="#91-C-的四种强制转换reinterpret-cast-const-cast-static-cast-dynamic-cast" class="headerlink" title="91 C++的四种强制转换reinterpret_cast&#x2F;const_cast&#x2F;static_cast &#x2F;dynamic_cast"></a>91 C++的四种强制转换reinterpret_cast&#x2F;const_cast&#x2F;static_cast &#x2F;dynamic_cast</h1><h1 id="92-static-cast比C语言中的转换强在哪里？"><a href="#92-static-cast比C语言中的转换强在哪里？" class="headerlink" title="92 static_cast比C语言中的转换强在哪里？"></a>92 static_cast比C语言中的转换强在哪里？</h1><h1 id="93-成员函数里memset-this-0-sizeof-this-会发生什么"><a href="#93-成员函数里memset-this-0-sizeof-this-会发生什么" class="headerlink" title="93 成员函数里memset(this,0,sizeof(*this))会发生什么"></a>93 成员函数里memset(this,0,sizeof(*this))会发生什么</h1><p>有时候类里面定义了很多int,char,struct等c语言里的那些类型的变量，我习惯在构造函数中将它们初始化为0，但是一句句的写太麻烦，所以直接就<code>memset(this, 0, sizeof *this);</code>将整个对象的内存全部置为0，但是下面场景是不能用的：</p>
+<ul>
+<li>类含有虚函数表：这么做会破坏虚函数表，后续对虚函数的调用都将出现异常</li>
+<li>类中含有C++类型的对象：例如，类中定义了一个list的对象，由于在构造函数体的代码执行之前就对list对象完成了初始化，假设list在它的构造函数里分配了内存，那么我们这么一做就破坏了list对象的内存</li>
+</ul>
+<h1 id="94-回调函数及其作用"><a href="#94-回调函数及其作用" class="headerlink" title="94 回调函数及其作用"></a>94 回调函数及其作用</h1><h1 id="95-delete和delete-区别？"><a href="#95-delete和delete-区别？" class="headerlink" title="95 delete和delete[]区别？"></a>95 delete和delete[]区别？</h1><ul>
+<li>delete只会调用一次析构函数。</li>
+<li>delete[]会调用数组（如果是对象的数组）中每个元素的析构函数</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span> *pAa = <span class="hljs-keyword">new</span> <span class="hljs-keyword">class</span> A[<span class="hljs-number">3</span>];<br><span class="hljs-keyword">delete</span> pAa;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="96-为什么不能把所有的函数写成内联函数"><a href="#96-为什么不能把所有的函数写成内联函数" class="headerlink" title="96 为什么不能把所有的函数写成内联函数?"></a>96 为什么不能把所有的函数写成内联函数?</h1><p>内联函数以代码复杂为代价，它以省去函数调用的开销来提高执行效率。所以一方面如果内联函数体内代码执行时间相比函数调用开销较大，则没有太大的意义；另一方面每一处内联函数的调用都要复制代码，消耗更多的内存空间，因此以下情况不宜使用内联函数</p>
+<ul>
+<li>函数体内的代码比较长，将导致内存消耗代价</li>
+<li>函数体内有循环，函数执行时间要比函数调用开销大</li>
+</ul>
 
                 
               </div>
