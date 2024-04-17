@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165247530.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165431867.png">
 <meta property="article:published_time" content="2024-03-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-04-15T09:10:03.147Z">
+<meta property="article:modified_time" content="2024-04-17T07:41:58.014Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165000175.png">
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          24k words
+          25k words
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          203 mins
+          206 mins
         
       </span>
     
@@ -287,7 +287,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-04-15T17:10:03+08:00
+                    Last updated on 2024-04-17T15:41:58+08:00
                   
                   
 
@@ -786,8 +786,13 @@
 <h2 id="预留空间"><a href="#预留空间" class="headerlink" title="预留空间"></a>预留空间</h2><p><code>reserve(int len);</code> 	容器预留len个元素长度，预留位置不初始化，元素不可访问</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span><br><span class="hljs-function"></span>&#123;<br>    vector&lt;<span class="hljs-type">int</span>&gt; v;<br>    <span class="hljs-type">int</span> num = <span class="hljs-number">0</span>; <span class="hljs-comment">// 开辟内存空间的次数</span><br>    <span class="hljs-type">int</span> *p = <span class="hljs-literal">nullptr</span>; <br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100000</span>; i++)<br>    &#123;<br>        v.<span class="hljs-built_in">push_back</span>(i);<br>        <span class="hljs-keyword">if</span>(p != &amp;v[<span class="hljs-number">0</span>])<br>        &#123;<br>            p = &amp;v[<span class="hljs-number">0</span>];<br>            num++;<br>        &#125;<br>    &#125;<br><br>    cout &lt;&lt; <span class="hljs-string">&quot;num: &quot;</span> &lt;&lt; num &lt;&lt; endl; <span class="hljs-comment">// num = 18;</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span><br><span class="hljs-function"></span>&#123;<br>    vector&lt;<span class="hljs-type">int</span>&gt; v;<br>    v.<span class="hljs-built_in">reserve</span>(<span class="hljs-number">100000</span>);<br>    <span class="hljs-type">int</span> num = <span class="hljs-number">0</span>; <span class="hljs-comment">// 开辟内存空间的次数</span><br>    <span class="hljs-type">int</span> *p = <span class="hljs-literal">nullptr</span>; <br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100000</span>; i++)<br>    &#123;<br>        v.<span class="hljs-built_in">push_back</span>(i);<br>        <span class="hljs-keyword">if</span>(p != &amp;v[<span class="hljs-number">0</span>])<br>        &#123;<br>            p = &amp;v[<span class="hljs-number">0</span>];<br>            num++;<br>        &#125;<br>    &#125;<br>     <br>    cout &lt;&lt; <span class="hljs-string">&quot;num: &quot;</span> &lt;&lt; num &lt;&lt; endl;  <span class="hljs-comment">// num = 1</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-
-
+<h1 id="29-拷贝构造函数"><a href="#29-拷贝构造函数" class="headerlink" title="29 拷贝构造函数"></a>29 拷贝构造函数</h1><p><strong>定义</strong>：如果一个构造函数的第一个参数是自身类类型的引用，且任何额外参数都有默认值，则此构造函数是拷贝构造函数</p>
+<blockquote>
+<p>如果我们没有为一个类定义拷贝构造函数，编译器会自动定义一个。</p>
+</blockquote>
+<p><strong>声明</strong>：Foo(const Foo&amp;)</p>
+<p><strong>为什么拷贝构造函数的第一个参数必须是一个引用类型？</strong></p>
+<p>因为拷贝构造函数用来初始化非引用类型参数。如果拷贝构造函数的参数不是引用类型，则调用永远也不会成功：为了调用拷贝构造函数，必须拷贝它的实参，但为了拷贝实参，又需要调用拷贝构造函数，如此循环，最终导致内存耗尽。</p>
 <h1 id="30-野指针和悬空指针"><a href="#30-野指针和悬空指针" class="headerlink" title="30 野指针和悬空指针"></a>30 野指针和悬空指针</h1><p>都是是指向无效内存区域(这里的无效指的是”不安全不可控”)的指针，访问行为将会导致未定义行为。</p>
 <ul>
 <li>野指针：指的是未初始化过的指针，未初始化就被调用<ul>
@@ -802,33 +807,33 @@
 </li>
 </ul>
 <h1 id="31-拷贝初始化和直接初始化"><a href="#31-拷贝初始化和直接初始化" class="headerlink" title="31 拷贝初始化和直接初始化"></a>31 拷贝初始化和直接初始化</h1><ul>
-<li>直接初始化直接调用与实参匹配的构造函数</li>
-<li>拷贝初始化总是调用拷贝构造函数。拷贝初始化首先使用指定构造函数创建一个临时对象，然后用拷贝构造函数将那个临时对象拷贝到正在创建的对象上</li>
+<li>如果不使用等号，则执行的是直接初始化。直接初始化直接调用与实参匹配的构造函数</li>
+<li>如果使用等号(&#x3D;)初始化一个变量，实际上执行的是拷贝初始化。拷贝初始化首先使用指定构造函数创建一个临时对象，然后用拷贝构造函数将那个临时对象拷贝到正在创建的对象上</li>
 </ul>
-<h1 id="32-赋值和初始化的区别"><a href="#32-赋值和初始化的区别" class="headerlink" title="32 赋值和初始化的区别"></a>32 赋值和初始化的区别</h1><p>简单理解：</p>
-<ul>
-<li>初始化就是在创建对象时赋值</li>
-<li>赋值是创建对象后再赋值</li>
-</ul>
-<h1 id="33-虚函数和纯虚函数"><a href="#33-虚函数和纯虚函数" class="headerlink" title="33 虚函数和纯虚函数"></a>33 虚函数和纯虚函数</h1><p>强调一个概念：</p>
-<ul>
-<li>定义一个函数为虚函数是为了允许用基类的指针或者引用指向子类对象</li>
-<li>定义一个函数为纯虚函数是为了实现一个接口，起到一个规范的作用</li>
-</ul>
-<p>虚函数是被virtual关键字修饰的函数，应在派生类中重写的成员函数，当某个虚函数通过指针或者引用调用时，编译器产生的代码直到运行时才能确定到底要调用哪个函数：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">/*</span><br><span class="hljs-comment">1. 下面这段代码首先定义了一个Animal1，该类有一个speak() 函数，不是虚函数；之后定义了一个Cat继承Animal1类；然后定义了一个doSpeak1()函数，入参为Animal1类的引用，输出结果是 Animal Speak 而不是 Cat Speak</span><br><span class="hljs-comment">2. 定义了一个Animal2类，该类有一个speak() 函数，是虚函数，之后定义了一个Dog继承Animal2类；然后定义了一个doSpeak2()函数，入参为Animal2类的引用，输出结果是Dog Speak</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Animal1</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">speak</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;Animal1 Speak&quot;</span> &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Animal2</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">speak</span><span class="hljs-params">()</span>  <span class="hljs-comment">// 虚函数</span></span><br><span class="hljs-function">    </span>&#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;Animal2 Speak&quot;</span> &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Cat</span> : <span class="hljs-keyword">public</span>  Animal1<br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">speak</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;Cat Speak&quot;</span> &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Dog</span> : <span class="hljs-keyword">public</span> Animal2<br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">speak</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;Dog Speak&quot;</span> &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">doSpeak1</span><span class="hljs-params">(Animal1&amp; animal)</span></span><br><span class="hljs-function"></span>&#123;<br>    animal.<span class="hljs-built_in">speak</span>();<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">doSpeak2</span><span class="hljs-params">(Animal2&amp; animal)</span></span><br><span class="hljs-function"></span>&#123;<br>    animal.<span class="hljs-built_in">speak</span>();<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span><br><span class="hljs-function"></span>&#123;<br>    Cat cat;<br>    <span class="hljs-built_in">doSpeak1</span>(cat);<br><br>    Dog dog;<br>    <span class="hljs-built_in">doSpeak2</span>(dog);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-comment">//  输出结果</span><br>Animal1 Speak<br>Dog Speak<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>拷贝初始化是依靠拷贝构造函数或移动构造函数来完成的</p>
+</blockquote>
+<h1 id="32-赋值和初始化的区别"><a href="#32-赋值和初始化的区别" class="headerlink" title="32 赋值和初始化的区别"></a>32 赋值和初始化的区别</h1><p>初始化：创建变量时赋予其一个初始值</p>
+<p>赋值：把对象的当前值擦除，并且以一个新值来替代</p>
+<h1 id="33-虚函数和纯虚函数"><a href="#33-虚函数和纯虚函数" class="headerlink" title="33 虚函数和纯虚函数"></a>33 虚函数和纯虚函数</h1><p><strong>虚函数：</strong></p>
+<p>为什么要有虚函数：对于某些函数，基类希望它的派生类各自定义合适自身的版本，基类就可以将这些函数声明为虚函数。实现动态绑定，也就是在程序运行时，函数根据传入的实参确定调用基类还是某个派生类的被重写过的虚函数。</p>
+<blockquote>
+<p>理解：定义一个函数为虚函数是为了在函数运行进行调用时，根据传入的实参确定要调用基类的函数还是派生类的函数</p>
+</blockquote>
+<p>伪代码：场景：购买书籍，超过一定数量时打折</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Quote</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">std::string <span class="hljs-title">isbn</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>; <span class="hljs-comment">// 返回书籍的ISBN号。该操作不涉及派生类的特殊性，因此只定义在基类中</span><br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">double</span> <span class="hljs-title">net_price</span><span class="hljs-params">(std::<span class="hljs-type">size_t</span> n)</span> <span class="hljs-type">const</span></span>; <span class="hljs-comment">// 返回书籍的实际价格，前提是用户购买该书的数量达到一定标准，这个操作是类型相关的</span><br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Bulk_Quote</span> : <span class="hljs-keyword">public</span> Quote<br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">net_price</span><span class="hljs-params">(std::<span class="hljs-type">size_t</span> n)</span> <span class="hljs-type">const</span> <span class="hljs-keyword">override</span></span>;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">print_total</span><span class="hljs-params">(<span class="hljs-type">const</span> Quote&amp; item, <span class="hljs-type">size_t</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">double</span> ret = item.<span class="hljs-built_in">net_price</span>(n);  <span class="hljs-comment">// 父类的引用指向子类的对象</span><br>    <span class="hljs-keyword">return</span> ret;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    Quote basic;<br>    Bulk_Quote bulk;<br>    <span class="hljs-comment">//发生了动态绑定，函数直到运行时根据具体传入的实参知道要调用基类还是派生类的函数</span><br>    <span class="hljs-built_in">print_total</span>(basic, <span class="hljs-number">20</span>);<br>    <span class="hljs-built_in">print_total</span>(bulk, <span class="hljs-number">20</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>多态满足条件：</p>
+<blockquote>
+<p>派生类必须在其内部对所有覆盖的函数进行声明</p>
+</blockquote>
 <ul>
-<li>有继承关系</li>
-<li>子类重写父类中的虚函数</li>
-</ul>
-<p>多态使用条件：</p>
-<ul>
-<li>父类指针或引用指向子类对象</li>
+<li><p>任何构造函数以外的非静态函数都可以是虚函数</p>
+</li>
+<li><p>虚函数一般都是要被重写的，如果没被重写，则该虚函数在基类中类似于其它的普通成员，派生类会直接继承其在基类中的版本（这种情况下，就没必要写成虚函数了）</p>
+</li>
 </ul>
 <p><strong>纯虚函数</strong></p>
-<p>在多态中，通常父类的虚函数的实现是毫无意义的，主要都是调用子类重写的内容，因此可以将虚函数改为纯虚函数</p>
+<p>定义一个函数为纯虚函数是为了实现一个接口，起到一个规范的作用</p>
 <p>纯虚函数语法：<code>virtual 返回值类型 函数名（参数列表）= 0；</code></p>
 <p>当类有了一个纯虚函数，这个类也称为抽象类</p>
 <p>抽象类特点：</p>
@@ -850,8 +855,8 @@
 <h1 id="34-友元"><a href="#34-友元" class="headerlink" title="34 友元"></a>34 友元</h1><p>友元的目的就是让一个函数或者类访问另一个类中私有成员，实现数据共享，节省开销</p>
 <p>友元的三种实现：</p>
 <ul>
-<li>全局函数做友元</li>
-<li>类做友元</li>
+<li>全局函数做友元（非成员函数）</li>
+<li>类做友元：如果一个类指定了友元类，则友元类的成员函数可以访问此类包括非公有成员在在内的所有成员</li>
 <li>成员函数做友元</li>
 </ul>
 <p>注意点：</p>
@@ -924,8 +929,10 @@
 <p><strong>private继承</strong></p>
 <p>基类的公有成员和保护成员都作为派生类的私有成员，并不被它的派生类访问，而基类的私有成员仍然是私有的，不能被这个派生类及其子类访问</p>
 <h1 id="40-什么情况下会调用拷贝构造函数"><a href="#40-什么情况下会调用拷贝构造函数" class="headerlink" title="40 什么情况下会调用拷贝构造函数"></a>40 什么情况下会调用拷贝构造函数</h1><ul>
-<li>用类的一个实例化对象去初始化另外一个对象的时候</li>
+<li>用等号<code>=</code>定义变量，用类的一个实例化对象去初始化另外一个对象的时候</li>
 <li>将一个对象作为实参传递给一个非引用类型的形参</li>
+<li>从一个返回类型为非引用类型的函数返回一个对象，返回值会被用来初始化调用方的结果</li>
+<li>用花括号列表初始化一个数组中的元素</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">A</span>() &#123;&#125;;  <span class="hljs-comment">// 默认构造函数</span><br>	<span class="hljs-built_in">A</span>(<span class="hljs-type">const</span> A&amp; a)  <span class="hljs-comment">// 拷贝构造函数</span><br>	&#123;<br>		cout &lt;&lt; <span class="hljs-string">&quot;copy constructor is called&quot;</span> &lt;&lt; endl;<br>	&#125;;<br>	~<span class="hljs-built_in">A</span>() &#123;&#125;;  <span class="hljs-comment">// 析构函数</span><br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">useClassA</span><span class="hljs-params">(A a)</span> </span>&#123;&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	A a1;<br>	A a2 = a1;  <span class="hljs-comment">//调用拷贝构造函数,对应情况1</span><br>	<span class="hljs-built_in">useClassA</span>(a1);<span class="hljs-comment">//调用拷贝构造函数，对应情况2</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -989,13 +996,7 @@
 <li>修饰指针。对指针来说，如果指针本身为const，那么指针便不能改变其指向</li>
 <li>修饰形参。在一个函数声明中，const可以修饰形参，表示该参数在函数中不能被改变</li>
 </ul>
-<h1 id="44-什么是类的继承"><a href="#44-什么是类的继承" class="headerlink" title="44 什么是类的继承"></a>44 什么是类的继承</h1><ul>
-<li>继承就是一个类继承了另一个类的属性和方法，这个新的类包含了上一个类的成员属性和方法，被称为子类或者派生类，被继承的类被称为父类或者基类</li>
-<li>子类对象可以当作父类对象使用</li>
-</ul>
-<p>如果子类中自己定义了析构函数，那么在销毁对象时会调用自己的析构函数。</p>
-<p>如果子类中没有定义析构函数，那么子类会自动继承父类的析构函数，这样，子类在销毁对象时会先调用自己的析构函数，再调用父类的析构函数</p>
-<h1 id="45-多态的底层原理"><a href="#45-多态的底层原理" class="headerlink" title="45 多态的底层原理"></a>45 多态的底层原理</h1><h1 id="46-值传递、指针传递、引用传递的区别和效率"><a href="#46-值传递、指针传递、引用传递的区别和效率" class="headerlink" title="46 值传递、指针传递、引用传递的区别和效率"></a>46 值传递、指针传递、引用传递的区别和效率</h1><ul>
+<h1 id="44-什么是类的继承"><a href="#44-什么是类的继承" class="headerlink" title="44 什么是类的继承"></a>44 什么是类的继承</h1><h1 id="45-多态的底层原理"><a href="#45-多态的底层原理" class="headerlink" title="45 多态的底层原理"></a>45 多态的底层原理</h1><h1 id="46-值传递、指针传递、引用传递的区别和效率"><a href="#46-值传递、指针传递、引用传递的区别和效率" class="headerlink" title="46 值传递、指针传递、引用传递的区别和效率"></a>46 值传递、指针传递、引用传递的区别和效率</h1><ul>
 <li>值传递：有形参向函数所属的栈拷贝数据的过程，如果值传递的对象是类对象 或是大的结构体对象，将耗费一定的时间和空间。（传值）</li>
 <li>指针传递：本质上是值传递。向函数所属的栈拷贝指针，指针指向是实参的地址</li>
 <li>引用传递：被调函数的形参也作为局部变量在栈中开辟了内存空间，但是这时存放的是由主调函数放进来的实参变量的地址。</li>
@@ -1068,8 +1069,12 @@
 <p>举例：操作系统封装了对硬件的访问方式，向应用程序或者用户提供了简单的访问方式，即接口，接口内部的实现应用程序和用户不可见</p>
 </blockquote>
 <p><strong>继承</strong></p>
-<p>让某种类型对象获得另一个类型对象的属性和方法。它可以使用现有类的所有功能，并且可以增加新的成员变量和成员函数</p>
-<p>常见的继承有三种方式</p>
+<p>让某种类型对象获得另一个类型对象的属性和方法。它可以使用现有类的所有功能，并且可以增加新的成员变量和成员函数。</p>
+<ul>
+<li>子类对象可以当作父类对象使用，也就是调用子类的对象调用父类的方法</li>
+</ul>
+<p>如果子类中自己定义了析构函数，那么在销毁对象时会调用自己的析构函数。</p>
+<p>如果子类中没有定义析构函数，那么子类会自动继承父类的析构函数，这样，子类在销毁对象时会先调用自己的析构函数，再调用父类的析构函数</p>
 <p><strong>多态</strong></p>
 <p>多态是指同一操作作用于不同的对象，可以产生不同的行为。即一个函数在不同的对象上拥有不同的行为。</p>
 <p>多态有两种形式：</p>
@@ -1466,7 +1471,9 @@
 <li>异常处理类</li>
 <li>杂项支持库</li>
 </ul>
-<h1 id="81-静态绑定和动态绑定"><a href="#81-静态绑定和动态绑定" class="headerlink" title="81 静态绑定和动态绑定"></a>81 静态绑定和动态绑定</h1><h1 id="82-如何设计一个计算仅单个子类的对象个数？"><a href="#82-如何设计一个计算仅单个子类的对象个数？" class="headerlink" title="82 如何设计一个计算仅单个子类的对象个数？"></a>82 如何设计一个计算仅单个子类的对象个数？</h1><p>1、为类设计一个static静态变量count作为计数器；</p>
+<h1 id="81-静态绑定和动态绑定"><a href="#81-静态绑定和动态绑定" class="headerlink" title="81 静态绑定和动态绑定"></a>81 静态绑定和动态绑定</h1><p>当使用基类的引用（或者指针）调用一个虚函数时将发生动态绑定。</p>
+<p>函数的运行版本由实参决定，即在函数运行时选择函数的版本，所以动态绑定又称为运行时绑定。</p>
+<h1 id="82-如何设计一个计算仅单个子类的对象个数？"><a href="#82-如何设计一个计算仅单个子类的对象个数？" class="headerlink" title="82 如何设计一个计算仅单个子类的对象个数？"></a>82 如何设计一个计算仅单个子类的对象个数？</h1><p>1、为类设计一个static静态变量count作为计数器；</p>
 <p>2、类定义结束后初始化count;</p>
 <p>3、在构造函数中对count进行+1;</p>
 <p>4、 设计拷贝构造函数，在进行拷贝构造函数中进行count +1，操作；</p>
@@ -1667,7 +1674,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>April 15, 2024</div>
+          <div>April 17, 2024</div>
         </div>
       
       
