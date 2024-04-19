@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165247530.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165431867.png">
 <meta property="article:published_time" content="2024-03-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-04-17T07:42:49.672Z">
+<meta property="article:modified_time" content="2024-04-19T08:10:08.885Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165000175.png">
@@ -237,7 +237,7 @@
         
         
         
-          206 mins
+          208 mins
         
       </span>
     
@@ -287,7 +287,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-04-17T15:42:49+08:00
+                    Last updated on 2024-04-19T16:10:08+08:00
                   
                   
 
@@ -470,7 +470,7 @@
 <p><strong>形象的比喻</strong></p>
 <p>栈就像我们去饭馆里吃饭，只管点菜（发出申请）、付钱、和吃（使用），吃饱了就走，不必理会切菜、洗菜等准备工作和洗碗、刷锅等扫尾工作，他的好处是快捷，但是自由度小。</p>
 <p>堆就像是自己动手做喜欢吃的菜肴，比较麻烦，但是比较符合自己的口味，而且自由度大。</p>
-<h1 id="6-堆快还是栈快"><a href="#6-堆快还是栈快" class="headerlink" title="6 堆快还是栈快"></a>6 堆快还是栈快</h1><p>栈快</p>
+<h1 id="6-堆快还是栈快"><a href="#6-堆快还是栈快" class="headerlink" title="6 堆快还是栈快"></a>6 堆快还是栈快</h1><p>栈快 </p>
 <ul>
 <li><p>操作系统会在底层对栈提供支持，会分配专门的寄存器存放栈的地址，栈的入栈出栈操作也十分简单，并且有专门的指令执行，所以栈的效率较高也比较快。</p>
 </li>
@@ -668,10 +668,10 @@
 <li>语义分析：语法分析器只是完成了对表达式语法层面的分析，语义分析器则对表达式是否有意义进 行判断，其分析的语义是静态语义——在编译期能分期的语义，相对应的动态语义是在运行期才能确定 的语义。</li>
 <li>优化：源代码级别的一个优化过程。</li>
 <li>目标代码生成：由代码生成器将中间代码转换成目标机器代码，生成一系列的代码序列——汇编语言 表示。</li>
-<li>目标代码优化：目标代码优化器对上述的目标机器代码进行优化：寻找合适的寻址方式、使用位移 来替代乘法运算、删除多余的指令等。</li>
+<li>目标代码优化：目标代码优化器对上述的目标机器代码进行优化：寻找合适的寻址方式、使用位移来替代乘法运算、删除多余的指令等。</li>
 </ul>
 <p><strong>汇编</strong></p>
-<p>将汇编代码转变成机器可以执行的指令(机器码文件)。 汇编器的汇编过程相对于编译器来说更简单，没 有复杂的语法，也没有语义，更不需要做指令优化，只是根据汇编指令和机器指令的对照表一一翻译过 来，汇编过程有汇编器as完成。经汇编之后，产生目标文件(与可执行文件格式几乎一样)xxx.o(Linux 下)、xxx.obj(Window下)。</p>
+<p>将汇编代码转变成机器可以执行的指令(机器码文件)。 汇编器的汇编过程相对于编译器来说更简单，没有复杂的语法，也没有语义，更不需要做指令优化，只是根据汇编指令和机器指令的对照表一一翻译过来，汇编过程有汇编器as完成。经汇编之后，产生目标文件(与可执行文件格式几乎一样)xxx.o(Linux 下)、xxx.obj(Window下)。</p>
 <p><strong>链接</strong></p>
 <p>将不同的源文件产生的目标文件进行链接，从而形成一个可以执行的程序。链接分为静态链接和动态链接：</p>
 <ul>
@@ -940,7 +940,7 @@
 
 <h1 id="41-静态变量什么时候初始化"><a href="#41-静态变量什么时候初始化" class="headerlink" title="41 静态变量什么时候初始化"></a>41 静态变量什么时候初始化</h1><ul>
 <li>全局变量、静态类成员变量在编译时进行前初始化；</li>
-<li>局部变量中的静态变量在第一次调用时初始化。</li>
+<li>局部变量中的静态变量在第一次运行到对象定义语句时初始化，并且直到程序终止才被销毁，再次期间即使对象所在的函数执行结束也不会对它有影响。</li>
 </ul>
 <h1 id="42-数据类型所占的字节数"><a href="#42-数据类型所占的字节数" class="headerlink" title="42 数据类型所占的字节数"></a>42 数据类型所占的字节数</h1><table>
 <thead>
@@ -996,21 +996,36 @@
 <li>修饰指针。对指针来说，如果指针本身为const，那么指针便不能改变其指向</li>
 <li>修饰形参。在一个函数声明中，const可以修饰形参，表示该参数在函数中不能被改变</li>
 </ul>
-<h1 id="44-什么是类的继承"><a href="#44-什么是类的继承" class="headerlink" title="44 什么是类的继承"></a>44 什么是类的继承</h1><h1 id="45-多态的底层原理"><a href="#45-多态的底层原理" class="headerlink" title="45 多态的底层原理"></a>45 多态的底层原理</h1><h1 id="46-值传递、指针传递、引用传递的区别和效率"><a href="#46-值传递、指针传递、引用传递的区别和效率" class="headerlink" title="46 值传递、指针传递、引用传递的区别和效率"></a>46 值传递、指针传递、引用传递的区别和效率</h1><ul>
-<li>值传递：有形参向函数所属的栈拷贝数据的过程，如果值传递的对象是类对象 或是大的结构体对象，将耗费一定的时间和空间。（传值）</li>
+<p>注意点：</p>
+<ul>
+<li><p>由于const对象一旦创建后其值就不能再改变，所以const对象必须初始化</p>
+</li>
+<li><p>const int 和普通的int一样都能参与算术运算，也都能转换成一个布尔值</p>
+</li>
+<li><p>默认状态下，const对象仅在文件内有效，如果想在多个文件之间共享const对象，必须在变量的定义之前添加extern关键字</p>
+</li>
+</ul>
+<h1 id="44-智能指针"><a href="#44-智能指针" class="headerlink" title="44 智能指针"></a>44 智能指针</h1><h1 id="45-多态的底层原理"><a href="#45-多态的底层原理" class="headerlink" title="45 多态的底层原理"></a>45 多态的底层原理</h1><h1 id="46-值传递、指针传递、引用传递的区别和效率"><a href="#46-值传递、指针传递、引用传递的区别和效率" class="headerlink" title="46 值传递、指针传递、引用传递的区别和效率"></a>46 值传递、指针传递、引用传递的区别和效率</h1><ul>
+<li>值传递：有形参向函数所属的栈拷贝数据的过程，如果值传递的对象是类对象或是大的结构体对象，耗费时间和空间比较大。</li>
 <li>指针传递：本质上是值传递。向函数所属的栈拷贝指针，指针指向是实参的地址</li>
 <li>引用传递：被调函数的形参也作为局部变量在栈中开辟了内存空间，但是这时存放的是由主调函数放进来的实参变量的地址。</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 值传递</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">valuePass</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;<br>    x = <span class="hljs-number">100</span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-type">int</span> num = <span class="hljs-number">50</span>;<br>    <span class="hljs-built_in">valuePass</span>(num);<br>    cout &lt;&lt; num;  <span class="hljs-comment">// 输出为 50，因为值传递不会改变原始变量的值</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">// 指针传递</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">pointerPass</span><span class="hljs-params">(<span class="hljs-type">int</span>* x)</span> </span>&#123;<br>    *x = <span class="hljs-number">100</span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-type">int</span> num = <span class="hljs-number">50</span>;<br>    <span class="hljs-built_in">pointerPass</span>(&amp;num);<br>    cout &lt;&lt; num;  <span class="hljs-comment">// 输出为 100，因为指针传递会改变原始变量的值</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">// 引用传递</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">referencePass</span><span class="hljs-params">(<span class="hljs-type">int</span>&amp; x)</span> </span>&#123;<br>    x = <span class="hljs-number">100</span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-type">int</span> num = <span class="hljs-number">50</span>;<br>    <span class="hljs-built_in">referencePass</span>(num);<br>    cout &lt;&lt; num;  <span class="hljs-comment">// 输出为 100，因为引用传递会改变原始变量的值</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>在值传递中，函数得到参数的一个副本，在函数内部对副本的修改不会影响原始变量。而在引用传递和指针传递中，函数得到的是原始变量的引用或指针，因此函数内部对变量的修改会影响原始变量的值。</p>
+
+
 <h1 id="47-形参与实参？"><a href="#47-形参与实参？" class="headerlink" title="47 形参与实参？"></a>47 形参与实参？</h1><ul>
 <li>形参变量只有在被调用时才分配内存单元，在调用结束时， 即刻释放所分配的内存单元。因此，形参只有在函数内部有效。 </li>
 <li>实参和形参在数量上，类型上，顺序上应严格一致。</li>
 <li>值传递时，形参和实参是不同的变量，他们在内存中位于不同的位置，形参将实参的内容复制一份，在该函数运行结束时形参被释放，实参内容不会改变。</li>
+<li>实参是形参的初始值</li>
 </ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 二者等价，空形参列表</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f1</span><span class="hljs-params">()</span></span>;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f2</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span>;<br></code></pre></td></tr></table></figure>
+
+
+
 <h1 id="48-创建对象时内存区发生了什么"><a href="#48-创建对象时内存区发生了什么" class="headerlink" title="48 创建对象时内存区发生了什么"></a>48 创建对象时内存区发生了什么</h1><p>C++中利用<code>new</code>操作符在堆区开辟内存</p>
-<p>堆区开辟的数据，由程序员手动开辟，手动释放，释放利用操作符<code>delete</code></p>
+<p>堆区开辟的数据，由程序员手动开辟，手动释放，释放操作符<code>delete</code></p>
 <p>语法：<code>new 数据类型</code></p>
 <p>利用<code>new</code>创建的数据，会返回该数据类型对应类型的<strong>指针</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> *a = <span class="hljs-keyword">new</span> <span class="hljs-built_in">int</span>(<span class="hljs-number">10</span>);    <span class="hljs-comment">// 创建一个整型变量，返回一个整型指针。在堆区开辟一块内存，用于存放10，在栈种开辟一块内存，存放指针，指向堆区的内存</span><br>    cout &lt;&lt; *a &lt;&lt; endl; <span class="hljs-comment">// 10， 对指针解引用，堆区内存种的值</span><br>    cout &lt;&lt; a &lt;&lt; endl; <span class="hljs-comment">// 0x1e1600，	指针保存的值，即指针所指向的堆中的地址</span><br>	cout &lt;&lt; &amp;a &lt;&lt; endl; <span class="hljs-comment">// 0x61fe18， 指针本身在栈中的地址</span><br>    <br>    <span class="hljs-keyword">delete</span> a;	<span class="hljs-comment">// delete 释放的是堆中的内存</span><br>    cout &lt;&lt; &amp;a &lt;&lt; endl; <span class="hljs-comment">// 0x61fe18， 指针本身在栈中所栈的内存没有变，也没有释放，</span><br>    cout &lt;&lt; a &lt;&lt; endl; <span class="hljs-comment">// 0x1e1600， 指针所指向的堆中的内存地址没有变，只是现在被释放了</span><br>    <br>    a =<span class="hljs-literal">nullptr</span>;<br>    cout &lt;&lt; a &lt;&lt; endl; <span class="hljs-comment">// 0  ，现在指针所指向的堆中的内存为0</span><br>    cout &lt;&lt; &amp;a &lt;&lt; endl; <span class="hljs-comment">// 0x61fe18， 指针所在的栈中的内存没有变，也没有释放，栈中的内存会在程序运行结束后系统自动释放</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -1088,13 +1103,19 @@
 <p>在类的构造函数中，不存在函数体内对成员赋值，而是在函数名的后面、花括号的前面使用<code>:</code>和成员初始化列表对成员赋值</p>
 <p><strong>效率</strong></p>
 <p>对于内置类型，效率没有差别</p>
-<p>对于其它类型，使用成员初始化列表会少一次调用构造函数的过程，而在函数体内使用直接赋值会多一次调用</p>
+<p>对于其它类型，使用成员初始化列表会少一次调用构造函数的过程；而在函数体内使用直接赋值会多一次调用默认构造函数的过程（先初始化再赋值）</p>
+<p>如果没有在构造函数的初始值列表中显示地初始化成员，则该成员将在构造函数体之前执行默认初始化</p>
+<p><strong>注意点</strong></p>
+<p>如果成员是<code>const</code>、引用、或者属于某种未提供默认构造函数的类类型，必须使用初始化列表为这些成员提供初值</p>
+<blockquote>
+<p>随着构造函数体一开始执行，初始化就完成了，构造函数体内是赋值的操作</p>
+</blockquote>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">A</span>()<br>    &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;default constructor&quot;</span> &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-built_in">A</span>(<span class="hljs-type">int</span> a)<br>    &#123;<br>        value = a;<br>        cout &lt;&lt; <span class="hljs-string">&quot;a: &quot;</span> &lt;&lt; a &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-type">int</span> value;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">B</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">B</span>():<span class="hljs-built_in">a</span>(<span class="hljs-number">1</span>)<br>    &#123;<br>        b = <span class="hljs-built_in">A</span>(<span class="hljs-number">2</span>);<br>        c = <span class="hljs-number">3</span>;<br>    &#125;<br><br>    A a;<br>    A b;<br>    <span class="hljs-type">int</span> c;<br>&#125;;<br><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    B b;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">// 输出结果</span><br>a: <span class="hljs-number">1</span><br><span class="hljs-keyword">default</span> constructor<br>a: <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
 
 <ul>
 <li><p>对于<code>a</code>，使用成员列表初始化，对a直接赋值</p>
 </li>
-<li><p>对于<code>b</code>，在进入构造函数之前，会先调用一次默认构造函数，进入构造函数后所做的事其实是一次赋值操作(对象已存在)</p>
+<li><p>对于<code>b</code>，在进入构造函数之前，会先调用一次默认构造函数，再进行一次赋值操作(对象已存在)</p>
 </li>
 <li><p>对于<code>c</code>，为基本类型，直接对<code>c</code>进行赋值</p>
 </li>
@@ -1127,11 +1148,11 @@
 <p><strong>使用gdb进行调试：</strong></p>
 <ul>
 <li>l(list) ，显示源代码，并且可以看到对应的行号；</li>
-<li>b(break)x, x是行号，表示在对应的行号位置设置断点；</li>
-<li>p(print)x, x是变量名，表示打印变量x的值</li>
-<li>r(run), 启动程序或重新开始程序的执行</li>
-<li>n(next),使用n命令可以逐步执行程序，一次执行一行代码</li>
-<li>c(continue),跳过当前断点，继续程序的执行：在程序暂停时（如遇到断点），输入c可继续程序执行，直到遇到下一个断点或程序结束</li>
+<li>b(break)x，x是行号，表示在对应的行号位置设置断点；</li>
+<li>p(print)x，x是变量名，表示打印变量x的值</li>
+<li>r(run)，启动程序或重新开始程序的执行</li>
+<li>n(next)，使用n命令可以逐步执行程序，一次执行一行代码</li>
+<li>c(continue)，跳过当前断点，继续程序的执行：在程序暂停时（如遇到断点），输入c可继续程序执行，直到遇到下一个断点或程序结束</li>
 <li>q(quit)，表示退出gdb</li>
 </ul>
 <h1 id="56-移动构造函数"><a href="#56-移动构造函数" class="headerlink" title="56 移动构造函数"></a>56 移动构造函数</h1><p><strong>移动构造函数的初衷：</strong></p>
@@ -1152,7 +1173,7 @@
 <li>在C语言中，函数返回值通常会被<strong>存储在寄存器中</strong>（如ax、eax等），而不是堆栈中。这样设计的目的是为了提高执行效率，避免频繁的堆栈操作。</li>
 <li>在函数调用结束后，返回值<strong>仍然保留在寄存器中</strong>，并且在函数退出时不会被销毁。这意味着返回值可以被调用函数使用，即使临时变量已经被销毁。</li>
 </ul>
-<p><strong>临时变量的声明周期</strong></p>
+<p><strong>临时变量的生命周期</strong></p>
 <p>临时变量，在函数调用过程中是被压到程序进程的栈中的，当函数退出时，临时变量出栈，即临时变量已经被销毁，临时变量占用的内存空间没有被清空，但是可以被分配给其他变量，所以有可能在函数退出时，该内存已经被修改了，对于临时变量来说已经是没有意义的值了</p>
 <p><strong>函数返回值的使用</strong></p>
 <p>如果需要返回值，一般使用赋值语句就可以。</p>
@@ -1674,7 +1695,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>April 17, 2024</div>
+          <div>April 19, 2024</div>
         </div>
       
       
