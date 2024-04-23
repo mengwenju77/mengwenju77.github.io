@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165247530.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165431867.png">
 <meta property="article:published_time" content="2024-03-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-04-22T12:24:10.231Z">
+<meta property="article:modified_time" content="2024-04-23T06:45:12.717Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165000175.png">
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          26k words
+          27k words
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          218 mins
+          227 mins
         
       </span>
     
@@ -287,7 +287,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-04-22T20:24:10+08:00
+                    Last updated on 2024-04-23T14:45:12+08:00
                   
                   
 
@@ -509,9 +509,9 @@
 </ul>
 </li>
 <li>delete的实现：<ul>
-<li>对指针指向的对象运行适当的析构函数；（编译器会自动选择合适的析构函数，析构函数可以被重载，但不建议）</li>
-<li>然后通过调用名为<strong>operator delete</strong>的标准库函数释放该对象所用内存</li>
-<li>delete的作用：接受一个动态对象的指针，销毁该对象，并释放与之关联的内存</li>
+<li>销毁对象：对指针指向的对象运行适当的析构函数；（编译器会自动选择合适的析构函数，析构函数可以被重载，但不建议）</li>
+<li>释放对象对应的内存：通过调用名为<strong>operator delete</strong>的标准库函数释放该对象所用内存</li>
+<li>delete的作用：销毁给定的指针指向的对象；释放对应的内存</li>
 </ul>
 </li>
 </ul>
@@ -797,7 +797,7 @@
 <p><strong>声明</strong>：Foo(const Foo&amp;)</p>
 <p><strong>为什么拷贝构造函数的第一个参数必须是一个引用类型？</strong></p>
 <p>因为拷贝构造函数用来初始化非引用类型参数。如果拷贝构造函数的参数不是引用类型，则调用永远也不会成功：为了调用拷贝构造函数，必须拷贝它的实参，但为了拷贝实参，又需要调用拷贝构造函数，如此循环，最终导致内存耗尽。</p>
-<h1 id="30-野指针和悬空指针"><a href="#30-野指针和悬空指针" class="headerlink" title="30 野指针和悬空指针"></a>30 野指针和悬空指针</h1><p>都是是指向无效内存区域(这里的无效指的是”不安全不可控”)的指针，访问行为将会导致未定义行为。</p>
+<h1 id="30-野指针和悬空指针"><a href="#30-野指针和悬空指针" class="headerlink" title="30 野指针和悬空指针"></a>30 野指针和悬空指针</h1><p>都是指向无效内存区域(这里的无效指的是”不安全不可控”)的指针，访问行为将会导致未定义行为。</p>
 <ul>
 <li>野指针：指的是未初始化过的指针，未初始化就被调用<ul>
 <li>产生原因：指针变量未初始化</li>
@@ -805,7 +805,7 @@
 </ul>
 </li>
 <li>悬空指针：指针最初指向的内存已经被释放的一种指针<ul>
-<li>产生原因：指针free或者delete之后没有及时置空</li>
+<li>产生原因：指针free或者delete之后没有及时置空，指针仍然保存着已经释放了的内存的地址</li>
 <li>解决方法：释放操作后立即置空</li>
 </ul>
 </li>
@@ -1040,6 +1040,7 @@
 
 
 <h1 id="49-类成员初始化方式？"><a href="#49-类成员初始化方式？" class="headerlink" title="49 类成员初始化方式？"></a>49 类成员初始化方式？</h1><ul>
+<li>直接初始化、拷贝初始化、成员列表初始化</li>
 <li>赋值初始化，即构造函数内赋值，如果<code>x</code>和<code>y</code>是内置类型，二者没区别，如果是其它自定义类类型，在进入构造函数之前，会先调用该类的默认构造函数，再进行一次赋值的操作</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyClass</span> &#123;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">int</span> x;<br>    <span class="hljs-type">int</span> y;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">MyClass</span>(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b) <br>    &#123;<br>        x = a;<br>        y = b;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
@@ -1671,8 +1672,8 @@
 <p>堆内存：存储动态分配的对象（即那些在程序运行时分配的对象）</p>
 <h1 id="99-智能指针"><a href="#99-智能指针" class="headerlink" title="99 智能指针"></a>99 智能指针</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>指针的使用很容易出问题，确保在正确的时间释放内存是很困难的</p>
 <ul>
-<li>如果忘记释放内存，会产生内存泄漏。</li>
-<li>如果多个指针指向同一块内存，其中一个指针把这块内存释放了，而其它指针正在使用这块内存，会产生引用非法内存的指针。</li>
+<li>如果忘记释放内存，会产生内存泄漏（在堆中使用new创建一块内存，不用了之后没有及时释放掉（delete），程序执行结束这种不会再归还给堆了）。</li>
+<li>使用已经释放掉的对象</li>
 </ul>
 <p>为了更安全和更容器地使用动态内存，产生了智能指针。智能指针的行为类似于常规指针，重要的区别就是它负责自动释放所指向的对象。新标准库中提供了两种智能指针。<code>unique_ptr</code>和<code>shared_ptr</code>这两种智能指针的区别在于管理底层指针的方式：</p>
 <ul>
@@ -1713,33 +1714,7 @@
 <td>交换p和q中的指针</td>
 </tr>
 </tbody></table>
-<h2 id="unique-ptr（独占指针）"><a href="#unique-ptr（独占指针）" class="headerlink" title="unique_ptr（独占指针）"></a>unique_ptr（独占指针）</h2><p><strong>含义：</strong>在任何给定的时刻，只能有一个指针管理内存</p>
-<p><strong>特点：</strong></p>
-<ul>
-<li>当指针超出作用域时，内存将自动释放</li>
-<li>该类型指针不可<code>Copy</code>，只可以<code>Move</code></li>
-</ul>
-<p><strong>三种创建方式：</strong></p>
-<ul>
-<li>通过已有指针创建</li>
-<li>通过<code>new</code>来创建</li>
-<li>通过<code>std::make_unique</code>创建（官方推荐）</li>
-</ul>
-<p><strong>使用：</strong></p>
-<ul>
-<li><p><code>unique_ptr</code>可以通过<code>get()</code>获取地址</p>
-</li>
-<li><p><code>unique_ptr</code>实现了 <code>-&gt;</code> 与<code>*</code></p>
-<ul>
-<li>可以通过-&gt;调用成员函数</li>
-<li>可以通过<code>*</code>调用<code>dereferencing</code></li>
-</ul>
-</li>
-</ul>
-<p><strong>举例：</strong></p>
-<p><code>shared_ptr</code></p>
-<p><code>unique_ptr</code></p>
-<h2 id="shared-ptr"><a href="#shared-ptr" class="headerlink" title="shared_ptr"></a>shared_ptr</h2><p><strong>创建<code>shared_ptr</code>指针</strong></p>
+<h2 id="shared-ptr类（共享指针）"><a href="#shared-ptr类（共享指针）" class="headerlink" title="shared_ptr类（共享指针）"></a>shared_ptr类（共享指针）</h2><p><strong>创建<code>shared_ptr</code>指针</strong>：<code>make_shared</code>函数</p>
 <p><code>make_shared</code>函数：在动态内存中分配一个对象并初始化它，返回指向此对象的<code>shared_ptr</code>（最安全的分配和使用动态内存的方式）</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++">shared_ptr&lt;<span class="hljs-type">int</span>&gt; p3 = <span class="hljs-built_in">make_shared</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">42</span>); <span class="hljs-comment">// 指向一个值为42的int的shared_ptr</span><br>shared_ptr&lt;string&gt; p4 = <span class="hljs-built_in">make_shared</span>&lt;string&gt;(<span class="hljs-number">3</span>, <span class="hljs-string">&#x27;9&#x27;</span>); <span class="hljs-comment">// 指向一个值为&quot;999&quot;的string的shared_ptr</span><br>shared_ptr&lt;<span class="hljs-type">int</span>&gt; p5 = <span class="hljs-built_in">make_shared</span>&lt;<span class="hljs-type">int</span>&gt;(); <span class="hljs-comment">// 指向一个值初始化的int，即值为0</span><br><span class="hljs-keyword">auto</span> p6 = make_shared&lt;vector&lt;string&gt;&gt;; <span class="hljs-comment">// p6指向一个动态分配的空vector&lt;string&gt;</span><br></code></pre></td></tr></table></figure>
 
@@ -1766,6 +1741,60 @@
 <blockquote>
 <p>到底是用一个计数器还是其它数据结构来记录有多少个指针共享对象，完全由标准库的具体实现来决定。关键是智能指针类能记录由多少个 shared_ptr 指向相同的对象，并能在恰当的时候自动释放对象</p>
 </blockquote>
+<p><strong>shared_ptr自动销毁所管理的对象</strong></p>
+<p>当指向一个对象的最后一个<code>shared_ptr</code>被销毁时，<code>shared_ptr</code>类会自动销毁此对象。它是通过析构函数完成销毁工作的。</p>
+<p><code>shared_ptr</code>的析构函数会递减它所指向的对象的引用计数。如果引用计数变为0，<code>shared_ptr</code>的析构函数就会销毁对象，并释放它占用的内存。</p>
+<p><strong>shared_ptr自动释放相关联的内存</strong></p>
+<p>当动态对象不再被使用时，<code>shared_ptr</code>类会自动释放动态对象</p>
+<h2 id="unique-ptr类（独占指针）"><a href="#unique-ptr类（独占指针）" class="headerlink" title="unique_ptr类（独占指针）"></a>unique_ptr类（独占指针）</h2><p><strong>含义：</strong>某个时刻只能有一个<code>unique_ptr</code>指向一个给定对象</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>由于一个<code>unique_ptr</code>拥有它指向的对象，因此<code>unique_ptr</code>不支持普通的拷贝或赋值操作</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">unique_ptr&lt;string&gt; <span class="hljs-title">p1</span><span class="hljs-params">(<span class="hljs-keyword">new</span> string(<span class="hljs-string">&quot;111&quot;</span>))</span></span>;<br><span class="hljs-function">unique_ptr&lt;string&gt; <span class="hljs-title">p2</span><span class="hljs-params">(p1)</span></span>; <span class="hljs-comment">// 错误，unique_ptr不能拷贝</span><br>unique_ptr&lt;string&gt; p3;<br>p3 = p1;<span class="hljs-comment">// 错误，unique_ptr不支持赋值</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>创建方式：</strong></p>
+<ul>
+<li>通过已有指针创建</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> *p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">int</span>(<span class="hljs-number">40</span>);<br><span class="hljs-function">unique_ptr&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">p2</span><span class="hljs-params">(p)</span></span>; <span class="hljs-comment">//如果p2释放，那么p指针就不能用了</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>通过<code>new</code>来创建</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">unique_ptr&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">p</span><span class="hljs-params">(<span class="hljs-keyword">new</span> <span class="hljs-type">int</span>(<span class="hljs-number">42</span>))</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p><strong>使用：</strong></p>
+<ul>
+<li>通过<code>release</code>或<code>reset</code>将指针的所有权从一个（非<code>const</code>）<code>unique_ptr</code>转移给另一个<code>unique_ptr</code></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// release成员返回unique_ptr当前保存的指针并将其置为空，因此p2被初始化为p1原来保存的指针，而p1被置为空</span><br><span class="hljs-function">unique_ptr&lt;string&gt; <span class="hljs-title">p1</span><span class="hljs-params">(<span class="hljs-keyword">new</span> string(<span class="hljs-string">&quot;Stegosaurus&quot;</span>))</span></span>;<br><span class="hljs-function">unique_ptr&lt;string&gt; <span class="hljs-title">p2</span><span class="hljs-params">(p1.release())</span></span>; <br><br><span class="hljs-comment">// reset接受一个可选的指针参数，令unique_ptr重新指向给定的指针。如果unique_ptr不为空，它原来指向的对象被释放</span><br><span class="hljs-comment">// 因此，对p2调用释放了用&quot;Stegosaurus&quot;初始化的string所使用的内存，将p3的使用权交给了p2，并将p3置空</span><br><span class="hljs-function">unique_ptr&lt;string&gt; <span class="hljs-title">p3</span><span class="hljs-params">(<span class="hljs-keyword">new</span> string(<span class="hljs-string">&quot;Trex&quot;</span>))</span></span>;<br>p2.<span class="hljs-built_in">reset</span>(p3.<span class="hljs-built_in">release</span>());<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>调用release会切断unique_ptr和它原来管理的对象间的联系。release返回的指针通常被用来初始化另一个智能指针或给另一个智能指针赋值。</p>
+</blockquote>
+<h2 id="weak-ptr"><a href="#weak-ptr" class="headerlink" title="weak_ptr"></a>weak_ptr</h2><h1 id="100-智能指针相关问题"><a href="#100-智能指针相关问题" class="headerlink" title="100 智能指针相关问题"></a>100 智能指针相关问题</h1><h2 id="1-讲一下什么是智能指针-智能指针有哪几种"><a href="#1-讲一下什么是智能指针-智能指针有哪几种" class="headerlink" title="1 讲一下什么是智能指针&#x2F;智能指针有哪几种"></a>1 讲一下什么是智能指针&#x2F;智能指针有哪几种</h2><p>相比于裸指针，智能指针是对裸指针的一种封装，初衷是让程序员无需手动释放内存，来避免内存泄漏。常见的智能指针有<code>auto_ptr</code>、<code>unique_ptr</code>、<code>shared_ptr</code>、<code>weak_ptr</code></p>
+<h2 id="2-讲一下这几种智能指针的区别和优缺点"><a href="#2-讲一下这几种智能指针的区别和优缺点" class="headerlink" title="2 讲一下这几种智能指针的区别和优缺点"></a>2 讲一下这几种智能指针的区别和优缺点</h2><ul>
+<li><code>auto_ptr</code>在C++11中就已经标为废弃了，代替它的是<code>unique_ptr</code>，相比之下，<code>unique_ptr</code>语义更加清晰，更加安全，不允许复制，更加高效，并且更好地支持数组。</li>
+<li><code>weak_ptr</code>本身不具备内存管理的能力，它主要是为了解决<code>shared_ptr</code>可能导致的循环引用问题，<code>weak_ptr</code>的原理就是指向某个资源时，它不会增加这个资源的引用计数，因此实际上真正意义上的智能指针就是<code>unique_ptr</code>和<code>shared_ptr</code></li>
+<li><code>unique_ptr</code>最主要的特点就是对资源是独占的，它不可以复制和用来拷贝。它<strong>通过在析构函数中释放资源来管理对象的生命周期</strong>，来自动管理资源。可以防止多个智能指针指向同一个对象，更加方便于管理。相比<code>shared_ptr</code>，它的优点是高效，避免了循环引用的问题</li>
+<li>当一个资源需要在多个对象之间共享时，就无法使用<code>unique_ptr</code>了。这时就需要使用到<code>shared_ptr</code>，它<strong>通过引用计数的方式来对资源进行控制</strong>，但是它存在循环引用的问题。需要结合<code>weak_ptr</code>来避免。</li>
+</ul>
+<h2 id="3-讲一下循环引用是如何发生的，以及如何解决"><a href="#3-讲一下循环引用是如何发生的，以及如何解决" class="headerlink" title="3 讲一下循环引用是如何发生的，以及如何解决"></a>3 讲一下循环引用是如何发生的，以及如何解决</h2><p>在两个或多个对象相互引用，或者一些复杂的数据结构，如图、双向链表中，存在多个引用路径的等情况下，可能会出现循环引用的问题，导致资源无法被释放掉，这时候就需要使用<code>weak_ptr</code>来打破循环引用。因为使用<code>weak_ptr</code>指向某一个资源时，它不会增加这个资源的引用计数</p>
+<h2 id="4-weak-ptr是弱引用，它弱在哪里？"><a href="#4-weak-ptr是弱引用，它弱在哪里？" class="headerlink" title="4 weak_ptr是弱引用，它弱在哪里？"></a>4 weak_ptr是弱引用，它弱在哪里？</h2><p>使用<code>weak_ptr</code>指向某一个资源时，它不会增加这个资源的引用计数</p>
+<h2 id="5-具体讲一下shared-ptr自动管理内存的原理-引用计数的具体原理-shared-ptr引用计数什么时候会增加，什么时候减少"><a href="#5-具体讲一下shared-ptr自动管理内存的原理-引用计数的具体原理-shared-ptr引用计数什么时候会增加，什么时候减少" class="headerlink" title="5 具体讲一下shared_ptr自动管理内存的原理&#x2F;引用计数的具体原理&#x2F;shared_ptr引用计数什么时候会增加，什么时候减少"></a>5 具体讲一下shared_ptr自动管理内存的原理&#x2F;引用计数的具体原理&#x2F;shared_ptr引用计数什么时候会增加，什么时候减少</h2><p><strong>引用计数的核心原理</strong></p>
+<p>在shared_ptr的内部维护了一个计数器，来跟踪有多少个shared_ptr对象指向了某一个资源。当计数器的值减少到0的时候，shared_ptr就会调用delete来释放资源（或者用户自定义的方法）</p>
+<p><strong>计数器增加的情况：拷贝一个<code>shared_ptr</code></strong></p>
+<ul>
+<li>当用一个<code>shared_ptr</code>初始化另一个<code>shared_ptr</code></li>
+<li>将一个<code>shared_ptr</code>作为参数传递给一个函数</li>
+<li>作为函数的返回值</li>
+</ul>
+<p><strong>计数器减少的情况：</strong></p>
+<ul>
+<li>当给<code>shared_ptr</code>赋予一个新值</li>
+<li><code>shared_ptr</code>被销毁（例如一个局部的<code>shared_ptr</code>离开作用域）</li>
+</ul>
 
                 
               </div>
@@ -1802,7 +1831,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>April 22, 2024</div>
+          <div>April 23, 2024</div>
         </div>
       
       
