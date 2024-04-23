@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165431867.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240423165237625.png">
 <meta property="article:published_time" content="2024-03-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-04-23T13:00:51.145Z">
+<meta property="article:modified_time" content="2024-04-23T14:02:01.870Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165000175.png">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          29k words
+          30k words
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          241 mins
+          249 mins
         
       </span>
     
@@ -288,7 +288,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-04-23T21:00:51+08:00
+                    Last updated on 2024-04-23T22:02:01+08:00
                   
                   
 
@@ -1477,13 +1477,7 @@
 
 
 
-<h1 id="79-如果有一个空类，它会默认添加哪些函数"><a href="#79-如果有一个空类，它会默认添加哪些函数" class="headerlink" title="79 如果有一个空类，它会默认添加哪些函数"></a>79 如果有一个空类，它会默认添加哪些函数</h1><ul>
-<li>缺省构造函数：<code>Empty(); </code></li>
-<li>拷贝构造函数：<code>Empty(const Empty&amp;);</code></li>
-<li>析构函数：<code>~Empty();</code></li>
-<li>赋值运算符：<code>Empty&amp; operator=( const Empty&amp; );</code></li>
-</ul>
-<h1 id="80-C-中标准库是什么"><a href="#80-C-中标准库是什么" class="headerlink" title="80 C++中标准库是什么"></a>80 C++中标准库是什么</h1><p>C++ 标准库可以分为两部分：</p>
+<h1 id="79"><a href="#79" class="headerlink" title="79"></a>79</h1><h1 id="80-C-中标准库是什么"><a href="#80-C-中标准库是什么" class="headerlink" title="80 C++中标准库是什么"></a>80 C++中标准库是什么</h1><p>C++ 标准库可以分为两部分：</p>
 <p><strong>标准函数库</strong>：这个库是由通用的、独立的、不属于任何类的函数组成的。函数库继承自 C 语言。</p>
 <ul>
 <li>输入&#x2F;输出 I&#x2F;O</li>
@@ -1896,48 +1890,36 @@
 <p>举例：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// this指针的使用：</span><br><span class="hljs-comment">// 用法1：在类的非静态成员函数中返回类对象本身的时候，直接使用`return *this`</span><br><span class="hljs-comment">// 用法2：当形参与成员变量名相同时用于区分，如`this-&gt;n = n`（不能写成n = n，相当于形参给形参自己赋值）</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Student</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">getAge</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">return</span> age;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setAge1</span><span class="hljs-params">(<span class="hljs-type">int</span> age)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-comment">// age = age; //此时，相当于形参给形参自己赋值，并没有给成员age赋值，对应用法2</span><br>        <span class="hljs-keyword">this</span>-&gt;age = age; <span class="hljs-comment">// 正确写法，给成员赋值</span><br>    &#125;<br><br>    <span class="hljs-function">Student <span class="hljs-title">setAge2</span><span class="hljs-params">(<span class="hljs-type">int</span> age)</span> <span class="hljs-comment">// 在类的非静态成员函数中返回类对象本身的时候，直接使用`return *this`，对应用法1</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">this</span>-&gt;age = age;<br>        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 静态函数</span><br>    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">lazy</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;i want to sleep &quot;</span> &lt;&lt; endl;<br>        <span class="hljs-comment">// 报错：“this”只能用于非静态成员函数内部。原因：因为this指针指向对象的首地址，而静态成员函数是先于对象存在的，所以静态/全局函数都没有this指针</span><br>        <span class="hljs-comment">// cout &lt;&lt; this-&gt;age &lt;&lt; endl; </span><br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">printf_func</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;this 指针指向的地址：&quot;</span> &lt;&lt; <span class="hljs-keyword">this</span> &lt;&lt; endl;<br>        cout &lt;&lt; <span class="hljs-string">&quot;成员age的地址: &quot;</span> &lt;&lt; &amp;age &lt;&lt; endl; <br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">int</span> age;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    Student s;<br>    s = s.<span class="hljs-built_in">setAge2</span>(<span class="hljs-number">18</span>);<br>    cout &lt;&lt; <span class="hljs-string">&quot;age: &quot;</span> &lt;&lt; s.<span class="hljs-built_in">getAge</span>() &lt;&lt; endl;<br><br>    <span class="hljs-comment">// this指针指向的地址=第一个成员的地址=对象的首地址(如果再创建一个对象2，则对象2的this指针的指向的地址就是对象2的首地址)</span><br>	<span class="hljs-comment">// this 指针指向的地址：0x61fe0c</span><br>    <span class="hljs-comment">// 成员age的地址: 0x61fe0c </span><br>    s.<span class="hljs-built_in">printf_func</span>(); <br>    cout &lt;&lt; <span class="hljs-string">&quot;对象的地址：&quot;</span> &lt;&lt; &amp;s &lt;&lt; endl; <span class="hljs-comment">// 对象的地址：0x61fe0c</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<h1 id="104-在成员函数中调用delete-this会出现什么问题"><a href="#104-在成员函数中调用delete-this会出现什么问题" class="headerlink" title="104 在成员函数中调用delete this会出现什么问题"></a>104 在成员函数中调用delete this会出现什么问题</h1><p>在类对象的内存空间中，只有数据成员和虚函数表指针，并不包含代码内容，类的成员函数单独放在代码段中。在调用成员函数时，隐含传递一个<code>this</code>指针，让成员函数直到当前是哪个对象在调用它。当调用<code>delete this</code>时，类对象的内存空间被释放。在delete this之后进行的其它任何函数调用，只要不涉及到this指针的内容，都能够正常运行。一旦涉及到this指针，如操作数据成员，调用虚函数等，就会出现不可预期的问题。</p>
+<p><strong>为什么会出现不可预期的问题，delete之后释放了类的内存空间了，那么这段内存应该已经还给系统，不再属于这个进程。按照这个逻辑，应该发生指针错误，无访问权限之类的令系统崩溃的问题才对啊？</strong></p>
+<p>这个问题牵涉到操作系统的内存管理策略。delete this释放了类对象的内存空间，但是内存并不是马上被回收到系统中，可能是缓冲或者其它什么原因，导致这段内存暂时并没有被系统回收，此时这段内存是可以访问的, 但是其中的值可能是不确定的。当获取数据成员，可能得到的是一串很长的未初始化的随机数, 访问虚函数表, 指针可能无效, 造成系统崩溃。</p>
+<h1 id="105-在类的析构函数中调用delete-this会出现什么问题"><a href="#105-在类的析构函数中调用delete-this会出现什么问题" class="headerlink" title="105 在类的析构函数中调用delete this会出现什么问题"></a>105 在类的析构函数中调用delete this会出现什么问题</h1><p>会导致堆栈溢出。</p>
+<p>delete的本质是“为即将释放的内存调用一个或多个析构函数”，然后释放内存，如果在析构函数中调用了delete this，那么this会调用本对象的析构函数，而析构函数中又调用delete this，造成无线递归，最终导致堆栈溢出，系统崩溃。</p>
+<h1 id="106-this指针调用成员变量时，堆栈会发生什么变化"><a href="#106-this指针调用成员变量时，堆栈会发生什么变化" class="headerlink" title="106 this指针调用成员变量时，堆栈会发生什么变化"></a>106 this指针调用成员变量时，堆栈会发生什么变化</h1><p>this指针首先入栈，然后成员函数的参数从右到左进行入栈，最后函数返回地址入栈</p>
+<h1 id="107-如果有一个空类，它会默认添加哪些函数、大小是多少"><a href="#107-如果有一个空类，它会默认添加哪些函数、大小是多少" class="headerlink" title="107 如果有一个空类，它会默认添加哪些函数、大小是多少"></a>107 如果有一个空类，它会默认添加哪些函数、大小是多少</h1><ul>
+<li>缺省构造函数：<code>Empty(); </code></li>
+<li>拷贝构造函数：<code>Empty(const Empty&amp;);</code></li>
+<li>析构函数：<code>~Empty();</code></li>
+<li>赋值运算符：<code>Empty&amp; operator=( const Empty&amp; );</code></li>
+</ul>
+<p><strong>空类的大小是多少？</strong></p>
+<p>空类的大小是1。</p>
+<p><strong>为什么是1？</strong></p>
+<p>这时为了让对象的实例能够相互区别。C++标准指出，不允许一个对象（包括类对象）的大小为0，不同的对象不能具有相同的地址，空类同样可以被实例化，并且每个实例在内存中都独一无二的地址。因此，编译器会给空类隐含加上一个字节，这样空类实例化之后就会拥有独一无二的地址。当该空类作为基类时，该类的大小就优化为0了，子类的大小就是子类本身的大小。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span><br>&#123;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; <span class="hljs-built_in">sizeof</span>(A) &lt;&lt; endl; <span class="hljs-comment">// 1</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<h1 id="108-类对象的大小受哪些因素影响"><a href="#108-类对象的大小受哪些因素影响" class="headerlink" title="108 类对象的大小受哪些因素影响"></a>108 类对象的大小受哪些因素影响</h1><ul>
+<li><p>类的非静态成员变量。（静态成员不占据类的空间，成员函数也不占用类的空间）</p>
+</li>
+<li><p>内存对齐另外分配的空间大小。</p>
+</li>
+<li><p>有虚函数的话，会在类对象插入vptr指针，加上指针大小</p>
+</li>
+<li><p>当该类是某类的派生类，那么派生类继承的基本部分的数据成员也会存在于派生类的空间中。（如果基类是一个空类，派生类的大小就是派生类本身的大小）</p>
+</li>
+</ul>
 
                 
               </div>
