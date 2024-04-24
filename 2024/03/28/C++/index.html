@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165431867.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240423165237625.png">
 <meta property="article:published_time" content="2024-03-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-04-23T14:02:01.870Z">
+<meta property="article:modified_time" content="2024-04-24T07:40:18.601Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165000175.png">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          30k words
+          31k words
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          249 mins
+          257 mins
         
       </span>
     
@@ -288,7 +288,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-04-23T22:02:01+08:00
+                    Last updated on 2024-04-24T15:40:18+08:00
                   
                   
 
@@ -358,8 +358,8 @@
 <p>比如下列情况，结构体所占的字节数为24</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">test</span> &#123;<br>  <span class="hljs-type">int</span>   a;  <span class="hljs-comment">//4</span><br>  <span class="hljs-type">double</span>  b;  <span class="hljs-comment">//8</span><br>  <span class="hljs-type">short</span> c;  <span class="hljs-comment">//2</span><br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span><br><span class="hljs-function"></span>&#123;<br>    test t;<br>    cout &lt;&lt; <span class="hljs-built_in">sizeof</span>(t) &lt;&lt; endl;  <span class="hljs-comment">// 24</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>如果把b和c交换一下位置，那么结构体所占的字节数为12</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">test</span> &#123;<br>  <span class="hljs-type">int</span>   a;  <span class="hljs-comment">//4</span><br>  <span class="hljs-type">short</span> c;  <span class="hljs-comment">//2</span><br>  <span class="hljs-type">double</span>  b;  <span class="hljs-comment">//8</span><br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span><br><span class="hljs-function"></span>&#123;<br>    test t;<br>    cout &lt;&lt; <span class="hljs-built_in">sizeof</span>(t) &lt;&lt; endl;  <span class="hljs-comment">// 12</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>如果把b和c交换一下位置，那么结构体所占的字节数为16</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">test</span> &#123;<br>  <span class="hljs-type">int</span>   a;  <span class="hljs-comment">//4</span><br>  <span class="hljs-type">short</span> c;  <span class="hljs-comment">//2</span><br>  <span class="hljs-type">double</span>  b;  <span class="hljs-comment">//8</span><br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span><br><span class="hljs-function"></span>&#123;<br>    test t;<br>    cout &lt;&lt; <span class="hljs-built_in">sizeof</span>(t) &lt;&lt; endl;  <span class="hljs-comment">// 16</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="3-内存对齐规则"><a href="#3-内存对齐规则" class="headerlink" title="3 内存对齐规则"></a>3 内存对齐规则</h2><ul>
 <li>各成员变量存放的起始地址， 相对于结构体的起始地址的偏移量 ，必须为该变量的类型所占用的字节数的倍数；</li>
@@ -1017,7 +1017,28 @@
 <h1 id="44-全局对象-局部对象-局部静态对象的生命周期"><a href="#44-全局对象-局部对象-局部静态对象的生命周期" class="headerlink" title="44 全局对象&#x2F;局部对象&#x2F;局部静态对象的生命周期"></a>44 全局对象&#x2F;局部对象&#x2F;局部静态对象的生命周期</h1><p><strong>全局对象：</strong>在程序启动时分配，在程序结束时销毁</p>
 <p><strong>局部对象：</strong>当进入其定义所在的程序块时被创建，在离开块时销毁</p>
 <p><strong>局部static对象：</strong>在第一次使用前分配，在程序结束时销毁</p>
-<h1 id="45-多态的底层原理"><a href="#45-多态的底层原理" class="headerlink" title="45 多态的底层原理"></a>45 多态的底层原理</h1><h1 id="46-值传递、指针传递、引用传递的区别和效率"><a href="#46-值传递、指针传递、引用传递的区别和效率" class="headerlink" title="46 值传递、指针传递、引用传递的区别和效率"></a>46 值传递、指针传递、引用传递的区别和效率</h1><ul>
+<h1 id="45-成员初始化列表的概念，为什么用它会快一些？"><a href="#45-成员初始化列表的概念，为什么用它会快一些？" class="headerlink" title="45 成员初始化列表的概念，为什么用它会快一些？"></a>45 成员初始化列表的概念，为什么用它会快一些？</h1><p><strong>概念</strong></p>
+<p>在类的构造函数中，不存在函数体内对成员赋值，而是在函数名的后面、花括号的前面使用<code>:</code>和成员初始化列表对成员赋值</p>
+<p><strong>效率</strong></p>
+<p>对于内置类型，效率没有差别</p>
+<p>对于其它类型，使用成员初始化列表会少一次调用构造函数的过程；而在函数体内使用直接赋值会多一次调用默认构造函数的过程（先初始化再赋值）</p>
+<p>如果没有在构造函数的初始值列表中显示地初始化成员，则该成员将在构造函数体之前执行默认初始化</p>
+<p><strong>注意点</strong></p>
+<p>如果成员是<code>const</code>、引用、或者属于某种未提供默认构造函数的类类型，必须使用初始化列表为这些成员提供初值</p>
+<blockquote>
+<p>随着构造函数体一开始执行，初始化就完成了，构造函数体内是赋值的操作</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">A</span>()<br>    &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;default constructor&quot;</span> &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-built_in">A</span>(<span class="hljs-type">int</span> a)<br>    &#123;<br>        value = a;<br>        cout &lt;&lt; <span class="hljs-string">&quot;a: &quot;</span> &lt;&lt; a &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-type">int</span> value;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">B</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">B</span>():<span class="hljs-built_in">a</span>(<span class="hljs-number">1</span>)<br>    &#123;<br>        b = <span class="hljs-built_in">A</span>(<span class="hljs-number">2</span>);<br>        c = <span class="hljs-number">3</span>;<br>    &#125;<br><br>    A a;<br>    A b;<br>    <span class="hljs-type">int</span> c;<br>&#125;;<br><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    B b;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">// 输出结果</span><br>a: <span class="hljs-number">1</span><br><span class="hljs-keyword">default</span> constructor<br>a: <span class="hljs-number">2</span>C<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>对于<code>a</code>，使用成员列表初始化，对a直接赋值</p>
+</li>
+<li><p>对于<code>b</code>，在进入构造函数之前，会先调用一次默认构造函数，再进行一次赋值操作(对象已存在)</p>
+</li>
+<li><p>对于<code>c</code>，为基本类型，直接对<code>c</code>进行赋值</p>
+</li>
+</ul>
+<h1 id="46-值传递、指针传递、引用传递的区别和效率"><a href="#46-值传递、指针传递、引用传递的区别和效率" class="headerlink" title="46 值传递、指针传递、引用传递的区别和效率"></a>46 值传递、指针传递、引用传递的区别和效率</h1><ul>
 <li>值传递：有形参向函数所属的栈拷贝数据的过程，如果值传递的对象是类对象或是大的结构体对象，耗费时间和空间比较大。</li>
 <li>指针传递：本质上是值传递。向函数所属的栈拷贝指针，指针指向是实参的地址</li>
 <li>引用传递：被调函数的形参也作为局部变量在栈中开辟了内存空间，但是这时存放的是由主调函数放进来的实参变量的地址。</li>
@@ -1110,33 +1131,14 @@
 <p>多态是指同一操作作用于不同的对象，可以产生不同的行为。即一个函数在不同的对象上拥有不同的行为。</p>
 <p>多态有两种形式：</p>
 <ul>
-<li><p>静态多态，重载：是指函数名相同，参数列表不同</p>
-</li>
-<li><p>动态多态，覆盖（重写）：是指子类重新定义父类的虚函数。</p>
-</li>
+<li>静态多态，重载：是指函数名相同，参数列表不同</li>
+<li>动态多态，覆盖（重写）：是指子类重新定义父类的虚函数。</li>
 </ul>
-<h1 id="53-成员初始化列表的概念，为什么用它会快一些？"><a href="#53-成员初始化列表的概念，为什么用它会快一些？" class="headerlink" title="53 成员初始化列表的概念，为什么用它会快一些？"></a>53 成员初始化列表的概念，为什么用它会快一些？</h1><p><strong>概念</strong></p>
-<p>在类的构造函数中，不存在函数体内对成员赋值，而是在函数名的后面、花括号的前面使用<code>:</code>和成员初始化列表对成员赋值</p>
-<p><strong>效率</strong></p>
-<p>对于内置类型，效率没有差别</p>
-<p>对于其它类型，使用成员初始化列表会少一次调用构造函数的过程；而在函数体内使用直接赋值会多一次调用默认构造函数的过程（先初始化再赋值）</p>
-<p>如果没有在构造函数的初始值列表中显示地初始化成员，则该成员将在构造函数体之前执行默认初始化</p>
-<p><strong>注意点</strong></p>
-<p>如果成员是<code>const</code>、引用、或者属于某种未提供默认构造函数的类类型，必须使用初始化列表为这些成员提供初值</p>
-<blockquote>
-<p>随着构造函数体一开始执行，初始化就完成了，构造函数体内是赋值的操作</p>
-</blockquote>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">A</span>()<br>    &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;default constructor&quot;</span> &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-built_in">A</span>(<span class="hljs-type">int</span> a)<br>    &#123;<br>        value = a;<br>        cout &lt;&lt; <span class="hljs-string">&quot;a: &quot;</span> &lt;&lt; a &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-type">int</span> value;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">B</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">B</span>():<span class="hljs-built_in">a</span>(<span class="hljs-number">1</span>)<br>    &#123;<br>        b = <span class="hljs-built_in">A</span>(<span class="hljs-number">2</span>);<br>        c = <span class="hljs-number">3</span>;<br>    &#125;<br><br>    A a;<br>    A b;<br>    <span class="hljs-type">int</span> c;<br>&#125;;<br><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    B b;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">// 输出结果</span><br>a: <span class="hljs-number">1</span><br><span class="hljs-keyword">default</span> constructor<br>a: <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+<p>多态如何实现？</p>
+<p>在基类的函数前加上 <code>virtual</code>关键字，在派生类中重写该函数，运行时将会根据所指对象的实际对象类型（基类&#x2F;派生类）来调用相应的函数，如果对象类型是派生类，就调用派生类的函数，如果对象类型是基类，就调用基类的函数。如果基类没有重写基类的虚函数，会调用父类的虚函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Base</span>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">()</span></span>&#123;<br>		cout &lt;&lt; <span class="hljs-string">&quot; Base::func()&quot;</span> &lt;&lt;endl;<br>	&#125;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Son1</span> : <span class="hljs-keyword">public</span> Base&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span></span>&#123;<br>		cout &lt;&lt; <span class="hljs-string">&quot; Son1::func()&quot;</span> &lt;&lt;endl;<br>	&#125;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Son2</span> : <span class="hljs-keyword">public</span> Base&#123;<br><br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	Base* base = <span class="hljs-keyword">new</span> Son1;<br>	base-&gt;<span class="hljs-built_in">fun</span>(); <span class="hljs-comment">// Son1::func()</span><br>	base = <span class="hljs-keyword">new</span> Son2;<br>	base-&gt;<span class="hljs-built_in">fun</span>();	<span class="hljs-comment">// Base::func()</span><br>	<span class="hljs-keyword">delete</span> base;<br>	base = <span class="hljs-literal">NULL</span>;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-comment">// 运行结果</span><br><span class="hljs-comment">// Son1::func()</span><br><span class="hljs-comment">// Base::func()</span><br><br></code></pre></td></tr></table></figure>
 
-<ul>
-<li><p>对于<code>a</code>，使用成员列表初始化，对a直接赋值</p>
-</li>
-<li><p>对于<code>b</code>，在进入构造函数之前，会先调用一次默认构造函数，再进行一次赋值操作(对象已存在)</p>
-</li>
-<li><p>对于<code>c</code>，为基本类型，直接对<code>c</code>进行赋值</p>
-</li>
-</ul>
-<h1 id="54-C-函数调用的压栈过程"><a href="#54-C-函数调用的压栈过程" class="headerlink" title="54 C++函数调用的压栈过程"></a>54 C++函数调用的压栈过程</h1><p><strong>代码层面</strong></p>
+<h1 id="53-多态的底层原理"><a href="#53-多态的底层原理" class="headerlink" title="53 多态的底层原理"></a>53 多态的底层原理</h1><h1 id="54-C-函数调用的压栈过程"><a href="#54-C-函数调用的压栈过程" class="headerlink" title="54 C++函数调用的压栈过程"></a>54 C++函数调用的压栈过程</h1><p><strong>代码层面</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span><br><span class="hljs-function"></span>&#123;<br>	cout &lt;&lt; n &lt;&lt; endl;<br>	<span class="hljs-keyword">return</span> n;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-type">int</span> param1, <span class="hljs-type">int</span> param2)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> var1 = param1;<br>	<span class="hljs-type">int</span> var2 = param2;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;var1=%d,var2=%d&quot;</span>, <span class="hljs-built_in">f</span>(var1), <span class="hljs-built_in">f</span>(var2));<span class="hljs-comment">//如果将printf换为cout进行输出，输出结果则刚好相反</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>* argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-built_in">func</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-comment">//输出结果</span><br><span class="hljs-comment">//2</span><br><span class="hljs-comment">//1</span><br><span class="hljs-comment">//var1=1,var2=2</span><br><br></code></pre></td></tr></table></figure>
 
 <p>（1）当函数入口函数main函数开始执行时，编译器会将我们操作系统的运行状态，main函数的返回地址、main的参数、mian函数中的变量、进行依次压栈；</p>
@@ -1477,7 +1479,19 @@
 
 
 
-<h1 id="79"><a href="#79" class="headerlink" title="79"></a>79</h1><h1 id="80-C-中标准库是什么"><a href="#80-C-中标准库是什么" class="headerlink" title="80 C++中标准库是什么"></a>80 C++中标准库是什么</h1><p>C++ 标准库可以分为两部分：</p>
+<h1 id="79-size-t"><a href="#79-size-t" class="headerlink" title="79 size_t"></a>79 size_t</h1><p><code>size_t</code>是<strong>无符号</strong>的长整型，一般用来表示字节数的多少。常用于如sizeof返回值的类型。</p>
+<p><strong>与<code>int</code>类型相比，主要的特点为</strong></p>
+<ul>
+<li><code>size_t</code>是无符号的，<code>int</code>是有符号的。</li>
+<li><code>size_t</code>是一种跟具体的平台有关联的类型，会具体调整其能表示的范围，因此其可移植性会更好。</li>
+<li><code>size_t</code>能保证可以存储任何类型理论上可能的对象的最大值，包括数组类型。而<code>int</code>类型则只能保证<strong>16</strong>位或 <strong>32</strong>位的长度，且<code>int</code>为有符号的类型，其能存储的范围就更小了。对于存储超过该范围的数值时，就会出现问题，而<code>size_t</code>则没有此问题。</li>
+</ul>
+<p>常见用法：</p>
+<ul>
+<li>当表示或计算字节数的大小时，用<code>size_t</code>，如计算 sizeof 返回值时。</li>
+<li>当用于数组索引和循环计数时，推荐使用<code>size_t</code>。尤其对于循环中的索引值递减时，由于<code>int</code>可以为负值，<code>unsigned int</code>不可以为0，此时递减的循环很容易出问题</li>
+</ul>
+<h1 id="80-C-中标准库是什么"><a href="#80-C-中标准库是什么" class="headerlink" title="80 C++中标准库是什么"></a>80 C++中标准库是什么</h1><p>C++ 标准库可以分为两部分：</p>
 <p><strong>标准函数库</strong>：这个库是由通用的、独立的、不属于任何类的函数组成的。函数库继承自 C 语言。</p>
 <ul>
 <li>输入&#x2F;输出 I&#x2F;O</li>
@@ -1657,19 +1671,24 @@
 <li>函数体内的代码比较长，将导致内存消耗</li>
 <li>函数体内有循环，函数执行时间要比函数调用开销大</li>
 </ul>
-<h1 id="97-size-t"><a href="#97-size-t" class="headerlink" title="97 size_t"></a>97 size_t</h1><p><code>size_t</code>是<strong>无符号</strong>的长整型，一般用来表示字节数的多少。常用于如sizeof返回值的类型。</p>
-<p><strong>与<code>int</code>类型相比，主要的特点为</strong></p>
+<h1 id="97-C-11新特性"><a href="#97-C-11新特性" class="headerlink" title="97 C++11新特性"></a>97 C++11新特性</h1><h2 id="nullptr替代NULL"><a href="#nullptr替代NULL" class="headerlink" title="nullptr替代NULL"></a>nullptr替代NULL</h2><p>C++中NULL和nullptr的区别</p>
 <ul>
-<li><code>size_t</code>是无符号的，<code>int</code>是有符号的。</li>
-<li><code>size_t</code>是一种跟具体的平台有关联的类型，会具体调整其能表示的范围，因此其可移植性会更好。</li>
-<li><code>size_t</code>能保证可以存储任何类型理论上可能的对象的最大值，包括数组类型。而<code>int</code>类型则只能保证<strong>16</strong>位或 <strong>32</strong>位的长度，且<code>int</code>为有符号的类型，其能存储的范围就更小了。对于存储超过该范围的数值时，就会出现问题，而<code>size_t</code>则没有此问题。</li>
+<li>NULL来自C语言，一般由宏定义实现，而nullptr是C++11新增的关键字</li>
+<li>在C语言中，NULL被定义为<code>(void*)0</code>，在C++语言中，NULL被定义为整数0。编译器一般对其实际定义如下：</li>
 </ul>
-<p>常见用法：</p>
-<ul>
-<li>当表示或计算字节数的大小时，用<code>size_t</code>，如计算 sizeof 返回值时。</li>
-<li>当用于数组索引和循环计数时，推荐使用<code>size_t</code>。尤其对于循环中的索引值递减时，由于<code>int</code>可以为负值，<code>unsigned int</code>不可以为0，此时递减的循环很容易出问题</li>
-</ul>
-<h1 id="98-内存分区"><a href="#98-内存分区" class="headerlink" title="98 内存分区"></a>98 内存分区</h1><p><img src="/../imgs/$%7Bfiilename%7D/image-20240423165237625.png" srcset="/img/loading.gif" lazyload alt="image-20240423165237625"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// C中NULL的定义</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> NULL 0</span><br><br><br><span class="hljs-comment">// C++中NULL的定义</span><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> __cplusplus</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> NULL 0</span><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> NULL ((void *)0)</span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
+
+<p>如果函数重载成整型和指针间的版本，传入NULL会被匹配到整型形参版本的函数，而不是预期的指针版本。<code>nullptr</code>在C++11中被引入用于解决一问题，<code>nullptr</code>可以明确区分整型和指针类型，能够根据环境自动转换成响应的指针类型，但不会被转换为任何整型，所以不会造成参数传递错误的情况。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;f(int)&quot;</span> &lt;&lt; endl;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">char</span>*)</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;f(char*)&quot;</span> &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">f</span>(<span class="hljs-number">0</span>);<br>    <span class="hljs-built_in">f</span>(<span class="hljs-literal">nullptr</span>);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>但使用<code>nullptr</code>仍会出现一种问题：如果函数在不同指针之间转换，那么传入<code>nullptr</code>仍然无法匹配到函数，会报错，这时需要显示调用函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;f(int)&quot;</span> &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">char</span>*)</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;f(char*)&quot;</span> &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">int</span>*)</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;f(int*)&quot;</span> &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">f</span>(<span class="hljs-number">0</span>);<br>    <span class="hljs-built_in">f</span>(<span class="hljs-literal">nullptr</span>); <span class="hljs-comment">// 报错，不知道匹配哪个函数</span><br>    <span class="hljs-built_in">f</span>((<span class="hljs-type">int</span>*)<span class="hljs-literal">nullptr</span>);  <span class="hljs-comment">// 显示调用函数</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="引入了auto和decltype这两个关键字实现了类型推导"><a href="#引入了auto和decltype这两个关键字实现了类型推导" class="headerlink" title="引入了auto和decltype这两个关键字实现了类型推导"></a>引入了auto和decltype这两个关键字实现了类型推导</h2><p>auto：auto让编译器通过初始值来进行类型推演，从而获得定义变量的类型，所以<code>auto</code>定义的变量必须有初始值。</p>
+<p>decltype：有时需要获取表达式的类型，但又不希望实际执行表达式，使用decltype关键字来解决这个问题。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">func</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;func&quot;</span> &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">decltype</span>(<span class="hljs-built_in">func</span>()) sum = <span class="hljs-number">5</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Lambda表达式"><a href="#Lambda表达式" class="headerlink" title="Lambda表达式"></a>Lambda表达式</h2><h2 id="基于范围的for循环"><a href="#基于范围的for循环" class="headerlink" title="基于范围的for循环"></a>基于范围的for循环</h2><h2 id="类和结构体的初始化列表"><a href="#类和结构体的初始化列表" class="headerlink" title="类和结构体的初始化列表"></a>类和结构体的初始化列表</h2><h2 id="右值引用和move语义"><a href="#右值引用和move语义" class="headerlink" title="右值引用和move语义"></a>右值引用和move语义</h2><h2 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h2><h1 id="98-内存分区"><a href="#98-内存分区" class="headerlink" title="98 内存分区"></a>98 内存分区</h1><p><img src="/../imgs/$%7Bfiilename%7D/image-20240423165237625.png" srcset="/img/loading.gif" lazyload alt="image-20240423165237625"></p>
 <p><strong>栈：</strong>存放函数内部局部非静态变量。函数执行结束时这些存储单元自动被释放，栈内存分配运算内置于处理器的指令集中，效率很高，但是分配的内存容量有限</p>
 <p><strong>堆：</strong>就是那些由<code>new</code>分配的内存块（动态分配的对象，即那些在程序运行时分配的对象），由程序员管理内存的释放，如果程序没有被释放掉，那么在程序结束后，由操作系统回收。但在程序结束前，会造成内存泄漏。</p>
 <p><strong>全局&#x2F;静态存储区：</strong>静态变量（局部static对象、类static数据成员）、全局变量</p>
@@ -1778,7 +1797,47 @@
 <blockquote>
 <p>调用release会切断unique_ptr和它原来管理的对象间的联系。release返回的指针通常被用来初始化另一个智能指针或给另一个智能指针赋值。</p>
 </blockquote>
-<h2 id="weak-ptr"><a href="#weak-ptr" class="headerlink" title="weak_ptr"></a>weak_ptr</h2><h1 id="100-智能指针相关问题"><a href="#100-智能指针相关问题" class="headerlink" title="100 智能指针相关问题"></a>100 智能指针相关问题</h1><h2 id="1-讲一下什么是智能指针-智能指针有哪几种"><a href="#1-讲一下什么是智能指针-智能指针有哪几种" class="headerlink" title="1 讲一下什么是智能指针&#x2F;智能指针有哪几种"></a>1 讲一下什么是智能指针&#x2F;智能指针有哪几种</h2><p>相比于裸指针，智能指针是对裸指针的一种封装，初衷是让程序员无需手动释放内存，来避免内存泄漏。常见的智能指针有<code>auto_ptr</code>、<code>unique_ptr</code>、<code>shared_ptr</code>、<code>weak_ptr</code></p>
+<h2 id="weak-ptr"><a href="#weak-ptr" class="headerlink" title="weak_ptr"></a>weak_ptr</h2><p>weak_ptr专门用于解决<code>share_ptr</code>循环引用的问题。<code>weak_ptr</code>不会修改引用计数，也就是它的存在并不影响对象的引用计数器。循环引用就是：两个对象互相使用一个<code>shared_ptr</code>成员变量指向对方。所引用并不对对象的内存进行管理，在功能上类似于普通指针，与普通指针比较大的区别是，弱指针能检测到所管理的对象是否已经释放，从而避免访问非法内存。</p>
+<p>当创建一个<code>weak_ptr</code>时，要用一个<code>shared_ptr</code>来初始化它</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">auto</span> p = <span class="hljs-built_in">make_shared</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">42</span>);<br><span class="hljs-function">weak_ptr&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">wp</span><span class="hljs-params">(p)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>用法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>wak_ptr<T> w</td>
+<td>空wak_ptr可以指向类型为T的对象</td>
+</tr>
+<tr>
+<td>wak_ptr<T> w(sp)</td>
+<td>与shared_ptr sp指向相同对象的wak_ptr。T必须能够转换为sp指向的类型</td>
+</tr>
+<tr>
+<td>w&#x3D;p</td>
+<td>p可以是一个sharead_ptr或一个weak_ptr。赋值后w与p共享对象</td>
+</tr>
+<tr>
+<td>w.reset()</td>
+<td>将w置为空</td>
+</tr>
+<tr>
+<td>w.use_count()</td>
+<td>与w共享对象的shared_ptr的数量</td>
+</tr>
+<tr>
+<td>w.expired()</td>
+<td>若w.use_count()为0，返回true，否则返回false</td>
+</tr>
+<tr>
+<td>w.lock()</td>
+<td>如果expired为true，返回一个空shared_ptr；否则返回一个指向w的对象的shared_ptr</td>
+</tr>
+</tbody></table>
+<h1 id="100-智能指针相关问题"><a href="#100-智能指针相关问题" class="headerlink" title="100 智能指针相关问题"></a>100 智能指针相关问题</h1><h2 id="1-讲一下什么是智能指针-智能指针有哪几种"><a href="#1-讲一下什么是智能指针-智能指针有哪几种" class="headerlink" title="1 讲一下什么是智能指针&#x2F;智能指针有哪几种"></a>1 讲一下什么是智能指针&#x2F;智能指针有哪几种</h2><p>相比于裸指针，智能指针是对裸指针的一种封装，初衷是让程序员无需手动释放内存，来避免内存泄漏。常见的智能指针有<code>auto_ptr</code>、<code>unique_ptr</code>、<code>shared_ptr</code>、<code>weak_ptr</code></p>
 <h2 id="2-讲一下这几种智能指针的区别和优缺点"><a href="#2-讲一下这几种智能指针的区别和优缺点" class="headerlink" title="2 讲一下这几种智能指针的区别和优缺点"></a>2 讲一下这几种智能指针的区别和优缺点</h2><ul>
 <li><code>auto_ptr</code>在C++11中就已经标为废弃了，代替它的是<code>unique_ptr</code>，相比之下，<code>unique_ptr</code>语义更加清晰，更加安全，不允许复制，更加高效，并且更好地支持数组。</li>
 <li><code>weak_ptr</code>本身不具备内存管理的能力，它主要是为了解决<code>shared_ptr</code>可能导致的循环引用问题，<code>weak_ptr</code>的原理就是指向某个资源时，它不会增加这个资源的引用计数，因此实际上真正意义上的智能指针就是<code>unique_ptr</code>和<code>shared_ptr</code></li>
@@ -1956,7 +2015,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>April 23, 2024</div>
+          <div>April 24, 2024</div>
         </div>
       
       
