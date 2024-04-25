@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165431867.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240423165237625.png">
 <meta property="article:published_time" content="2024-03-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-04-25T12:15:33.791Z">
+<meta property="article:modified_time" content="2024-04-25T14:12:51.404Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165000175.png">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          34k words
+          35k words
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          283 mins
+          288 mins
         
       </span>
     
@@ -288,7 +288,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-04-25T20:15:33+08:00
+                    Last updated on 2024-04-25T22:12:51+08:00
                   
                   
 
@@ -2053,7 +2053,36 @@
 <li>静态函数：静态函数不属于类，静态成员函数没有this指针，无法调用虚表指针，所以静态函数不能是虚函数</li>
 <li>友元函数：友元函数不属于类的成员函数，不能被继承。对于没有继承特性的函数没有虚函数的说法</li>
 </ul>
+<h1 id="119-构造函数"><a href="#119-构造函数" class="headerlink" title="119 构造函数"></a>119 构造函数</h1><h2 id="合成的默认构造函数"><a href="#合成的默认构造函数" class="headerlink" title="合成的默认构造函数"></a>合成的默认构造函数</h2><p><strong>定义</strong>：如果类中没有显示地定义一个构造函数，那么编译器就会隐式地定义一个默认构造函数（也叫合成的默认构造函数）</p>
+<p><strong>使用场景</strong>：当我们没有为类显示定义构造函数的时候。</p>
+<p><strong>使用合成的默认构造函数初始化类的规则：</strong></p>
+<ul>
+<li>如果存在类内的初始值，用初始值来初始化成员</li>
+<li>否则，默认初始化该成员</li>
+</ul>
+<blockquote>
+<p>类内初始值：直接在类内定义的时候给变量一个初始值，而不需要在构造函数中进行初始化。如果对象被默认构造，这些值将生效。</p>
+<p>默认构造函数有两种：合成的默认构造函数、我们自己定义的默认构造函数</p>
+</blockquote>
+<p><strong>使用合成的默认构造函数的限制：</strong>某些类不能依赖于合成的默认构造函数，原因有三个：</p>
+<ul>
+<li>原因1：编译器只有在发现类不包含任何构造函数的情况下才会生成一个默认的构造函数。一旦我们定义了一些其它的构造函数，那么除非我们再定义一个默认的构造函数，否则类将没有默认构造函数</li>
+<li>原因2：对于某些类来说，合成的默认构造函数可能执行错误的操作</li>
+</ul>
+<h2 id="各个构造函数的原理"><a href="#各个构造函数的原理" class="headerlink" title="各个构造函数的原理"></a>各个构造函数的原理</h2><h2 id="各个构造函数的使用场景"><a href="#各个构造函数的使用场景" class="headerlink" title="各个构造函数的使用场景"></a>各个构造函数的使用场景</h2><h1 id="120-初始化"><a href="#120-初始化" class="headerlink" title="120 初始化"></a>120 初始化</h1><h2 id="初始化的方式"><a href="#初始化的方式" class="headerlink" title="初始化的方式"></a>初始化的方式</h2><p><strong>默认初始化：</strong>如果定义变量时没有指定初值，则变量被默认初始化。</p>
+<p><strong>默认初始化的规则：</strong>如果是内置类型的变量未被显示初始化，它的值由定义的位置决定。</p>
+<ul>
+<li>定义于任何函数体之外的变量被初始化为0。</li>
+<li>定义在函数体内部的内置类型变量将不被初始化。一个未被初始化的内置类型变量的值是未定义的，如果试图拷贝或以其它形式访问此类值将引发错误。（定义局部变量的时候要给它一个初始值）</li>
+</ul>
+<blockquote>
+<p>当给带符号类型一个超出它表示范围的值时，结果是未定义的。此时，程序可能继续工作、可能崩溃，也可能生成垃圾数据。</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Base</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-comment">// b和c都是未定义的，有值可能是编译器优化</span><br>        <span class="hljs-type">int</span> b;<br>        string c;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
+
+
+<h2 id="各种初始化方式的原理"><a href="#各种初始化方式的原理" class="headerlink" title="各种初始化方式的原理"></a>各种初始化方式的原理</h2><h2 id="各种初始化方式的使用场景"><a href="#各种初始化方式的使用场景" class="headerlink" title="各种初始化方式的使用场景"></a>各种初始化方式的使用场景</h2>
                 
               </div>
             
