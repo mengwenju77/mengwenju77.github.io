@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165431867.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240423165237625.png">
 <meta property="article:published_time" content="2024-03-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-04-25T08:29:14.377Z">
+<meta property="article:modified_time" content="2024-04-25T12:15:33.791Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165000175.png">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          33k words
+          34k words
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          279 mins
+          283 mins
         
       </span>
     
@@ -288,7 +288,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-04-25T16:29:14+08:00
+                    Last updated on 2024-04-25T20:15:33+08:00
                   
                   
 
@@ -827,7 +827,7 @@
 <h1 id="33-虚函数和纯虚函数"><a href="#33-虚函数和纯虚函数" class="headerlink" title="33 虚函数和纯虚函数"></a>33 虚函数和纯虚函数</h1><p><strong>虚函数：</strong></p>
 <p>为什么要有虚函数：对于某些函数，基类希望它的派生类各自定义合适自身的版本，基类就可以将这些函数声明为虚函数。实现动态绑定，也就是在程序运行时，函数根据传入的实参确定调用基类还是某个派生类中被重写过的虚函数。</p>
 <blockquote>
-<p>理解：定义一个函数为虚函数是为了在函数运行进行调用时，根据传入的实参确定要调用基类的函数还是派生类的函数</p>
+<p>理解：定义一个函数为virtual虚函数是为了在函数运行进行调用时，根据传入的实参确定要调用基类的函数还是派生类的函数</p>
 </blockquote>
 <p>伪代码：场景：购买书籍，超过一定数量时打折</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Quote</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">std::string <span class="hljs-title">isbn</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>; <span class="hljs-comment">// 返回书籍的ISBN号。该操作不涉及派生类的特殊性，因此只定义在基类中</span><br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">double</span> <span class="hljs-title">net_price</span><span class="hljs-params">(std::<span class="hljs-type">size_t</span> n)</span> <span class="hljs-type">const</span></span>; <span class="hljs-comment">// 返回书籍的实际价格，前提是用户购买该书的数量达到一定标准，这个操作是类型相关的</span><br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Bulk_Quote</span> : <span class="hljs-keyword">public</span> Quote<br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">net_price</span><span class="hljs-params">(std::<span class="hljs-type">size_t</span> n)</span> <span class="hljs-type">const</span> <span class="hljs-keyword">override</span></span>;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">print_total</span><span class="hljs-params">(<span class="hljs-type">const</span> Quote&amp; item, <span class="hljs-type">size_t</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">double</span> ret = item.<span class="hljs-built_in">net_price</span>(n);  <span class="hljs-comment">// 父类的引用指向子类的对象</span><br>    <span class="hljs-keyword">return</span> ret;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    Quote basic;<br>    Bulk_Quote bulk;<br>    <span class="hljs-comment">//发生了动态绑定，函数直到运行时根据具体传入的实参知道要调用基类还是派生类的函数</span><br>    <span class="hljs-built_in">print_total</span>(basic, <span class="hljs-number">20</span>);<br>    <span class="hljs-built_in">print_total</span>(bulk, <span class="hljs-number">20</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -836,13 +836,14 @@
 <p>派生类必须在其内部对所有覆盖的函数进行声明</p>
 </blockquote>
 <ul>
-<li><p>任何构造函数以外的非静态函数都可以是虚函数</p>
-</li>
-<li><p>虚函数一般都是要被重写的，如果没被重写，则该虚函数在基类中类似于其它的普通成员，派生类会直接继承其在基类中的版本（这种情况下，就没必要写成虚函数了）</p>
-</li>
+<li>任何构造函数以外的非静态函数都可以是虚函数</li>
+<li>虚函数一般都是要被重写的，如果没被重写，则该虚函数在基类中类似于其它的普通成员，派生类会直接继承其在基类中的版本（这种情况下，就没必要写成虚函数了）</li>
+<li>虚函数需要在基类中加上<code>virtual</code>修饰符，因为<code>virtual</code>会被隐式继承，所以子类中相同的函数都是虚函数当一个成员函数被声明为虚函数之后，其派生类中同名函数自动成为虚函数，在派生类中重新定义此函数时要求函数名、返回值类型、参数个数和类型全部与基类函数相同。</li>
 </ul>
 <p><strong>纯虚函数</strong></p>
-<p>定义一个函数为纯虚函数是为了实现一个接口，起到一个规范的作用</p>
+<p>定义一个函数为纯虚函数是为了实现一个接口，起到一个规范的作用。</p>
+<p>纯虚函数首先是虚函数，其次它没有函数体，取而代之的是用<code>=0</code>。</p>
+<p>既然是虚函数，它的函数指针会被存放在虚函数表中，由于纯虚函数并没有具体的函数体，因此它在虚函数表中的值就为0，而具有函数体的虚函数则是函数的具体地址。</p>
 <p>纯虚函数语法：<code>virtual 返回值类型 函数名（参数列表）= 0；</code></p>
 <p>当类有了一个纯虚函数，这个类也称为抽象类</p>
 <p>抽象类特点：</p>
@@ -852,7 +853,7 @@
 </ul>
 <p>引入原因：</p>
 <ul>
-<li><p>为了方便使用多态特性，我们常常需要在基类中定义虚函数。</p>
+<li><p>为了方便使用多态特性，我们常常需要在基类中定义纯虚函数。</p>
 </li>
 <li><p>在很多情况下，基类本身生成对象是不合情理的。例如，动物作为一个基类可以派生出老虎、孔雀等子类，但动物本身生成对象明显不合常理。</p>
 </li>
@@ -2046,6 +2047,12 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c++"><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Base</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> </span>&#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Base class\n&quot;</span>;<br>    &#125;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Derived</span> : <span class="hljs-keyword">public</span> Base &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>&#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Derived class\n&quot;</span>;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    Derived obj;<br>    obj.<span class="hljs-built_in">display</span>();  <span class="hljs-comment">// 直接调用虚函数 display</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h1 id="117-虚函数的代价是什么"><a href="#117-虚函数的代价是什么" class="headerlink" title="117 虚函数的代价是什么"></a>117 虚函数的代价是什么</h1><p>会在每个实例化的对象中添加一个虚表指针，增加对象的大小。</p>
+<h1 id="118-哪些函数不能是虚函数？"><a href="#118-哪些函数不能是虚函数？" class="headerlink" title="118 哪些函数不能是虚函数？"></a>118 哪些函数不能是虚函数？</h1><ul>
+<li>构造函数：如果构造函数是虚函数，那么需要对象的虚表指针对构造函数进行调用，但构造函数就是用来构建对象的，此时还没有对象，也就无法调用构造函数，所以构造函数不能是虚函数</li>
+<li>内联函数：内联函数表示在编译阶段进行函数体的替换操作，而虚函数意味着在运行期间进行类型确定。当是指向派生类的指针（多态性）调用声明为内联的虚函数时，不会内联展开（因为此时调用哪个虚函数是运行时知道的）。当是对象本身调用虚函数时，会内联展开，不过前提是函数不复杂</li>
+<li>静态函数：静态函数不属于类，静态成员函数没有this指针，无法调用虚表指针，所以静态函数不能是虚函数</li>
+<li>友元函数：友元函数不属于类的成员函数，不能被继承。对于没有继承特性的函数没有虚函数的说法</li>
+</ul>
 
                 
               </div>
