@@ -16,12 +16,12 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="[toc] 1 在main执行之前和之后执行的代码可能是什么？main函数执行之前执行的代码  全局对象初始化，在main之前调用构造函数  123456789101112131415161718192021class A&amp;#123;public:    A()    &amp;#123;        cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;    &amp;#125;">
+    <meta name="description" content="[toc] 1 在main执行之前和之后执行的代码可能是什么？main函数执行之前执行的代码  全局对象初始化，在main之前调用构造函数  12345678910111213141516171819class A&amp;#123;public:    A()    &amp;#123;        cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;    &amp;#125;&amp;#12">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++">
 <meta property="og:url" content="http://example.com/2024/03/28/C++/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="[toc] 1 在main执行之前和之后执行的代码可能是什么？main函数执行之前执行的代码  全局对象初始化，在main之前调用构造函数  123456789101112131415161718192021class A&amp;#123;public:    A()    &amp;#123;        cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;    &amp;#125;">
+<meta property="og:description" content="[toc] 1 在main执行之前和之后执行的代码可能是什么？main函数执行之前执行的代码  全局对象初始化，在main之前调用构造函数  12345678910111213141516171819class A&amp;#123;public:    A()    &amp;#123;        cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;    &amp;#125;&amp;#12">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165000175.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165233475.png">
@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165431867.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240423165237625.png">
 <meta property="article:published_time" content="2024-03-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-04-28T11:50:36.847Z">
+<meta property="article:modified_time" content="2024-04-28T12:31:33.283Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165000175.png">
@@ -238,7 +238,7 @@
         
         
         
-          298 mins
+          297 mins
         
       </span>
     
@@ -288,7 +288,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-04-28T19:50:36+08:00
+                    Last updated on 2024-04-28T20:31:33+08:00
                   
                   
 
@@ -303,7 +303,7 @@
 <ul>
 <li>全局对象初始化，在main之前调用构造函数</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">A</span>()<br>    &#123;<br>        cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br>A a;　　<span class="hljs-comment">//调用构造函数</span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;　<br>&#125;<br><br><span class="hljs-comment">//输出结果</span><br>A<br>main<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">A</span>()<br>    &#123;<br>        cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br>A a;　　<span class="hljs-comment">//调用构造函数</span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;　<br>&#125;<br><span class="hljs-comment">//输出结果</span><br>A<br>main<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>将main函数的参数argc、argv传给main函数，才算真正调用main函数</li>
@@ -315,9 +315,8 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123; <br>    cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br>__attribute__((constructor)) <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">beforeMainToRun</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-comment">//执行结果</span><br>beforeMainToRun  <br>main<br></code></pre></td></tr></table></figure>
 
-<ul>
-<li>其它，暂时不理解…</li>
-</ul>
+
+
 <p><strong>main函数执行之后执行的代码</strong></p>
 <ul>
 <li>可以注册一个<code>atexit</code>函数，注册的函数会在main之后运行</li>
@@ -330,7 +329,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++">__attribute__((destructor)) <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">afterMainToRun</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123; <br>    cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <ul>
-<li>其它，如全局对象的析构函数，不理解…</li>
+<li>其它，如全局对象的析构函数</li>
 </ul>
 <h1 id="2-内存对齐问题？"><a href="#2-内存对齐问题？" class="headerlink" title="2 内存对齐问题？"></a>2 内存对齐问题？</h1><h2 id="1-什么是内存对齐"><a href="#1-什么是内存对齐" class="headerlink" title="1 什么是内存对齐"></a><strong>1 什么是内存对齐</strong></h2><p>元素是按照声明顺序一个一个放到内存中去的，但并不是紧密排列的。元素放置的地址一定会在自己宽度的整数倍上开始，即内存对齐。</p>
 <blockquote>
@@ -383,9 +382,9 @@
 </blockquote>
 <h1 id="3-指针和引用的区别"><a href="#3-指针和引用的区别" class="headerlink" title="3 指针和引用的区别"></a>3 指针和引用的区别</h1><ul>
 <li>指针是一个变量，存储的是一个地址；引用跟原来的变量实质上是同一个东西，是原变量的别名</li>
-<li>指针可以为空，而引用在定义的时候必须初始化（因为引用是原变量的别名，如果没有初始化，那么引用是给谁起的名字呢？）</li>
-<li>指针可以有多级，引用只有一级（指针是一个内存中的对象，向其它对象一样也有自己的地址，那么就可以有指针指向这个地址，即指向指针的指针）</li>
-<li>指针在初始化之后可以改变指向，而引用在初始化之后不可改变（指针可以在初始化的时候指向某个地址，后面可以改变指向，指向另外一个地址）</li>
+<li>指针可以为空，而引用在定义的时候必须初始化</li>
+<li>指针可以有多级，引用只有一级</li>
+<li>指针在初始化之后可以改变指向，而引用在初始化之后不可改变</li>
 <li>sizeof指针得到的是本指针的大小，sizeof引用得到的是引用所指向变量的大小</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">test</span><span class="hljs-params">(<span class="hljs-type">int</span> *p)</span></span><br><span class="hljs-function"></span>&#123;<br>　　<span class="hljs-type">int</span> a=<span class="hljs-number">1</span>;<br>　　p=&amp;a;<br>　　cout&lt;&lt;p&lt;&lt;<span class="hljs-string">&quot; &quot;</span>&lt;&lt;*p&lt;&lt;endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> *p=<span class="hljs-literal">NULL</span>;<br>    <span class="hljs-built_in">test</span>(p);<br>    <span class="hljs-keyword">if</span>(p==<span class="hljs-literal">NULL</span>)<br>    cout&lt;&lt;<span class="hljs-string">&quot;指针p为NULL&quot;</span>&lt;&lt;endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-comment">//运行结果为：</span><br><span class="hljs-comment">//0x61fddc 1</span><br><span class="hljs-comment">//指针p为NULL</span><br><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">testPTR</span><span class="hljs-params">(<span class="hljs-type">int</span>* p)</span> </span>&#123;<br>	<span class="hljs-type">int</span> a = <span class="hljs-number">12</span>;<br>	p = &amp;a;<br><br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">testREFF</span><span class="hljs-params">(<span class="hljs-type">int</span>&amp; p)</span> </span>&#123;<br>	<span class="hljs-type">int</span> a = <span class="hljs-number">12</span>;<br>	p = a;<br><br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<br>	<span class="hljs-type">int</span>* b = &amp;a;<br>    cout &lt;&lt; <span class="hljs-string">&quot;before: &quot;</span> &lt;&lt;  b &lt;&lt; endl; <span class="hljs-comment">// before: 0x61fe14</span><br>	<span class="hljs-built_in">testPTR</span>(b); <span class="hljs-comment">//相当于值传递，函数外实际上没改变指针</span><br>	cout &lt;&lt; a &lt;&lt; endl;<span class="hljs-comment">// 10</span><br>	cout &lt;&lt; *b &lt;&lt; endl;<span class="hljs-comment">// 10</span><br>    cout &lt;&lt; <span class="hljs-string">&quot;after: &quot;</span> &lt;&lt;  b &lt;&lt; endl; <span class="hljs-comment">// after: 0x61fe14</span><br><br>	a = <span class="hljs-number">10</span>;<br>	<span class="hljs-built_in">testREFF</span>(a);<br>	cout &lt;&lt; a &lt;&lt; endl;<span class="hljs-comment">//12</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
@@ -498,8 +497,6 @@
 <li><p>使用new操作符申请内存分配时无须指定内存块的大小，编译器会根据类型信息自行计算。而malloc则需要显式地指出所需内存的尺寸。</p>
 </li>
 <li><p>new操作符内存分配成功时，返回的是对象类型的指针，类型严格与对象匹配，无须进行类型转换，所以new是类型安全的。而malloc内存分配成功则是返回void * ，需要通过强制类型转换将void*指针转换成我们需要的类型。</p>
-</li>
-<li><p>new &#x2F; delete是C++运算符，malloc &#x2F; free是C&#x2F;C++语言标准库函数</p>
 </li>
 </ul>
 <h1 id="9-new和delete是如何实现的？"><a href="#9-new和delete是如何实现的？" class="headerlink" title="9 new和delete是如何实现的？"></a>9 new和delete是如何实现的？</h1><ul>
@@ -627,7 +624,6 @@
 <h1 id="20-C-中struct和class的区别"><a href="#20-C-中struct和class的区别" class="headerlink" title="20 C++中struct和class的区别"></a>20 C++中struct和class的区别</h1><p><strong>相同点</strong></p>
 <ul>
 <li>两者都拥有成员函数、公有和私有部分</li>
-<li>任何可以使用class完成的工作，同样可以使用struct完成</li>
 </ul>
 <p><strong>不同点</strong></p>
 <ul>
@@ -994,7 +990,7 @@
 <p><strong>效率</strong></p>
 <p>对于内置类型，效率没有差别</p>
 <p>对于其它类型，使用成员初始化列表会少一次调用构造函数的过程；而在函数体内使用直接赋值会多一次调用默认构造函数的过程（先初始化再赋值）</p>
-<p>如果没有在构造函数的初始值列表中显示地初始化成员，则该成员将在构造函数体之前执行默认初始化</p>
+<p>如果没有在构造函数的初始值列表中显式地初始化成员，则该成员将在构造函数体之前执行默认初始化</p>
 <p><strong>注意点</strong></p>
 <p>如果成员是<code>const</code>、引用、或者属于某种未提供默认构造函数的类类型，必须使用初始化列表为这些成员提供初值</p>
 <blockquote>
@@ -1675,7 +1671,7 @@
 <p>如果函数重载成整型和指针间的版本，传入NULL会被匹配到整型形参版本的函数，而不是预期的指针版本。<code>nullptr</code>在C++11中被引入用于解决一问题，<code>nullptr</code>可以明确区分整型和指针类型，能够根据环境自动转换成响应的指针类型，但不会被转换为任何整型，所以不会造成参数传递错误的情况。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;f(int)&quot;</span> &lt;&lt; endl;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">char</span>*)</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;f(char*)&quot;</span> &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">f</span>(<span class="hljs-number">0</span>);<br>    <span class="hljs-built_in">f</span>(<span class="hljs-literal">nullptr</span>);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>但使用<code>nullptr</code>仍会出现一种问题：如果函数在不同指针之间转换，那么传入<code>nullptr</code>仍然无法匹配到函数，会报错，这时需要显示调用函数</p>
+<p>但使用<code>nullptr</code>仍会出现一种问题：如果函数在不同指针之间转换，那么传入<code>nullptr</code>仍然无法匹配到函数，会报错，这时需要显式调用函数</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;f(int)&quot;</span> &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">char</span>*)</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;f(char*)&quot;</span> &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">int</span>*)</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;f(int*)&quot;</span> &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">f</span>(<span class="hljs-number">0</span>);<br>    <span class="hljs-built_in">f</span>(<span class="hljs-literal">nullptr</span>); <span class="hljs-comment">// 报错，不知道匹配哪个函数</span><br>    <span class="hljs-built_in">f</span>((<span class="hljs-type">int</span>*)<span class="hljs-literal">nullptr</span>);  <span class="hljs-comment">// 显示调用函数</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="引入了auto和decltype这两个关键字实现了类型推导"><a href="#引入了auto和decltype这两个关键字实现了类型推导" class="headerlink" title="引入了auto和decltype这两个关键字实现了类型推导"></a>引入了auto和decltype这两个关键字实现了类型推导</h2><p>auto：auto让编译器通过初始值来进行类型推演，从而获得定义变量的类型，所以<code>auto</code>定义的变量必须有初始值。</p>
@@ -2024,8 +2020,8 @@
 <li>静态函数：静态函数不属于类，静态成员函数没有this指针，无法调用虚表指针，所以静态函数不能是虚函数</li>
 <li>友元函数：友元函数不属于类的成员函数，不能被继承。对于没有继承特性的函数没有虚函数的说法</li>
 </ul>
-<h1 id="119-构造函数"><a href="#119-构造函数" class="headerlink" title="119 构造函数"></a>119 构造函数</h1><h2 id="默认构造函数"><a href="#默认构造函数" class="headerlink" title="默认构造函数"></a>默认构造函数</h2><p><strong>定义</strong>：如果类中没有显示地定义一个构造函数，那么编译器就会隐式地定义一个默认构造函数（也叫合成的默认构造函数）。</p>
-<p><strong>使用场景</strong>：当我们没有为类显示定义构造函数的时候。</p>
+<h1 id="119-构造函数"><a href="#119-构造函数" class="headerlink" title="119 构造函数"></a>119 构造函数</h1><h2 id="默认构造函数"><a href="#默认构造函数" class="headerlink" title="默认构造函数"></a>默认构造函数</h2><p><strong>定义</strong>：如果类中没有显式地定义一个构造函数，那么编译器就会隐式地定义一个默认构造函数（也叫合成的默认构造函数）。</p>
+<p><strong>使用场景</strong>：当我们没有为类显式定义构造函数的时候。</p>
 <p><strong>使用合成的默认构造函数初始化类的规则：</strong></p>
 <ul>
 <li>如果存在类内的初始值，用初始值来初始化成员</li>
@@ -2048,7 +2044,7 @@
 <li>原因3：有时候编译器不能为某些类合成默认的构造函数。比如：如果类中包含一个其它类类型的成员且这个成员的类型没有默认构造函数，那么编译器将无法初始化该成员，并且会导致编译错误。（因为编译器在生成默认构造函数时需要调用所有成员的默认构造函数，如果其中一个成员的类型没有默认构造函数，编译器无法保证类的完整成员都能被正确初始化）</li>
 </ul>
 <p><strong>&#x3D; default</strong></p>
-<p>default关键字可以显示要求编译器生成默认构造函数，目的：我们既需要其它形式的构造函数，也需要默认的构造函数。这个作用完全等同于合成默认构造函数。</p>
+<p>default关键字可以显式要求编译器生成默认构造函数，目的：我们既需要其它形式的构造函数，也需要默认的构造函数。这个作用完全等同于合成默认构造函数。</p>
 <blockquote>
 <p>即使有其它构造函数，我们也应该提供一个默认构造和散户</p>
 </blockquote>
