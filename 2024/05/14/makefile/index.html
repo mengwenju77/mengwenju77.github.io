@@ -16,25 +16,23 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1 消息队列消息队列实验 读进程： 12345678910111213141516171819202122232425262728293031#include &lt;stdio.h&gt; #include &lt;sys&#x2F;ipc.h&gt; #include &lt;sys&#x2F;msg.h&gt;   &#x2F;&#x2F;消息结构体struct mesg_buffer &amp;#123;     long mesg_t">
+    <meta name="description" content="Makefile从一个例子开始： main.cpp文件 1234567891011#include &lt;iostream&gt;#include &quot;functions.h&quot;using namespace std; int main()&amp;#123;    printmain();    cout &lt;&lt; &quot;This is main:&quot; &lt;&amp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="进程通信">
-<meta property="og:url" content="http://example.com/2024/05/13/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/index.html">
+<meta property="og:title" content="makefile">
+<meta property="og:url" content="http://example.com/2024/05/14/makefile/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1 消息队列消息队列实验 读进程： 12345678910111213141516171819202122232425262728293031#include &lt;stdio.h&gt; #include &lt;sys&#x2F;ipc.h&gt; #include &lt;sys&#x2F;msg.h&gt;   &#x2F;&#x2F;消息结构体struct mesg_buffer &amp;#123;     long mesg_t">
+<meta property="og:description" content="Makefile从一个例子开始： main.cpp文件 1234567891011#include &lt;iostream&gt;#include &quot;functions.h&quot;using namespace std; int main()&amp;#123;    printmain();    cout &lt;&lt; &quot;This is main:&quot; &lt;&amp;">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240513212522806.png">
-<meta property="article:published_time" content="2024-05-13T13:19:59.503Z">
-<meta property="article:modified_time" content="2024-05-14T02:26:28.651Z">
+<meta property="article:published_time" content="2024-05-14T02:59:00.372Z">
+<meta property="article:modified_time" content="2024-05-14T05:14:42.096Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240513212522806.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>进程通信 - Hexo</title>
+  <title>makefile - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="进程通信"></span>
+            <span id="subtitle" data-typed-text="makefile"></span>
           
         </div>
 
@@ -211,8 +209,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-05-13 21:19" pubdate>
-          2024/05/13 9:19 pm
+        <time datetime="2024-05-14 10:59" pubdate>
+          2024/05/14 10:59 am
         </time>
       </span>
     
@@ -223,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          306 words
+          778 words
         
       </span>
     
@@ -234,7 +232,7 @@
         
         
         
-          3 mins
+          7 mins
         
       </span>
     
@@ -279,12 +277,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">进程通信</h1>
+            <h1 id="seo-header">makefile</h1>
             
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-05-14T10:26:28+08:00
+                    Last updated on 2024-05-14T13:14:42+08:00
                   
                   
 
@@ -294,18 +292,81 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-消息队列"><a href="#1-消息队列" class="headerlink" title="1 消息队列"></a>1 消息队列</h1><p><strong>消息队列实验</strong></p>
-<p>读进程：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span> </span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/ipc.h&gt;</span> </span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/msg.h&gt;</span> </span><br>  <br><span class="hljs-comment">//消息结构体</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">mesg_buffer</span> &#123; <br>    <span class="hljs-type">long</span> mesg_type; <br>    <span class="hljs-type">char</span> mesg_text[<span class="hljs-number">100</span>]; <br>&#125; message; <br>  <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123; <br>    <span class="hljs-type">key_t</span> key; <br>    <span class="hljs-type">int</span> msgid; <br>  <br>    <span class="hljs-comment">//函数ftok把一个已存在的路径名和一个整数标识符转换成一个key_t值，称为IPC键值</span><br>    key = <span class="hljs-built_in">ftok</span>(<span class="hljs-string">&quot;progfile&quot;</span>, <span class="hljs-number">65</span>); <br>  <br>    <span class="hljs-comment">// 创建一个新的或打开一个已经存在的消息队列，返回其id</span><br>    msgid = <span class="hljs-built_in">msgget</span>(key, <span class="hljs-number">0666</span> | IPC_CREAT); <br>  <br>    <span class="hljs-comment">// 接收消息</span><br>    <span class="hljs-built_in">msgrcv</span>(msgid, &amp;message, <span class="hljs-built_in">sizeof</span>(message), <span class="hljs-number">1</span>, <span class="hljs-number">0</span>); <br>  <br>    <span class="hljs-comment">// 显示消息 </span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;收到的消息为: %s \n&quot;</span>,  message.mesg_text); <br>  <br>    <span class="hljs-comment">// to destroy the message queue </span><br>    <span class="hljs-built_in">msgctl</span>(msgid, IPC_RMID, <span class="hljs-literal">NULL</span>); <br>  <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; <br>&#125;<br></code></pre></td></tr></table></figure>
+                <h1 id="Makefile"><a href="#Makefile" class="headerlink" title="Makefile"></a>Makefile</h1><p>从一个例子开始：</p>
+<p><code>main.cpp</code>文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;functions.h&quot;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br> <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">printmain</span>();<br>    cout &lt;&lt; <span class="hljs-string">&quot;This is main:&quot;</span> &lt;&lt; endl;<br>    cout &lt;&lt; <span class="hljs-string">&quot;The factorial of 5 is: &quot;</span> &lt;&lt; <span class="hljs-built_in">factorial</span>(<span class="hljs-number">5</span>) &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>写进程</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;sys/ipc.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;sys/msg.h&gt;</span></span><br><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">msg_buffer</span>&#123;<br>	<span class="hljs-type">long</span> mesg_type;<br>	<span class="hljs-type">char</span> mesg_text[<span class="hljs-number">100</span>];<br>&#125;message;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>	<span class="hljs-type">key_t</span> key; <br>    <span class="hljs-type">int</span> msgid; <br>  <br>    <span class="hljs-comment">//函数ftok把一个已存在的路径名和一个整数标识符转换成一个key_t值</span><br>    key = <span class="hljs-built_in">ftok</span>(<span class="hljs-string">&quot;progfile&quot;</span>, <span class="hljs-number">65</span>); <br>  <br>    <span class="hljs-comment">// msgget：创建一个消息队列，返回以key命名的消息队列的标识符</span><br>    msgid = <span class="hljs-built_in">msgget</span>(key, <span class="hljs-number">0666</span> | IPC_CREAT); <br>    message.mesg_type = <span class="hljs-number">1</span>; <br>  <br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;写入的数据为: &quot;</span>); <br>    <span class="hljs-built_in">gets</span>(message.mesg_text); <br>  <br>    <span class="hljs-comment">//发送消息</span><br>    <span class="hljs-built_in">msgsnd</span>(msgid, &amp;message, <span class="hljs-built_in">sizeof</span>(message), <span class="hljs-number">0</span>); <br>  <br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;发送的消息为: %s \n&quot;</span>, message.mesg_text); <br>  <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; <br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>function.cpp</code>文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;functions.h&quot;</span></span><br> <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">functions</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(n == <span class="hljs-number">1</span>)<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">else</span><br>            <span class="hljs-keyword">return</span> n * <span class="hljs-built_in">functions</span>(n<span class="hljs-number">-1</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>分别编译：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">g++ read.cpp -o r.out<br>g++ write.cpp -o w.out<br></code></pre></td></tr></table></figure>
+<p><code>printhello.cpp</code>文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;functions.h&quot;</span></span><br> <br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br> <br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">printhello</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> i;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Hello world&quot;</span> &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>得到两个文件：<code>r.out</code>和<code>w.out</code>，运行</p>
-<p><img src="/../imgs/$%7Bfiilename%7D/image-20240513212522806.png" srcset="/img/loading.gif" lazyload alt="image-20240513212522806"></p>
+<p><code>function.h</code>文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> _FUNCTIONS_H_</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _FUNCTIONS_H_</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">printhello</span><span class="hljs-params">()</span></span>;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">function</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span></span>;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
+
+<p>目录结构：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">|-- makefilelearn<br>|   |-- inc<br>|   |   `-- functions.h<br>|   |-- main.cpp<br>|   |-- main.o<br>|   `-- src<br>|       |-- functions.cpp<br>|       `-- printhello.cpp<br></code></pre></td></tr></table></figure>
+
+<p><strong>编译方法1：使用命令分别编译</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># makefilelear目录下：</span><br>g++ main.cpp -c<br><span class="hljs-comment"># makefilelearn/src目录下：</span><br>g++ functions.cpp -c<br>g++ printhello.cpp -c<br></code></pre></td></tr></table></figure>
+
+<p>生成3个<code>.o</code>文件，目录结构：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">|-- makefilelearn<br>|   |-- inc<br>|   |   |-- functions.h<br>|   |   `-- functions.h.gch<br>|   |-- main.cpp<br>|   |-- main.o<br>|   `-- src<br>|       |-- functions.cpp<br>|       |-- functions.o<br>|       |-- printhello.cpp<br>|       `-- printhello.o<br></code></pre></td></tr></table></figure>
+
+<p>然后链接在一起：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++">g++ main.o src/functions.o src/printhello.o -o main<br></code></pre></td></tr></table></figure>
+
+<p>生成可执行程序<code>main</code>，运行：<code>./main</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Hello world<br>This is main:<br>The <span class="hljs-keyword">function</span> of 5 is: 120<br></code></pre></td></tr></table></figure>
+
+<p>总结：虽然能编译，并且运行，但是文件多了的话，很麻烦</p>
+<p><strong>注意：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">g++ main.cpp -c   <span class="hljs-comment">#只编译不链接</span><br>g++ main.cpp -o   <span class="hljs-comment">#编译并链接</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>编译方法2：makefile–版本1</strong></p>
+<p>目录结构：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">|-- makefilelearn<br>|   |-- inc<br>|   |   `-- functions.h<br>|   |-- main<br>|   |-- main.cpp<br>|   |-- Makefile<br>|   `-- src<br>|       |-- functions.cpp<br>|       `-- printhello.cpp<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># VERSION 1</span><br><span class="hljs-comment"># main为生成的可执行文件，依赖于后面的三个.cpp文件</span><br><span class="hljs-comment"># g++前面加一个TAB的空格</span><br>main: main.cpp src/printhello.cpp src/functions.cpp<br>	g++ -o main main.cpp src/printhello.cpp src/functions.cpp<br></code></pre></td></tr></table></figure>
+
+<p>编译好makefile文件之后使用<code>make</code>命令进行编译</p>
+<p>缺点：全部编译，如果文件多，要编很久</p>
+<p><strong>编译方法3：makefile–版本2</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># VERSION 2</span><br><span class="hljs-comment"># 定义变量</span><br>CXX = g++<br>TARGET = main<br>OBJ = main.o printhello.o functions.o<br><span class="hljs-comment"># make时执行g++ 先找TARGET，TARGET不存在找OBJ，OBJ不存在，编译三个.cpp文件生成.o文件</span><br><span class="hljs-comment"># 然后再编译OBJ文件，生成可执行文件hello</span><br>$(TARGET): $(OBJ)<br>	$(CXX) -o $(TARGET) $(OBJ)<br><span class="hljs-comment"># main.o这样来的，编译main.cpp生成</span><br>main.o: main.cpp<br>	$(CXX) -c main.cpp<br>printhello.o: src/printhello.cpp<br>	$(CXX) -c src/printhello.cpp<br>functions.o: src/functions.cpp<br>	$(CXX) -c src/functions.cpp<br></code></pre></td></tr></table></figure>
+
+<p>好处就是只编译修改的文件，没修改的文件不编译</p>
+<p><strong>编译方法4：makefile–版本3</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># VERSION 4</span><br>CXX = g++<br>TARGET = hello<br><span class="hljs-comment"># 所有当前目录的.cpp文件都放在SRC里面</span><br>SRC = $(wildcard *.cpp) $(wildcard src/*.cpp)<br><span class="hljs-comment"># 把SRC里面的.cpp文件替换为.o文件</span><br>OBJ = $(patsubst %.cpp, %.o,$(SRC))<br> <br>CXXLAGS = -c -Wall<br> <br>$(TARGET): $(OBJ)<br>	$(CXX) -o <span class="hljs-variable">$@</span> $^<br> <br>%.o: %.cpp<br>	$(CXX) $(CXXLAGS) $&lt; -o <span class="hljs-variable">$@</span><br> <br>.PHONY: clean<br>clean:<br>	<span class="hljs-built_in">rm</span> -f *.o $(TARGET)<br></code></pre></td></tr></table></figure>
+
+<p>这样写更通用，添加一个文件后不需要修改makefile文件</p>
+<blockquote>
+<p>查看目录结构</p>
+</blockquote>
+<p>安装目录树结构命令(centos7系统)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">yum install -y tree<br></code></pre></td></tr></table></figure>
+
+<p>查看目录结构</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++">查看当第N级目录和文件<br>tree -L N<br>比如：查看<span class="hljs-number">3</span>级目录<br>tree -L <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="Cmake"><a href="#Cmake" class="headerlink" title="Cmake"></a>Cmake</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">cmake_minimum_required(VERSION 2.8)<br>project(hello)<br>add_executable(hello main.cpp src/functions.cpp src/printhello.cpp)<br></code></pre></td></tr></table></figure>
+
+<p>目录结构</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">|-- makefilelearn<br>|   |-- CMakeLists.txt<br>|   |-- inc<br>|   |   `-- functions.h<br>|   |-- main.cpp<br>|   `-- src<br>|       |-- functions.cpp<br>|       `-- printhello.cpp<br></code></pre></td></tr></table></figure>
+
+<p>使用<code>CMakelists</code>文件编译</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 先执行</span><br>cmake .<br><span class="hljs-comment"># 再执行</span><br>make<br></code></pre></td></tr></table></figure>
+
+<p>但会生成很多文件，会比较乱，删起来也比较麻烦。可以创建一个目录<code>build</code>，在<code>build</code>目录下进行编译，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 先执行</span><br>cmake ..<br><span class="hljs-comment"># 再执行</span><br>make<br></code></pre></td></tr></table></figure>
+
+<p>此时，所有的文件都是在<code>build</code>目录下生成的，里面有个<code>hello</code>可执行文件，删的话执行把<code>build</code>文件夹里的文件删掉就行了</p>
+<p><strong>参考：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV188411L7d2/?spm_id_from=333.337.search-card.all.click&vd_source=79a47c5035e6336414e7ccb0cf2a076d">https://www.bilibili.com/video/BV188411L7d2/?spm_id_from=333.337.search-card.all.click&amp;vd_source=79a47c5035e6336414e7ccb0cf2a076d</a></p>
 
                 
               </div>
@@ -323,8 +384,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>进程通信</div>
-      <div>http://example.com/2024/05/13/进程通信/</div>
+      <div>makefile</div>
+      <div>http://example.com/2024/05/14/makefile/</div>
     </div>
     <div class="license-meta">
       
@@ -336,7 +397,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>May 13, 2024</div>
+          <div>May 14, 2024</div>
         </div>
       
       
@@ -373,18 +434,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/05/14/makefile/" title="makefile">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">makefile</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/05/13/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/" title="服务器配置">
-                        <span class="hidden-mobile">服务器配置</span>
+                      <a href="/2024/05/13/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/" title="进程通信">
+                        <span class="hidden-mobile">进程通信</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
