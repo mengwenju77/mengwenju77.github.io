@@ -16,13 +16,15 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
-<meta property="og:title" content="汇编语言">
-<meta property="og:url" content="http://example.com/2024/04/26/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/index.html">
+    <meta name="description" content="Yum更新  yum update -y  Tab补全  yum -y install bash-completion  Wget  yum install -y wget  Vim  yum install -y vim-enhanced  网络工具  yum install -y net-tools.x86_64  目前gcc版本是4.8.5 12gcc (GCC) 4.8.5 2015062">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器配置">
+<meta property="og:url" content="http://example.com/2024/05/13/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Yum更新  yum update -y  Tab补全  yum -y install bash-completion  Wget  yum install -y wget  Vim  yum install -y vim-enhanced  网络工具  yum install -y net-tools.x86_64  目前gcc版本是4.8.5 12gcc (GCC) 4.8.5 2015062">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-04-26T06:44:45.152Z">
-<meta property="article:modified_time" content="2024-04-26T06:46:41.140Z">
+<meta property="article:published_time" content="2024-05-13T08:27:13.250Z">
+<meta property="article:modified_time" content="2024-05-13T12:04:52.848Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -30,7 +32,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>汇编语言 - Hexo</title>
+  <title>服务器配置 - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -196,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="汇编语言"></span>
+            <span id="subtitle" data-typed-text="服务器配置"></span>
           
         </div>
 
@@ -207,8 +209,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-04-26 14:44" pubdate>
-          2024/04/26 2:44 pm
+        <time datetime="2024-05-13 16:27" pubdate>
+          2024/05/13 4:27 pm
         </time>
       </span>
     
@@ -219,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 words
+          261 words
         
       </span>
     
@@ -230,7 +232,7 @@
         
         
         
-          1 mins
+          3 mins
         
       </span>
     
@@ -275,12 +277,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">汇编语言</h1>
+            <h1 id="seo-header">服务器配置</h1>
             
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-04-26T14:46:41+08:00
+                    Last updated on 2024-05-13T20:04:52+08:00
                   
                   
 
@@ -290,7 +292,48 @@
             
               <div class="markdown-body">
                 
-                
+                <p><strong>Yum更新</strong></p>
+<blockquote>
+<p>yum update -y</p>
+</blockquote>
+<p><strong>Tab补全</strong></p>
+<blockquote>
+<p>yum -y install bash-completion</p>
+</blockquote>
+<p><strong>Wget</strong></p>
+<blockquote>
+<p>yum install -y wget</p>
+</blockquote>
+<p><strong>Vim</strong></p>
+<blockquote>
+<p>yum install -y vim-enhanced</p>
+</blockquote>
+<p><strong>网络工具</strong></p>
+<blockquote>
+<p>yum install -y net-tools.x86_64</p>
+</blockquote>
+<p>目前gcc版本是<code>4.8.5</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-44)<br>g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-44)<br></code></pre></td></tr></table></figure>
+
+<p>至此，已经能够编译C++文件，但是C++版本是C++98，并不是C++11</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++">g++ -dM -E -x c++  /dev/null | grep -F __cplusplus<br>输出：<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> __cplusplus 199711L</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">C++ pre-C++98: __cplusplus is 1.<br>C++98: __cplusplus is 199711L.<br>C++98 + TR1: This reads as C++98 and there is no way to check that I know of.<br>C++11: __cplusplus is 201103L.<br>C++14: __cplusplus is 201402L.<br>C++17: __cplusplus is 201703L.<br>C++20: __cplusplus is 202002L.<br></code></pre></td></tr></table></figure>
+
+<p><strong>升级成C++11</strong></p>
+<p><strong>设置免登录</strong></p>
+<p>1、本地cmd，输入下面指令，一路回车不用输入内容，需要确认的话就确认</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh-keygen -t rsa<br></code></pre></td></tr></table></figure>
+
+<p>在<code>C:\Users\mengwenju\.ssh</code>文件夹里找到<code>id_rsa.pub</code>文件，里面就是密钥</p>
+<p>2、在服务器<code>/root/.ssh\</code>找到<code>authorized_keys</code>文件，将上面<code>id_rsa.pub</code>中的密钥复制进去，如果原来<code>id_rsa.pub</code>已经有密钥了，往下再粘贴一个即可</p>
+<p>3、至此，使用vscode或者bash连接都是免密码的</p>
+<p><strong>参考：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_37613503/article/details/112160865">https://blog.csdn.net/m0_37613503/article/details/112160865</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39547794/article/details/130080464">https://blog.csdn.net/qq_39547794/article/details/130080464</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34902437/article/details/124329128">https://blog.csdn.net/qq_34902437/article/details/124329128</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1GK4y1w7iU/?spm_id_from=333.337.search-card.all.click&vd_source=79a47c5035e6336414e7ccb0cf2a076d">https://www.bilibili.com/video/BV1GK4y1w7iU/?spm_id_from=333.337.search-card.all.click&amp;vd_source=79a47c5035e6336414e7ccb0cf2a076d</a></p>
+
                 
               </div>
             
@@ -307,8 +350,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>汇编语言</div>
-      <div>http://example.com/2024/04/26/汇编语言/</div>
+      <div>服务器配置</div>
+      <div>http://example.com/2024/05/13/服务器配置/</div>
     </div>
     <div class="license-meta">
       
@@ -320,13 +363,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>April 26, 2024</div>
+          <div>May 13, 2024</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>April 26, 2024</div>
+          <div>May 13, 2024</div>
         </div>
       
       
@@ -357,9 +400,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/05/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">
+                      <a href="/2024/05/13/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/" title="进程通信">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">设计模式</span>
+                        <span class="hidden-mobile">进程通信</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -367,8 +410,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/04/23/%E5%B8%B8%E7%94%A8%E5%A4%B4%E6%96%87%E4%BB%B6/" title="常用头文件">
-                        <span class="hidden-mobile">常用头文件</span>
+                      <a href="/2024/05/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">
+                        <span class="hidden-mobile">设计模式</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
