@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165431867.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240423165237625.png">
 <meta property="article:published_time" content="2024-03-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-05-21T02:26:56.955Z">
+<meta property="article:modified_time" content="2024-05-21T03:19:26.878Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165000175.png">
@@ -288,7 +288,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-05-21T10:26:56+08:00
+                    Last updated on 2024-05-21T11:19:26+08:00
                   
                   
 
@@ -1425,6 +1425,11 @@
 </ul>
 <p>通过 until 命令可以直接跳出某个循环体，这样就能提高调试效率了。如果想直接从循环体中跳出, 必须要满足以下的条件，否则命令不会生效：</p>
 <p>要跳出的循环体内部不能有有效的断点<br>必须要在循环体的开始&#x2F;结束行执行该命令</p>
+<p>coredump程序</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-type">int</span> *p)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> y = *p;<br>    <span class="hljs-keyword">return</span> y;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> *p = <span class="hljs-literal">NULL</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">func</span>(p);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
 <h1 id="56-移动构造函数"><a href="#56-移动构造函数" class="headerlink" title="56 移动构造函数"></a>56 移动构造函数</h1><p><strong>移动构造函数的初衷：</strong></p>
 <p>使用对象<code>a</code>初始化对象<code>b</code>后对象<code>a</code>就不在使用了，但是对象<code>a</code>的内存还在，如果是拷贝构造函数的话，是将对象<code>a</code>的内容复制一份到对象<code>b</code>中，那么能否直接使用对象<code>a</code>的内存呢，这样就避免了内存的重新分配，降低了构造的成本。</p>
 <p><strong>规则：</strong></p>
