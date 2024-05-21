@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165431867.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240423165237625.png">
 <meta property="article:published_time" content="2024-03-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-05-06T08:21:58.475Z">
+<meta property="article:modified_time" content="2024-05-20T08:57:49.284Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165000175.png">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          36k words
+          39k words
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          297 mins
+          324 mins
         
       </span>
     
@@ -288,7 +288,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-05-06T16:21:58+08:00
+                    Last updated on 2024-05-20T16:57:49+08:00
                   
                   
 
@@ -668,7 +668,6 @@
 <p><strong>编译</strong></p>
 <p>把预编译之后生成的xxx.i或xxx.ii文件，进行一系列词法分析、语法分析、语义分析及优化后，生成相应的汇编代码文件。</p>
 <ul>
-<li>词法分析：利用类似于“有限状态机”的算法，将源代码程序输入到扫描机中，将其中的字符序列分割成一系列的记号。</li>
 <li>语法分析：语法分析器对由扫描器产生的记号，进行语法分析，产生语法树。由语法分析器输出的 语法树是一种以表达式为节点的树。</li>
 <li>语义分析：语法分析器只是完成了对表达式语法层面的分析，语义分析器则对表达式是否有意义进 行判断，其分析的语义是静态语义——在编译期能分期的语义，相对应的动态语义是在运行期才能确定的语义。</li>
 <li>优化：源代码级别的一个优化过程。</li>
@@ -693,6 +692,74 @@
 <p>共享库：就是即使需要每个程序都依赖同一个库，但是该库不会像静态链接那样在内存中存在多分，副本，而是这多个程序在执行时共享同一份副本；</p>
 <p>更新方便：更新时只需要替换原来的目标文件，而无需将所有的程序再重新链接一遍。当程序下一次运行时，新版本的目标文件会被自动加载到内存并且链接起来，程序就完成了升级的目标。</p>
 <p>性能损耗：因为把链接推迟到了程序运行时，所以每次执行程序都需要进行链接，所以性能会有一定损失。</p>
+<p><strong>视频中看到的资料：</strong></p>
+<ul>
+<li><p>预编译（预处理）：在这个阶段主要做了三件事：<code>展开头文件</code>、<code>宏替换</code>、<code>去掉注释行</code></p>
+<ul>
+<li>这个阶段需要GCC调用预处理器来完成，最终得到的还是源文件，文本格式，只不过头文件、宏、注释相关的内容发发生了变化</li>
+</ul>
+</li>
+<li><p>编译：这个阶段需要GCC调用<code>编译器</code>对文件进行编译，最终得到一个汇编文件</p>
+</li>
+<li><p>汇编：这个阶段需要GCC调用<code>汇编器</code>对文件进行汇编，最终得到一个二进制文件</p>
+</li>
+<li><p>链接：这个阶段需要GCC调用<code>链接器</code>对程序需要调用的库进行链接，最终得到一个可执行的二进制文件</p>
+<table>
+<thead>
+<tr>
+<th>过程</th>
+<th>说明</th>
+<th>gcc参数</th>
+<th>得到的文件名后缀</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>源文件</td>
+<td>无</td>
+<td><code>.c</code></td>
+</tr>
+<tr>
+<td>预编译</td>
+<td>预处理后得到C文件（还是源文件，只是宏、注释、头文件变了）</td>
+<td><code>-E</code></td>
+<td><code>.i</code></td>
+</tr>
+<tr>
+<td>编译</td>
+<td>编译之后得到汇编语言的源文件</td>
+<td><code>-s</code></td>
+<td><code>.s</code></td>
+</tr>
+<tr>
+<td>汇编</td>
+<td>汇编后得到二进制文件</td>
+<td><code>-c</code></td>
+<td><code>.O</code></td>
+</tr>
+<tr>
+<td>链接</td>
+<td>链接后得到可执行文件</td>
+<td>无</td>
+<td>无</td>
+</tr>
+</tbody></table>
+<p>举例：</p>
+<p>Demo.cpp文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MAX_COUNT 3</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">// 这是一个注释</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; MAX_COUNT; i++)<br>    &#123;<br>      cout &lt;&lt; __cplusplus &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>预编译：<code>g++ Demo.cpp -E -o Demo.i</code>，生成<code>Demo.i</code>文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// Demo.i的一部分</span><br># <span class="hljs-number">1</span> <span class="hljs-string">&quot;Demo.cpp&quot;</span><br># <span class="hljs-number">1</span> <span class="hljs-string">&quot;&lt;built-in&gt;&quot;</span><br># <span class="hljs-number">1</span> <span class="hljs-string">&quot;&lt;command-line&gt;&quot;</span><br># <span class="hljs-number">1</span> <span class="hljs-string">&quot;/usr/include/stdc-predef.h&quot;</span> <span class="hljs-number">1</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> 	<span class="hljs-comment">//头文件展开，从根目录开始</span><br># <span class="hljs-number">1</span> <span class="hljs-string">&quot;&lt;command-line&gt;&quot;</span> <span class="hljs-number">2</span><br># <span class="hljs-number">1</span> <span class="hljs-string">&quot;Demo.cpp&quot;</span><br># <span class="hljs-number">1</span> <span class="hljs-string">&quot;/usr/include/c++/4.8.2/iostream&quot;</span> <span class="hljs-number">1</span> <span class="hljs-number">3</span><br># <span class="hljs-number">36</span> <span class="hljs-string">&quot;/usr/include/c++/4.8.2/iostream&quot;</span> <span class="hljs-number">3</span><br>...<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>								<span class="hljs-comment">// 去掉注释</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++) <span class="hljs-comment">// 宏替换</span><br>    &#123;<br>      cout &lt;&lt; <span class="hljs-number">199711L</span> &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>编译：<code>g++ Demo.i -S -o Demo.s</code>，生成汇编文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 汇编文件一部分</span><br>	.file	<span class="hljs-string">&quot;Demo.cpp&quot;</span><br>	.local	_ZStL8__ioinit<br>	.comm	_ZStL8__ioinit,<span class="hljs-number">1</span>,<span class="hljs-number">1</span><br>	.text<br>	.globl	main<br>	.type	main, @function<br>main:<br>.LFB971:<br>	.cfi_startproc<br>...<br></code></pre></td></tr></table></figure>
+
+<p>汇编：<code>g++ Demo.s -c -o Demo.o</code>，生成二进制文件（打不开）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++">ELF<br></code></pre></td></tr></table></figure>
+
+<p>链接：<code>g++ Demo.o -o Demo</code>，生成可执行文件，执行后结果：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs">199711<br>199711<br>199711<br></code></pre></td></tr></table></figure></li>
+</ul>
 <h1 id="25-构造函数与析构函数"><a href="#25-构造函数与析构函数" class="headerlink" title="25 构造函数与析构函数"></a>25 构造函数与析构函数</h1><p><strong>构造函数：</strong>主要作用在于创建对象时为对象的成员属性赋值，构造函数由编译器自动调用，无须手动调用</p>
 <p><strong>析构函数：</strong>主要作用在于对象销毁前系统自动调用，执行一些清理工作</p>
 <p><strong>构造函数的语法：</strong><code>类名()&#123;&#125;</code></p>
@@ -1143,7 +1210,7 @@
 <p>形参在函数未调用之前都是没有分配存储空间的，在函数调用结束之后，形参弹出栈空间，清除形参空间。</p>
 <p>数组作为参数的函数调用方式是地址传递，形参和实参都指向相同的内存空间，调用完成后，形参指针被销毁，但是所指向的内存空间依然存在，不会被销毁也不能被销毁。</p>
 <p>当函数有多个返回值的时候，不能用普通的 return 的方式实现，需要通过传回地址的形式进行，即地址&#x2F;指针传递。</p>
-<h1 id="55-coredump怎么调试"><a href="#55-coredump怎么调试" class="headerlink" title="55 coredump怎么调试"></a>55 coredump怎么调试</h1><p>core文件会包含了程序运行时的内存，寄存器状态，堆栈指针，内存管理信息还有各种函数调用堆栈信息</p>
+<h1 id="55-GDB"><a href="#55-GDB" class="headerlink" title="55  GDB"></a>55  GDB</h1><p>core文件会包含了程序运行时的内存，寄存器状态，堆栈指针，内存管理信息还有各种函数调用堆栈信息</p>
 <p><strong>产生coredump的情况：</strong></p>
 <ul>
 <li><p>数组越界</p>
@@ -1159,10 +1226,205 @@
 <li>b(break)x，x是行号，表示在对应的行号位置设置断点；</li>
 <li>p(print)x，x是变量名，表示打印变量x的值</li>
 <li>r(run)，启动程序或重新开始程序的执行</li>
-<li>n(next)，使用n命令可以逐步执行程序，一次执行一行代码</li>
-<li>c(continue)，跳过当前断点，继续程序的执行：在程序暂停时（如遇到断点），输入c可继续程序执行，直到遇到下一个断点或程序结束</li>
+<li>s(step)，逐行执行代码（遇到函数进入）</li>
+<li>n(next)，逐行执行代码（遇到函数不进入）</li>
+<li>finish，跳出当前函数</li>
+<li>c(continue)，跳过当前断点，继续程序执行，直到遇到下一个断点或程序结束</li>
 <li>q(quit)，表示退出gdb</li>
 </ul>
+<h2 id="1-调试准备"><a href="#1-调试准备" class="headerlink" title="1 调试准备"></a>1 调试准备</h2><p><strong>调试程序：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> NUM 10</span><br><br><span class="hljs-comment">// argc, argv 是命令行参数</span><br><span class="hljs-comment">// 启动应用程序的时候</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>* argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;参数个数: %d\n&quot;</span>, argc);<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;argc; ++i)<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, NUM);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;参数 %d: %s\n&quot;</span>, i, argv[i]);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>命令行传参</strong></p>
+<ul>
+<li>第一步: 编译出带条信息的可执行程序</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">g++ GdbDebug.cpp -o app -g<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>第二步: 启动gdb进程, 指定需要gdb调试的应用程序名称</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">gdb app<br>(gdb) <br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>第三步: 在启动应用程序 app之前设置命令行参数。gdb中设置参数的命令叫做set args …，查看设置的命令行参数命令是 show args。 语法格式如下：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 设置的时机: 启动gdb之后, 在应用程序启动之前</span><br>(gdb) <span class="hljs-built_in">set</span> args 参数1 参数2 .... ...<br><span class="hljs-comment"># 查看设置的命令行参数</span><br>(gdb) show args<br></code></pre></td></tr></table></figure>
+
+<p><strong>gdb中启动程序</strong></p>
+<p>两种方式：在整个 gdb 调试过程中, 启动应用程序的命令只能使用一次。</p>
+<ul>
+<li>run: 可以缩写为 r, 如果程序中设置了断点会停在第一个断点的位置, 如果没有设置断点, 程序就执行完了</li>
+<li>start: 启动程序, 最终会阻塞在main函数的第一行，等待输入后续其它 gdb 指令</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 两种方式</span><br><span class="hljs-comment"># 方式1: run == r </span><br>(gdb) run  <br><br><span class="hljs-comment"># 方式2: start</span><br>(gdb) start<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-查看代码"><a href="#2-查看代码" class="headerlink" title="2 查看代码"></a>2 查看代码</h2><p><strong>当前文件</strong>：（main函数对应的文件）</p>
+<ul>
+<li>从第一行开始显示：(gdb) list </li>
+<li>列值这行号对应的上下文代码, 默认情况下只显示10行内容：(gdb) list 行号</li>
+<li>显示这个函数的上下文内容, 默认显示10行：(gdb) list 函数名</li>
+</ul>
+<p><code>l</code>和<code>list</code>等价</p>
+<p><strong>切换文件</strong></p>
+<p>在list命令后边将要查看的文件名指定出来就可以了，切换命令执行完毕之后，这个文件就变成了当前文件（多个文件要一起编译，生成可执行程序）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 切换到指定的文件，并列出这行号对应的上下文代码, 默认情况下只显示10行内容</span><br>(gdb) l 文件名:行号<br><br><span class="hljs-comment"># 切换到指定的文件，并显示这个函数的上下文内容, 默认显示10行</span><br>(gdb) l 文件名:函数名<br></code></pre></td></tr></table></figure>
+
+<p><strong>设置显示的行数</strong></p>
+<p>默认通过list只能一次查看10行代码, 如果想显示更多, 可以通过set listsize设置, 同样如果想查看当前显示的行数可以通过 show listsize查看, 这里的listsize可以简写为 list。具体语法格式如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 以下两个命令中的 listsize 都可以写成 list</span><br>(gdb) <span class="hljs-built_in">set</span> listsize 行数<br><br><span class="hljs-comment"># 查看当前list一次显示的行数</span><br>(gdb) show listsize<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-断点操作"><a href="#3-断点操作" class="headerlink" title="3 断点操作"></a>3 断点操作</h2><p>想要通过gdb调试某一行或者得到某个变量在运行状态下的实际值，就需要在在这一行设置断点，程序指定到断点的位置就会阻塞，就可以通过gdb的调试命令得到我们想要的信息了。</p>
+<p>设置断点的命令叫做break可以缩写为b。</p>
+<p><strong>设置断点</strong></p>
+<p>设置断点有两种方式：</p>
+<ul>
+<li>普通断点：程序只要运行到这个位置就会被阻塞</li>
+<li>条件断点：只有指定的条件被满足了程序才会在断点处阻塞</li>
+</ul>
+<p>调试程序的断点可以设置到某个具体的行, 也可以设置到某个函数上，具体的设置方式如下：</p>
+<p>设置普通断点到当前文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 在当前文件的某一行上设置断点</span><br><span class="hljs-comment"># break == b</span><br>(gdb) b 行号<br>(gdb) b 函数名		<span class="hljs-comment"># 停止在函数的第一行</span><br></code></pre></td></tr></table></figure>
+
+<p>设置普通断点到非当前文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 在非当前文件的某一行上设置断点</span><br>(gdb) b 文件名:行号<br>(gdb) b 文件名:函数名		<span class="hljs-comment"># 停止在函数的第一行</span><br></code></pre></td></tr></table></figure>
+
+<p>设置条件断点：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 必须要满足某个条件, 程序才会停在这个断点的位置上</span><br><span class="hljs-comment"># 通常情况下, 在循环中条件断点用的比较多</span><br>(gdb) b 行数 <span class="hljs-keyword">if</span> 变量名==某个值<br></code></pre></td></tr></table></figure>
+
+<p><strong>查看断点</strong></p>
+<p>断点设置完毕之后, 可以通过 info break命令查看设置的断点信息，其中info可以缩写为i</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># info == i</span><br><span class="hljs-comment"># 查看设置的断点信息</span><br>(gdb) i b   <span class="hljs-comment">#info break</span><br><br><span class="hljs-comment"># 举例</span><br>Num     Type           Disp Enb Address            What<br>1       breakpoint     keep y   0x000000000040056c <span class="hljs-keyword">in</span> main(int, char**)<br>                                                   at GdbDebug.cpp:14<br>2       breakpoint     keep y   0x000000000040056c <span class="hljs-keyword">in</span> main(int, char**)<br>                                                   at GdbDebug.cpp:14<br></code></pre></td></tr></table></figure>
+
+<p>断点属性信息：</p>
+<ul>
+<li>Num: 断点的编号, 删除断点或者设置断点状态的时候都需要使用</li>
+<li>Enb: 当前断点的状态, y表示断点可用, n表示断点不可用</li>
+<li>What: 描述断点被设置在了哪个文件的哪一行或者哪个函数上</li>
+</ul>
+<p><strong>删除断点</strong></p>
+<ul>
+<li>delete 断点编号</li>
+</ul>
+<p>删除断点的方式有两种: 删除(一个或者多个)指定断点或者删除一个连续的断点区间：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># delete == del == d</span><br><span class="hljs-comment"># 需要 info b 查看断点的信息, 第一列就是编号</span><br>(gdb) d 断点的编号1 断点编号2 ...<br><span class="hljs-comment"># 举例: </span><br>(gdb) d 1          <span class="hljs-comment"># 删除第1个断点</span><br>(gdb) d 2 4 6      <span class="hljs-comment"># 删除第2,4,6个断点</span><br><br><span class="hljs-comment"># 删除一个范围, 断点编号 num1 - numN 是一个连续区间</span><br>(gdb) d num1-numN<br><span class="hljs-comment"># 举例, 删除第1到第5个断点</span><br>(gdb) d 1-5<br></code></pre></td></tr></table></figure>
+
+<p><strong>设置断点状态</strong></p>
+<p>如果某个断点只是临时不需要了，可以将其设置为不可用状态, 设置命令为disable 断点编号，当需要的时候再将其设置回可用状态，设置命令为 enable 断点编号。</p>
+<ul>
+<li>设置断点无效</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 让断点失效之后, gdb调试过程中程序是不会停在这个位置的</span><br><span class="hljs-comment"># disable == dis</span><br><span class="hljs-comment"># 设置某一个或者某几个断点无效</span><br>(gdb) dis 断点1的编号 [断点2的编号 ...]<br><br><span class="hljs-comment"># 设置某个区间断点无效</span><br>(gdb) dis 断点1编号-断点n编号<br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>让无效的断点生效</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># enable == ena</span><br><span class="hljs-comment"># 设置某一个或者某几个断点有效</span><br>(gdb) ena 断点1的编号 [断点2的编号 ...]<br><br><span class="hljs-comment"># 设置某个区间断点有效</span><br>(gdb) ena 断点1编号-断点n编号<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-调试命令"><a href="#4-调试命令" class="headerlink" title="4 调试命令"></a>4 调试命令</h2><p><strong>继续运行gdb</strong></p>
+<p>如果调试的程序被断点阻塞了又想让程序继续执行，这时候就可以使用continue命令。程序会继续运行, 直到遇到下一个有效的断点。continue可以缩写为 c。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># continue == c</span><br>(gdb) <span class="hljs-built_in">continue</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>手动打印信息</strong></p>
+<p>当程序被某个断点阻塞之后, 可以通过一些命令打印变量的名字或者变量的类型，并且还可以跟踪打印某个变量的值。</p>
+<ul>
+<li>打印变量值</li>
+</ul>
+<p>在gdb调试的时候如果需要打印变量的值， 使用的命令是 print, 可缩写为 p。如果打印的变量是整数还可以指定输出的整数的格式, 格式化输出的整数对应的字符表如下：</p>
+<table>
+<thead>
+<tr>
+<th>格式化字符(&#x2F;fmt)</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;x</td>
+<td>以十六进制的形式打印出整数。</td>
+</tr>
+<tr>
+<td>&#x2F;d</td>
+<td>以有符号、十进制的形式打印出整数。</td>
+</tr>
+<tr>
+<td>&#x2F;u</td>
+<td>以无符号、十进制的形式打印出整数。</td>
+</tr>
+<tr>
+<td>&#x2F;o</td>
+<td>以八进制的形式打印出整数。</td>
+</tr>
+<tr>
+<td>&#x2F;t</td>
+<td>以二进制的形式打印出整数。</td>
+</tr>
+<tr>
+<td>&#x2F;f</td>
+<td>以浮点数的形式打印变量或表达式的值。</td>
+</tr>
+<tr>
+<td>&#x2F;c</td>
+<td>以字符形式打印变量或表达式的值。</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># print == p</span><br>(gdb) p 变量名<br><br><span class="hljs-comment"># 如果变量是一个整形, 默认对应的值是以10进制格式输出, 其他格式请参考上表</span><br>(gdb) p/fmt 变量名<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>打印变量类型</li>
+</ul>
+<p>如果在调试过程中需要查看某个变量的类型, 可以使用命令ptype, 语法格式如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 语法格式</span><br>(gdb) ptype 变量名<br></code></pre></td></tr></table></figure>
+
+<p><strong>自动打印信息</strong></p>
+<ul>
+<li>设置变量名自动显示</li>
+</ul>
+<p>和 print 命令一样，display 命令也用于调试阶段查看某个变量或表达式的值，它们的区别是，使用 display 命令查看变量或表达式的值，每当程序暂停执行（例如单步执行）时，GDB 调试器都会自动打印出来，而 print 命令则不会。因此，当想频繁查看某个变量或表达式的值从而观察它的变化情况时，使用 display 命令可以一劳永逸。display 命令没有缩写形式，常用的语法格式如下 2 种：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 在变量的有效取值范围内, 自动打印变量的值(设置一次, 以后就会自动显示)</span><br>(gdb) display 变量名<br><br><span class="hljs-comment"># 以指定的整形格式打印变量的值, 关于 fmt 的取值, 请参考 print 命令</span><br>(gdb) display/fmt 变量名<br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>查看自动显示列表</li>
+</ul>
+<p>对于使用 display 命令查看的目标变量或表达式，都会被记录在一张列表（称为自动显示列表）中。通过执行info dispaly命令，可以打印出这张表：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># info == i</span><br>(gdb) info display<br>Auto-display expressions now <span class="hljs-keyword">in</span> effect:<br>Num Enb Expression<br>1:   y  i<br>2:   y  array[i]<br>3:   y  /x array[i]<br></code></pre></td></tr></table></figure>
+
+<p>在展示出的信息中, 每个列的含义如下:</p>
+<p>Num : 变量或表达式的编号，GDB 调试器为每个变量或表达式都分配有唯一的编号<br>Enb : 表示当前变量（表达式）是处于激活状态还是禁用状态，如果处于激活状态（用 y 表示），则每次程序停止执行，该变量的值都会被打印出来；反之，如果处于禁用状态（用 n 表示），则该变量（表达式）的值不会被打印。<br>Expression ：被自动打印值的变量或表达式的名字。</p>
+<ul>
+<li>取消自动显示</li>
+</ul>
+<p>对于不需要再打印值的变量或表达式，可以将其删除或者禁用。</p>
+<p>删除自动显示列表中的变量或表达式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 命令中的 num 是通过 info display 得到的编号, 编号可以是一个或者多个</span><br>(gdb) undisplay num [num1 ...]<br><span class="hljs-comment"># num1 - numN 表示一个范围</span><br>(gdb) undisplay num1-numN<br><br>(gdb) delete display num [num1 ...]<br>(gdb) delete display num1-numN<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>禁用自动显示</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 命令中的 num 是通过 info display 得到的编号, 编号可以是一个或者多个</span><br>(gdb) <span class="hljs-built_in">disable</span> display num [num1 ...]<br><span class="hljs-comment"># num1 - numN 表示一个范围</span><br>(gdb) <span class="hljs-built_in">disable</span> display num1-numN<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>启用已禁用的自动显示</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 命令中的 num 是通过 info display 得到的编号, 编号可以是一个或者多个</span><br>(gdb) <span class="hljs-built_in">enable</span>  display num [num1 ...]<br><span class="hljs-comment"># num1 - numN 表示一个范围</span><br>(gdb) <span class="hljs-built_in">enable</span> display num1-numN<br></code></pre></td></tr></table></figure>
+
+<p><strong>单步调试</strong></p>
+<ul>
+<li>step</li>
+</ul>
+<p>step命令可以缩写为s, 命令被执行一次代码被向下执行一行，如果这一行是一个函数调用，那么程序<code>会</code>进入到函数体内部。</p>
+<ul>
+<li>next</li>
+</ul>
+<p>next命令和step命令功能是相似的，只是在使用next调试程序的时候<code>不会</code>进入到函数体内部，next可以缩写为 n</p>
+<ul>
+<li>finish</li>
+</ul>
+<p>如果通过 s 单步调试进入到函数内部, 想要跳出这个函数体， 可以执行finish命令。如果想要跳出函数体必须要保证函数体内不能有有效断点，否则无法跳出。</p>
+<ul>
+<li>until</li>
+</ul>
+<p>通过 until 命令可以直接跳出某个循环体，这样就能提高调试效率了。如果想直接从循环体中跳出, 必须要满足以下的条件，否则命令不会生效：</p>
+<p>要跳出的循环体内部不能有有效的断点<br>必须要在循环体的开始&#x2F;结束行执行该命令</p>
 <h1 id="56-移动构造函数"><a href="#56-移动构造函数" class="headerlink" title="56 移动构造函数"></a>56 移动构造函数</h1><p><strong>移动构造函数的初衷：</strong></p>
 <p>使用对象<code>a</code>初始化对象<code>b</code>后对象<code>a</code>就不在使用了，但是对象<code>a</code>的内存还在，如果是拷贝构造函数的话，是将对象<code>a</code>的内容复制一份到对象<code>b</code>中，那么能否直接使用对象<code>a</code>的内存呢，这样就避免了内存的重新分配，降低了构造的成本。</p>
 <p><strong>规则：</strong></p>
@@ -2153,7 +2415,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>May 6, 2024</div>
+          <div>May 20, 2024</div>
         </div>
       
       

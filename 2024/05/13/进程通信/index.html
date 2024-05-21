@@ -16,16 +16,16 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1 消息队列消息队列实验 读进程： 12345678910111213141516171819202122232425262728293031#include &lt;stdio.h&gt; #include &lt;sys&#x2F;ipc.h&gt; #include &lt;sys&#x2F;msg.h&gt;   &#x2F;&#x2F;消息结构体struct mesg_buffer &amp;#123;     long mesg_t">
+    <meta name="description" content="1 消息队列消息队列解决了什么问题解耦 有序性 异步处理 削峰 写进程消息队列通过msgsnd函数发送消息，其声明为： 1int  msgsnd(int msgid, const void *msg_ptr, size_t msg_sz, int msgflg);   int msgid：消息队列标识符，由msgget函数返回  msgget函数：创建一个消息队列，返回以key命名的消息队列的标识">
 <meta property="og:type" content="article">
 <meta property="og:title" content="进程通信">
 <meta property="og:url" content="http://example.com/2024/05/13/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1 消息队列消息队列实验 读进程： 12345678910111213141516171819202122232425262728293031#include &lt;stdio.h&gt; #include &lt;sys&#x2F;ipc.h&gt; #include &lt;sys&#x2F;msg.h&gt;   &#x2F;&#x2F;消息结构体struct mesg_buffer &amp;#123;     long mesg_t">
+<meta property="og:description" content="1 消息队列消息队列解决了什么问题解耦 有序性 异步处理 削峰 写进程消息队列通过msgsnd函数发送消息，其声明为： 1int  msgsnd(int msgid, const void *msg_ptr, size_t msg_sz, int msgflg);   int msgid：消息队列标识符，由msgget函数返回  msgget函数：创建一个消息队列，返回以key命名的消息队列的标识">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240513212522806.png">
 <meta property="article:published_time" content="2024-05-13T13:19:59.503Z">
-<meta property="article:modified_time" content="2024-05-14T02:26:28.651Z">
+<meta property="article:modified_time" content="2024-05-15T08:24:29.273Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240513212522806.png">
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          306 words
+          1.2k words
         
       </span>
     
@@ -234,7 +234,7 @@
         
         
         
-          3 mins
+          10 mins
         
       </span>
     
@@ -284,7 +284,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-05-14T10:26:28+08:00
+                    Last updated on 2024-05-15T16:24:29+08:00
                   
                   
 
@@ -294,8 +294,91 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-消息队列"><a href="#1-消息队列" class="headerlink" title="1 消息队列"></a>1 消息队列</h1><p><strong>消息队列实验</strong></p>
-<p>读进程：</p>
+                <h1 id="1-消息队列"><a href="#1-消息队列" class="headerlink" title="1 消息队列"></a>1 消息队列</h1><h2 id="消息队列解决了什么问题"><a href="#消息队列解决了什么问题" class="headerlink" title="消息队列解决了什么问题"></a>消息队列解决了什么问题</h2><p><strong>解耦</strong></p>
+<p><strong>有序性</strong></p>
+<p><strong>异步处理</strong></p>
+<p><strong>削峰</strong></p>
+<h2 id="写进程"><a href="#写进程" class="headerlink" title="写进程"></a>写进程</h2><p>消息队列通过<code>msgsnd</code>函数发送消息，其声明为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span>  <span class="hljs-title">msgsnd</span><span class="hljs-params">(<span class="hljs-type">int</span> msgid, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *msg_ptr, <span class="hljs-type">size_t</span> msg_sz, <span class="hljs-type">int</span> msgflg)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>int msgid</code>：消息队列标识符，由<code>msgget</code>函数返回</p>
+<ul>
+<li><p><code>msgget</code>函数：创建一个消息队列，返回以key命名的消息队列的标识符 <code>int msgget(key_t key, int msgflg);</code></p>
+<ul>
+<li><p><code>key</code>：某个消息队列的名字，<code>key</code>如何获取？</p>
+<ul>
+<li>通过宏定义<code>key</code>值</li>
+<li>通过<code>ftok</code>函数生成<code>key</code>值</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 函数ftok把一个已存在的路径名和一个整数标识符转换成一个key_t值</span><br><span class="hljs-comment">// ftok函数将通过对pathname的索引节点号（inode number）与proj_id进行异或操作生成一个唯一的键值。返回的键值类型是key_t，通常是一个长整型</span><br><span class="hljs-function"><span class="hljs-type">key_t</span> <span class="hljs-title">ftok</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *pathname, <span class="hljs-type">int</span> proj_id)</span></span>;  <span class="hljs-comment">// 声明</span><br>key = <span class="hljs-number">123</span>;  <span class="hljs-comment">// 获取方法1</span><br>key = <span class="hljs-built_in">ftok</span>(<span class="hljs-string">&quot;progfile&quot;</span>, <span class="hljs-number">65</span>);  <span class="hljs-comment">// 获取方法2</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>msgflg</code>举例说明</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">IPC_CREAT	如果消息队列对象不存在，则创建之，否则则进行打开操作<br>IPC_EXCL	如果消息对象不存在则创建之，否则产生一个错误并返回<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>const void *msg_ptr</code>：是一个指针，指针指向准备发送的消息</p>
+</li>
+<li><p><code>size_t msg_sz</code>：是<code>msg_ptr</code>指向的消息长度，消息缓冲区结构体中<code>mtext</code>的大小,不包括数据的类型</p>
+</li>
+<li><p><code>int msgflg</code>：控制着当前消息队列满或到达系统上限时将要发生的事情</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++">msgflg = IPC_NOWAIT 表示队列满不等待，返回EAGAIN错误<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>成功返回0</li>
+<li>失败返回-1</li>
+</ul>
+<h2 id="读进程"><a href="#读进程" class="headerlink" title="读进程"></a>读进程</h2><p>使用<code>msgrcv</code>函数进行读数据，其声明为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span>  <span class="hljs-title">msgrcv</span><span class="hljs-params">(<span class="hljs-type">int</span> msgid, <span class="hljs-type">void</span> *msg_ptr, <span class="hljs-type">size_t</span> msgsz, <span class="hljs-type">long</span> <span class="hljs-type">int</span> msgtype, <span class="hljs-type">int</span> msgflg)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>int msgid</code>：由<code>msgget</code>函数返回的消息队列标识码，<code>msgget</code>函数用法同写进程</li>
+<li><code>void *msg_ptr</code>：是一个指针，指针指向准备接收的消息</li>
+<li><code>size_t msgsz</code>：是<code>msg_ptr</code>指向的消息长度，消息缓冲区结构体中<code>mtext</code>的大小,不包括数据的类型</li>
+<li><code>long int msgtype</code>：它可以实现接收优先级的简单形式<ul>
+<li><code>msgtype=0</code>返回队列第一条信息</li>
+<li><code>msgtype&gt;0</code>返回队列第一条类型等于<code>msgtype</code>的消息</li>
+<li><code>msgtype&lt;0</code>返回队列第一条类型小于等于<code>msgtype</code>绝对值的消息</li>
+</ul>
+</li>
+<li><code>int msgflg</code>：控制着队列中没有相应类型的消息可供接收时将要发生的事<ul>
+<li><code>msgflg=IPC_NOWAIT</code>，队列没有可读消息不等待，返回<code>ENOMSG</code>错误。</li>
+<li><code>msgflg=MSG_NOERROR</code>，消息大小超过<code>msgsz</code>时被截断</li>
+</ul>
+</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>成功返回实际放到接收缓冲区里去的字符个数</li>
+<li>失败，则返回-1</li>
+</ul>
+<h2 id="消息队列的控制函数"><a href="#消息队列的控制函数" class="headerlink" title="消息队列的控制函数"></a>消息队列的控制函数</h2><p>函数声明：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span>  <span class="hljs-title">msgctl</span><span class="hljs-params">(<span class="hljs-type">int</span> msqid, <span class="hljs-type">int</span> command, strcut msqid_ds *buf)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>msqid</code>： 由<code>msgget</code>函数返回的消息队列标识码</li>
+<li><code>command</code>：是将要采取的动作,（有三个可取值）分别如下</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">IPC_STAT：获取消息队列的状态信息，将 msqid_ds 结构体填充到 buf 中。<br>IPC_SET：设置消息队列的权限，从 buf 结构体中读取权限信息。<br>IPC_RMID：删除消息队列，释放相关资源。<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>buf</code>：保存消息队列信息的结构体指针，通常是结构体 <code>msqid_ds</code> 的指针，用于传递或接收消息队列的属性信息。</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>操作成功，返回0</li>
+<li>失败，返回-1</li>
+</ul>
+<h2 id="查看消息队列"><a href="#查看消息队列" class="headerlink" title="查看消息队列"></a>查看消息队列</h2><ul>
+<li><p><code>ipcs -q</code>：命令查看已经创建的消息队列，包括他的key值信息，id信息，拥有者信息，文件权限信息，已使用的字节数，和消息条数。</p>
+</li>
+<li><p><code>ipcrm -Q加消息队列的key值</code>，用来删除一个消息队列。</p>
+</li>
+</ul>
+<h2 id="消息队列实验"><a href="#消息队列实验" class="headerlink" title="消息队列实验"></a>消息队列实验</h2><p>读进程：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span> </span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/ipc.h&gt;</span> </span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/msg.h&gt;</span> </span><br>  <br><span class="hljs-comment">//消息结构体</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">mesg_buffer</span> &#123; <br>    <span class="hljs-type">long</span> mesg_type; <br>    <span class="hljs-type">char</span> mesg_text[<span class="hljs-number">100</span>]; <br>&#125; message; <br>  <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123; <br>    <span class="hljs-type">key_t</span> key; <br>    <span class="hljs-type">int</span> msgid; <br>  <br>    <span class="hljs-comment">//函数ftok把一个已存在的路径名和一个整数标识符转换成一个key_t值，称为IPC键值</span><br>    key = <span class="hljs-built_in">ftok</span>(<span class="hljs-string">&quot;progfile&quot;</span>, <span class="hljs-number">65</span>); <br>  <br>    <span class="hljs-comment">// 创建一个新的或打开一个已经存在的消息队列，返回其id</span><br>    msgid = <span class="hljs-built_in">msgget</span>(key, <span class="hljs-number">0666</span> | IPC_CREAT); <br>  <br>    <span class="hljs-comment">// 接收消息</span><br>    <span class="hljs-built_in">msgrcv</span>(msgid, &amp;message, <span class="hljs-built_in">sizeof</span>(message), <span class="hljs-number">1</span>, <span class="hljs-number">0</span>); <br>  <br>    <span class="hljs-comment">// 显示消息 </span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;收到的消息为: %s \n&quot;</span>,  message.mesg_text); <br>  <br>    <span class="hljs-comment">// to destroy the message queue </span><br>    <span class="hljs-built_in">msgctl</span>(msgid, IPC_RMID, <span class="hljs-literal">NULL</span>); <br>  <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; <br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>写进程</p>
@@ -342,7 +425,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>May 14, 2024</div>
+          <div>May 15, 2024</div>
         </div>
       
       

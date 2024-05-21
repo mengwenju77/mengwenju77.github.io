@@ -1,0 +1,1101 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 Linux目录1.1 相对路径相对路径：相对于当前文件的路径。在Linux中有两个表示路径的特殊符号：  .&#x2F;：代表目前所在的目录，也可以使用.表示 ..&#x2F;：代表当前目录的上一层目录。也可以使用..表示  1.2 绝对路径绝对路径：从系统磁盘起始节点开始描述的路径  Llinux：起始节点为根目录。比如：&#x2F;root&#x2F;work&#x2F;mq  2 命令解析器pwd这个命令是怎么执行的？为什么aabbcc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux">
+<meta property="og:url" content="http://example.com/2024/05/16/Linux/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1 Linux目录1.1 相对路径相对路径：相对于当前文件的路径。在Linux中有两个表示路径的特殊符号：  .&#x2F;：代表目前所在的目录，也可以使用.表示 ..&#x2F;：代表当前目录的上一层目录。也可以使用..表示  1.2 绝对路径绝对路径：从系统磁盘起始节点开始描述的路径  Llinux：起始节点为根目录。比如：&#x2F;root&#x2F;work&#x2F;mq  2 命令解析器pwd这个命令是怎么执行的？为什么aabbcc">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240516110954877.png">
+<meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240520100532084.png">
+<meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240520100743111.png">
+<meta property="article:published_time" content="2024-05-16T02:21:48.616Z">
+<meta property="article:modified_time" content="2024-05-20T03:00:06.043Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240516110954877.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Linux - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 25vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>主页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>文档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Linux"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-16 10:21" pubdate>
+          2024/05/16 10:21 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Linux</h1>
+            
+              <p id="updated-time" class="note note-info" style="display: none">
+                
+                  
+                    Last updated on 2024-05-20T11:00:06+08:00
+                  
+                  
+
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="1-Linux目录"><a href="#1-Linux目录" class="headerlink" title="1 Linux目录"></a>1 Linux目录</h1><h2 id="1-1-相对路径"><a href="#1-1-相对路径" class="headerlink" title="1.1 相对路径"></a>1.1 相对路径</h2><p>相对路径：相对于当前文件的路径。在Linux中有两个表示路径的特殊符号：</p>
+<ul>
+<li><code>./</code>：代表目前所在的目录，也可以使用<code>.</code>表示</li>
+<li><code>../</code>：代表当前目录的上一层目录。也可以使用<code>..</code>表示</li>
+</ul>
+<h2 id="1-2-绝对路径"><a href="#1-2-绝对路径" class="headerlink" title="1.2 绝对路径"></a>1.2 绝对路径</h2><p>绝对路径：从系统磁盘起始节点开始描述的路径</p>
+<ul>
+<li>Llinux：起始节点为根目录。比如：<code>/root/work/mq</code></li>
+</ul>
+<h1 id="2-命令解析器"><a href="#2-命令解析器" class="headerlink" title="2 命令解析器"></a>2 命令解析器</h1><p><code>pwd</code>这个命令是怎么执行的？为什么<code>aabbcc</code>这个命令执行不了？</p>
+<p>一个命令相当于一个可执行程序，在linux中输入<code>which pwd</code>，会出现：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">/usr/bin/pwd<br></code></pre></td></tr></table></figure>
+
+<p>输入<code>echo $PATH</code>，会出现：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/sbin:/u</span>sr<span class="hljs-regexp">/local/</span>bin:<span class="hljs-regexp">/usr/</span>sbin:<span class="hljs-regexp">/usr/</span>bin:<span class="hljs-regexp">/root/</span>bin<br></code></pre></td></tr></table></figure>
+
+<p>输入<code>pwd</code>时，linux会在上述目录下一个一个搜索，搜到就执行，搜不到就不执行。pwd这个可执行程序是在<code>/usr/bin/pwd</code>目录下。</p>
+<p>如果自己的可执行程序想要全局访问，那么把可执行程序放到PATH目录下即可</p>
+<h1 id="3-文件类型"><a href="#3-文件类型" class="headerlink" title="3 文件类型"></a>3 文件类型</h1><p>在linux中，一共有7种文件类型，这7种文件类型是根据属性进行划分的，而不是根据后缀划分的</p>
+<ul>
+<li><code>-</code>：普通的文件</li>
+<li><code>d</code>：目录（dirctory）</li>
+<li><code>l</code>：软链接文件（link），相当于windows中的快捷方式</li>
+<li><code>c</code>：字符设备（char）</li>
+<li><code>b</code>：块设备（block）</li>
+<li><code>p</code>：管道文件（pipe）</li>
+<li><code>s</code>：本地套接字文件（socket）</li>
+</ul>
+<h1 id="4-文件权限"><a href="#4-文件权限" class="headerlink" title="4 文件权限"></a>4 文件权限</h1><p>linux中不同的用户可以对文件拥有不同的操作权限，权限一共有四种：<code>读权限、写权限、执行权限、没有任何权限</code></p>
+<ul>
+<li>读权限：使用<code>r</code>表示，即<code>read</code></li>
+<li>写权限：使用<code>w</code>表示，即<code>write</code></li>
+<li>执行权限：使用<code>x</code>表示，即<code>excute</code></li>
+<li>没有任何权限：使用<code>-</code>表示</li>
+</ul>
+<p><img src="/../imgs/$%7Bfiilename%7D/image-20240516110954877.png" srcset="/img/loading.gif" lazyload alt="image-20240516110954877"></p>
+<h1 id="5-文件查看"><a href="#5-文件查看" class="headerlink" title="5 文件查看"></a>5 文件查看</h1><p><strong>more</strong></p>
+<p>more 文件名</p>
+<ul>
+<li>回车：显示下一行</li>
+<li>空格：向下滚动一屏</li>
+<li>b：返回上一屏</li>
+<li>q：退出more</li>
+</ul>
+<p><strong>less</strong></p>
+<p>less 文件名</p>
+<ul>
+<li>回车：显示下一行</li>
+<li>空格：向下滚动一屏</li>
+<li>b：返回上一屏</li>
+<li>上下键：上下滚动</li>
+<li>G：跳到最后一行</li>
+<li>g：跳到第一行<u>GGg</u></li>
+<li>q：退出less</li>
+</ul>
+<p><strong>head</strong>：使用该命令可以查看文件头部的若干信息。</p>
+<ul>
+<li>默认显示文件的前10行</li>
+<li>head 文件名</li>
+<li>指定显示头部的前多少行</li>
+<li>head -行数 文件名</li>
+</ul>
+<p><strong>tail</strong>：使用该命令可以查看文件尾部的若干行信息</p>
+<ul>
+<li>默认显示文件的后10行</li>
+<li>tail 文件名</li>
+<li>指定显示尾部的多少行</li>
+<li>tail -行数 文件名</li>
+</ul>
+<h1 id="6-修改文件权限"><a href="#6-修改文件权限" class="headerlink" title="6 修改文件权限"></a>6 修改文件权限</h1><p><strong>字母设定法</strong></p>
+<p>语法格式：<code>chmod who [+ | - | =] 文件名</code></p>
+<ul>
+<li><p>who：</p>
+<ul>
+<li>u：user ，文件所有者</li>
+<li>g：group，文件所属组用户</li>
+<li>o：other，其它</li>
+<li>a：all，以上三类人，u+g+o</li>
+</ul>
+</li>
+<li><p>对权限的操作：</p>
+<ul>
+<li>+：添加权限</li>
+<li>-：去除权限</li>
+<li>&#x3D;：覆盖权限</li>
+</ul>
+</li>
+<li><p>mod：权限</p>
+<ul>
+<li>r：read，读</li>
+<li>w：write，写</li>
+<li>x：execute，执行</li>
+<li>-：没有权限</li>
+</ul>
+</li>
+</ul>
+<p><strong>数字设定法</strong></p>
+<p>语法格式：<code>chomd [+ | - | =] mod文件名</code></p>
+<ul>
+<li><p>对权限的操作：</p>
+<ul>
+<li>+：添加权限</li>
+<li>-：去除权限</li>
+<li>&#x3D;：权限的覆盖，等号可以不写</li>
+</ul>
+</li>
+<li><p>mod：权限描述，所有权限都放开是7</p>
+<ul>
+<li>4：read</li>
+<li>2：write</li>
+<li>1：execute</li>
+<li>0：没有权限</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs subunit">chmod 567 a.txt<br>第一个数字是文件所有者权限，5代表4<span class="hljs-string">+1</span>，也就是对文件所有者开放：读+执行权限<br>第二个数字是文件所属组用户权限，6代表4<span class="hljs-string">+2</span>，也就是对文件所有者开放：读+写权限<br>第三个用户是其它人权限：7代表4<span class="hljs-string">+2</span><span class="hljs-string">+1</span>，也就是对其他人开放：读+写+执行权限<br></code></pre></td></tr></table></figure>
+
+<h1 id="7-重定向"><a href="#7-重定向" class="headerlink" title="7 重定向"></a>7 重定向</h1><p>关于重定向使用最多的是<code>输出重定向</code>，就是修改输出的数据的位置。</p>
+<ul>
+<li><code>&gt;</code>：将文件内容写入到指定文件中，如果文件中已有数据，则会使用新数据覆盖原数据</li>
+<li><code>&gt;&gt;</code>：将输出的内容追加到指定的文件尾部</li>
+</ul>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs openscad"><span class="hljs-built_in">echo</span> 相当于在终端打印，类似printf，还有其它输出方式，比如 tail -f a.<span class="hljs-built_in">log</span><br><span class="hljs-built_in">echo</span> hello &gt; tmp  <span class="hljs-comment">// 如果tmp文件不存在，则创建，如果存在，则覆盖</span><br><span class="hljs-built_in">echo</span> <span class="hljs-number">123</span> &gt;&gt; tmp  <span class="hljs-comment">// 追加到尾部</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="8-用户添加和删除"><a href="#8-用户添加和删除" class="headerlink" title="8 用户添加和删除"></a>8 用户添加和删除</h1><p><strong>用户添加</strong></p>
+<p>centos操作系统下：</p>
+<p>sudo adduser 用户名</p>
+<p><strong>用户删除</strong></p>
+<p>userdel 用户名 -r</p>
+<p>-r 可以一并删除用户的家目录，否则可能需要手动删除</p>
+<p><strong>用户切换</strong></p>
+<p><code>su 用户名</code>：su只切换用户，不切换当前工作目录</p>
+<p><code>su - 用户名</code>：切换用户，并且把目录切换为当前用户的家目录</p>
+<p><strong>修改用户密码</strong></p>
+<p>修改自己的密码：<code>passwd</code></p>
+<p>修改别人的密码：<code>passwd 用户名</code></p>
+<p>普通用户修改别人的密码需要有sudo权限</p>
+<p>centos给普通用户添加权限：</p>
+<ul>
+<li><p>在root用户下，执行 <code>visudo</code></p>
+</li>
+<li><p>找到：<code>root    ALL=(ALL)       ALL</code></p>
+</li>
+<li><p>在下面加一行：<code>用户名       ALL=(ALL)       ALL</code>保存退出即可</p>
+</li>
+</ul>
+<h1 id="9-文件搜索"><a href="#9-文件搜索" class="headerlink" title="9 文件搜索"></a>9 文件搜索</h1><h2 id="9-1-find"><a href="#9-1-find" class="headerlink" title="9.1 find"></a><strong>9.1 find</strong></h2><p>根据文件的属性，查找对应的磁盘文件，常用的属性：文件名、文件类型、文件大小、文件的目录</p>
+<p><strong>按文件名字搜索：-name</strong></p>
+<p>搜索格式：<code>find 搜索的路径 -name 要搜索的文件名</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 按文件名搜索 -name</span><br>find . -name *.cpp <span class="hljs-comment"># 在当前目录下搜索后缀名为cpp的文件</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>按文件类型搜索： -type</strong></p>
+<table>
+<thead>
+<tr>
+<th>文件类型</th>
+<th>类型的字符描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>普通的文件类型</td>
+<td>f</td>
+</tr>
+<tr>
+<td>目录类型</td>
+<td>d</td>
+</tr>
+<tr>
+<td>软连接类型</td>
+<td>l</td>
+</tr>
+<tr>
+<td>字符设备类型</td>
+<td>c</td>
+</tr>
+<tr>
+<td>块设备类型</td>
+<td>b</td>
+</tr>
+<tr>
+<td>管道类型</td>
+<td>p</td>
+</tr>
+<tr>
+<td>本地套接字类型</td>
+<td>s</td>
+</tr>
+</tbody></table>
+<p>搜索格式：<code>find 搜索的路径 -type 文件类型</code></p>
+<p><strong>按文件大小搜索：-size</strong></p>
+<p>语法格式：<code>find 搜索的路径 -size [+ | -]文件大小</code></p>
+<ul>
+<li>文件的大小需要加单位<ul>
+<li>k（小写）</li>
+<li>M（大写）</li>
+<li>G（大写）</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs subunit">文件划分区间：<br>-size 4k：表示的区间为(4<span class="hljs-string">-1</span>k,4k]<br>-size <span class="hljs-string">-4</span>k：表示的区间[0k,4<span class="hljs-string">-1</span>k]<br>-size <span class="hljs-string">+4</span>k：表示的区间(4k,正无穷]<br></code></pre></td></tr></table></figure>
+
+<p><strong>基于目录层级搜索</strong></p>
+<ul>
+<li><code>-maxdepth</code>：最多搜索到第多少层目录</li>
+<li><code>-mindepth</code>：至少从第多少层开始搜索</li>
+</ul>
+<p>举例：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">find</span> . -maxdepth <span class="hljs-number">5</span> -name <span class="hljs-regexp">*.cpp</span> <span class="hljs-comment"># 最多搜索5层</span><br>find . -mindepth <span class="hljs-number">5</span> -name <span class="hljs-regexp">*.cpp</span> <span class="hljs-comment"># 最少从第5层开始搜索</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>find高级用法</strong></p>
+<p>如果想找到一个文件之后进行某些操作，比如查看信息，可以在正常的搜索之后加上：<code>-exec 操作命令 &#123;&#125; \;</code> 或者<code>-oj 操作命令 &#123;&#125; \;</code> </p>
+<p><code>-exec</code>：不和用户交互</p>
+<p><code>-ok</code>：和用户交互</p>
+<p>举例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">find /work -name main.cpp -<span class="hljs-built_in">exec</span> <span class="hljs-built_in">ls</span> -l &#123;&#125; \;  <br>find /work -name main.cpp -ok <span class="hljs-built_in">ls</span> -l &#123;&#125; \;<br></code></pre></td></tr></table></figure>
+
+<p>但上面这种写法比较繁琐，不好记，另外一种写法是 <code>|xargs</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">find /work -name main.cpp |xargs <span class="hljs-built_in">ls</span> -l;  <br></code></pre></td></tr></table></figure>
+
+<p><code>xargs</code>的效率比使用<code>-exec</code>的效率高</p>
+<ul>
+<li><code>-exec</code>：将<code>find</code>查询的结果逐条传递给后买你的<code>shell</code>命令</li>
+<li><code>-xargs</code>：将<code>find</code>查询的结果一次性传递给后面的<code>shell</code>命令</li>
+</ul>
+<h2 id="9-2-grep"><a href="#9-2-grep" class="headerlink" title="9.2 grep"></a><strong>9.2 grep</strong></h2><p>grep命令用于查找文件里符合条件的字符串，常用参数：</p>
+<ul>
+<li><code>-r</code>：如果需要搜素目录中的文件内容，需要进行递归操作，必须指定该参数</li>
+<li><code>-i</code>：对应要搜索的关键字，忽略字符大小写的差别</li>
+<li><code>-n</code>：在显示符合样式的那一行之前，标示出该行的行号</li>
+</ul>
+<p>语法：<code>grep &quot;搜索的内容&quot; 搜索的路径/文件 参数</code></p>
+<p>举例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">grep <span class="hljs-string">&quot;include&quot;</span> ./ main.cpp -rn<br>grep <span class="hljs-string">&quot;include&quot;</span> main.cpp -rn<br></code></pre></td></tr></table></figure>
+
+<h2 id="9-3-locate"><a href="#9-3-locate" class="headerlink" title="9.3 locate"></a><strong>9.3 locate</strong></h2><h1 id="10-静态库动态库"><a href="#10-静态库动态库" class="headerlink" title="10 静态库动态库"></a>10 静态库动态库</h1><h2 id="10-1-静态库"><a href="#10-1-静态库" class="headerlink" title="10.1 静态库"></a>10.1 静态库</h2><ul>
+<li>在Linux中静态库以lib作为前缀, 以.a作为后缀, 中间是库的名字自己指定即可, 即: libxxx.a</li>
+<li>在Windows中静态库一般以lib作为前缀, 以lib作为后缀, 中间是库的名字需要自己指定, 即: libxxx.lib</li>
+</ul>
+<p>源码：</p>
+<p><code>add.cpp</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;head.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> a+b;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>sub.cpp</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;head.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">subtract</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> a-b;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>mult.cpp</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;head.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">multiply</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> a*b;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>div.cpp</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;head.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">divide</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> (<span class="hljs-type">double</span>)a/b;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>head.h</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> _HEAD_H</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _HEAD_H</span><br><span class="hljs-comment">// 加法</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span></span>;<br><span class="hljs-comment">// 减法</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">subtract</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span></span>;<br><span class="hljs-comment">// 乘法</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">multiply</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span></span>;<br><span class="hljs-comment">// 除法</span><br><span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">divide</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span></span>;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br></code></pre></td></tr></table></figure>
+
+<p>测试程序<code>main</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;head.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> a = <span class="hljs-number">20</span>;<br>    <span class="hljs-type">int</span> b = <span class="hljs-number">12</span>;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;a = %d, b = %d\n&quot;</span>, a, b);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;a + b = %d\n&quot;</span>, <span class="hljs-built_in">add</span>(a, b));<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;a - b = %d\n&quot;</span>, <span class="hljs-built_in">subtract</span>(a, b));<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;a * b = %d\n&quot;</span>, <span class="hljs-built_in">multiply</span>(a, b));<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;a / b = %f\n&quot;</span>, <span class="hljs-built_in">divide</span>(a, b));<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>目录结构：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">.<br>|-- add.cpp<br>|-- div.cpp<br>|-- include<br>|   -- head.h<br>|-- main.cpp<br>|-- mult.cpp<br>-- sub.cpp<br></code></pre></td></tr></table></figure>
+
+<p><strong>制作静态库</strong>：生成静态库，需要先对源文件进行汇编操作 (使用参数 -c) 得到二进制格式的目标文件 (.o 格式), 然后在通过 ar工具将目标文件打包就可以得到静态库文件了 (libxxx.a)。</p>
+<ul>
+<li>将源文件汇编，生成二进制文件。<code>g++ add.cpp sub.cpp mult.cpp div.cpp -c</code>，生成报错：找不到<code>head.h</code>的头文件，因为<code>head.h</code>和其它源代码文件不在同一个目录下，所以找不到，解决方法：指定头文件目录：<code>g++ add.cpp sub.cpp mult.cpp div.cpp -c -I ./include/</code>，汇编结束后会生成源文件对应的二进制<code>.o</code>文件</li>
+<li>将生成的目标文件通过<code>ar</code>工具打包生成静态库，使用<code>ar</code>工具：<code>ar rcs libcalc.a *.o</code>，生成<code>libcalc.a</code></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">ar工具的三个参数：</span><br>参数c：创建一个库，不管库是否存在，都将创建。<br>参数s：创建目标文件索引，这在创建较大的库时能加快时间。<br>参数r：在库中插入模块(替换)。默认新的成员添加在库的结尾处，如果模块名已经在库中存在，则替换同名的模块<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>发布静态库：静态库<code>libcalc.a</code>和库对应的头文件<code>head.h</code>一并发布</li>
+</ul>
+<p><strong>静态库的使用：</strong></p>
+<p>得到一个可用的静态库之后，需要将其放到一个目录中，然后根据得到的头文件编写测试代码，对静态库中的函数进行调用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">.<br>|-- add.cpp<br>|-- add.o<br>|-- div.cpp<br>|-- div.o<br>|-- include<br>|   `-- head.h<br>|-- mult.cpp<br>|-- mult.o<br>|-- sub.cpp<br>|-- sub.o<br>`-- <span class="hljs-built_in">test</span><br>    |-- head.h<br>    |-- libcalc.a<br>    `-- main.cpp<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>编译测试程序：<code>g++ main.cpp -o main</code>，出现错误：</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++">main.cpp:(.text+<span class="hljs-number">0x38</span>): undefined reference to `<span class="hljs-built_in">add</span>(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>)&#x27;<br>main.cpp:(.text+<span class="hljs-number">0x58</span>): undefined reference to `<span class="hljs-built_in">subtract</span>(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>)&#x27;<br>main.cpp:(.text+<span class="hljs-number">0x78</span>): undefined reference to `<span class="hljs-built_in">multiply</span>(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>)&#x27;<br>main.cpp:(.text+<span class="hljs-number">0x98</span>): undefined reference to `<span class="hljs-built_in">divide</span>(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>)&#x27;<br></code></pre></td></tr></table></figure>
+
+<p>这是因为程序在编译的时候没有找到这些函数的定义的位置，有引用但是没定义；解决方法：在编译的时候指定库文件的路径和名字：</p>
+<p><code>g++ main.cpp -o main -I ./ -lcalc</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 编译的时候指定库信息</span><br>	-L: 指定库所在的目录(相对或者绝对路径)<br>	-l: 指定库的名字, 掐头(lib)去尾(.a) ==&gt; calc<br><span class="hljs-comment"># -L -l, 参数和参数值之间可以有空格, 也可以没有  -L./ -lcalc</span><br>$ g++ main.c -o app -L ./ -l calc<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>执行之后生成可执行程序<code>main</code></li>
+</ul>
+<h2 id="10-2-动态库"><a href="#10-2-动态库" class="headerlink" title="10.2 动态库"></a>10.2 动态库</h2><ul>
+<li>在Linux中动态库以lib作为前缀, 以.so作为后缀, 中间是库的名字自己指定即可, 即: libxxx.so</li>
+<li>在Windows中动态库一般以lib作为前缀, 以dll作为后缀, 中间是库的名字需要自己指定, 即: libxxx.dll</li>
+</ul>
+<p><strong>制作动态库</strong></p>
+<p>生成动态链接库是直接使用gcc命令并且需要添加-fPIC（-fpic） 以及-shared 参数。</p>
+<ul>
+<li>对源文件进行汇编生成二进制文件：<code>g++ *.cpp -c -fpic -I ./include/</code>，得到源文件的<code>.o</code>文件</li>
+<li>将得到的<code>.o</code>文件打包成动态库：<code>g++ -shared *.o -o libcalc.so</code>，得到动态库文件<code>libcalc.so</code></li>
+<li>发布头文件和动态库</li>
+</ul>
+<p><strong>使用动态库</strong></p>
+<p>目录结构：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">.<br>|-- head.h<br>|-- libcalc.so<br>`-- main.cpp<br></code></pre></td></tr></table></figure>
+
+<p>执行：<code>g++ main.cpp -o main -L ./ -lcalc</code></p>
+<p>报错：g++通过指定的动态库信息生成了可执行程序，但是可执行程序运行却提示无法加载到动态库。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">./main: error while loading shared libraries: libcalc.so: cannot open shared object file: No such file or directory<br></code></pre></td></tr></table></figure>
+
+<p>使用<code>ldd 可执行程序名</code>查看程序执行时能否找到所需要的动态库：<code>ldd main</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">linux-vdso.so.1 =&gt;  (0x00007ffec878b000)<br>libcalc.so =&gt; not found<br>libstdc++.so.6 =&gt; /lib64/libstdc++.so.6 (0x00007f2b9fd84000)<br>libm.so.6 =&gt; /lib64/libm.so.6 (0x00007f2b9fa82000)<br>libgcc_s.so.1 =&gt; /lib64/libgcc_s.so.1 (0x00007f2b9f86c000)<br>libc.so.6 =&gt; /lib64/libc.so.6 (0x00007f2b9f49e000)<br>/lib64/ld-linux-x86-64.so.2 (0x00007f2ba008c000)<br></code></pre></td></tr></table></figure>
+
+<p>可以看到只有<code>libcalc.so</code>找不到</p>
+<p><strong>找不到的原因</strong></p>
+<p>库的工作原理：</p>
+<ul>
+<li>静态库如何被加载？</li>
+</ul>
+<p>在程序编译的最后一个阶段也就是链接阶段，提供的静态库会被打包到可执行程序中。当可执行程序被执行，静态库中的代码也会一并被加载到内存中，因此不会出现静态库找不到无法被加载的问题。</p>
+<ul>
+<li>动态库如何被加载？在程序编译的最后一个阶段也就是链接阶段：<ul>
+<li>在gcc命令中虽然指定了库路径(使用参数 -L ), 但是这个路径并没有记录到可执行程序中，只是检查了这个路径下的库文件是否存在。</li>
+<li>同样对应的动态库文件也没有被打包到可执行程序中，只是在可执行程序中记录了库的名字。</li>
+</ul>
+</li>
+</ul>
+<p>可执行程序被执行起来之后</p>
+<ul>
+<li>程序执行的时候会先检测需要的动态库是否可以被加载，加载不到就会提示上边的错误信息</li>
+<li>当动态库中的函数在程序中被调用了, 这个时候动态库才加载到内存，如果不被调用就不加载</li>
+<li>动态库的检测和内存加载操作都是由动态连接器来完成的</li>
+</ul>
+<p>动态链接器：</p>
+<p>动态链接器是一个独立于应用程序的进程, 属于操作系统, 当用户的程序需要加载动态库的时候动态连接器就开始工作了，很显然动态连接器根本就不知道用户通过 gcc 编译程序的时候通过参数 -L指定的路径。</p>
+<p>那么动态链接器是如何搜索某一个动态库的呢，在它内部有一个默认的搜索顺序，按照优先级从高到低的顺序分别是：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">1.可执行文件内部的 DT_RPATH 段<br>2.系统的环境变量 LD_LIBRARY_PATH<br>3.系统动态库的缓存文件 /etc/ld.so.cache<br>4.存储动态库/静态库的系统目录 /lib/, /usr/lib等<br></code></pre></td></tr></table></figure>
+
+
+<p>按照以上四个顺序, 依次搜索, 找到之后结束遍历, 最终还是没找到, 动态链接器就会提示动态库找不到的错误信息</p>
+<p><strong>解决方法</strong></p>
+<p>方案1：将库路径添加到环境变量 <code>LD_LIBRARY_PATH</code> 中</p>
+<ul>
+<li><p>找到相关的配置文件</p>
+<ul>
+<li>用户级别: ~&#x2F;.bashrc —&gt; 设置对当前用户有效</li>
+<li>系统级别: &#x2F;etc&#x2F;profile —&gt; 设置对所有用户有效</li>
+</ul>
+</li>
+<li><p>使用 vim 打开配置文件, 在文件最后添加一行：</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:动态库的绝对路径<br>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/work/dynamiclib/test<br></code></pre></td></tr></table></figure>
+
+<p>然后执行<code>source .bashrc</code>使配置生效。使用命令 <code>echo $LD_LIBRARY_PATH</code> 可以查看环境变量的值</p>
+<p>此时，再进入到<code>/work/dynamiclib/test</code>执行<code>main</code>文件就行了</p>
+<p>方案2：更新 &#x2F;etc&#x2F;ld.so.cache 文件</p>
+<ul>
+<li><p>找到动态库所在的绝对路径（不包括库的名字）比如：<code>/work/dynamiclib/test</code></p>
+</li>
+<li><p>使用vim 修改 &#x2F;etc&#x2F;ld.so.conf 这个文件, 将上边的路径添加到文件中(独自占一行)</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">1. 打开文件</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo vim /etc/ld.so.conf</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">2. 添加动态库路径, 并保存退出</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>更新<code> /etc/ld.so.conf</code>中的数据到<code>/etc/ld.so.cache</code>中（这是个二进制文件，不能直接修改）</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">必须使用管理员权限执行这个命令</span><br>sudo ldconfig <br></code></pre></td></tr></table></figure>
+
+<p>方案3：拷贝动态库文件到系统库目录 <code>/lib/ </code>或者 <code>/usr/lib</code> 中 (或者将库的软链接文件放进去)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">库拷贝(不推荐)</span><br>sudo cp /xxx/xxx/libxxx.so /usr/lib<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">创建软连接</span><br>sudo ln -s /xxx/xxx/libxxx.so /usr/lib/libxxx.so<br></code></pre></td></tr></table></figure>
+
+<h2 id="10-3-静态库和动态库的优缺点"><a href="#10-3-静态库和动态库的优缺点" class="headerlink" title="10.3 静态库和动态库的优缺点"></a>10.3 静态库和动态库的优缺点</h2><p><strong>静态库：</strong></p>
+<ul>
+<li>优点：<ul>
+<li>静态库被打包到应用程序中加载速度快</li>
+<li>发布程序无需提供依赖的静态库，移植方便</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>相同的库文件数据可能在内存中被加载多份, 消耗系统资源，浪费内存</li>
+<li>库文件更新需要重新编译项目文件, 生成新的可执行程序, 浪费时间（链接时完整地拷贝至可执行文件中，被多次使用就有多分拷贝，如果库更新，那么需要重新编译应用程序，也就是重新链接拷贝）。</li>
+</ul>
+</li>
+</ul>
+<p><img src="/../imgs/$%7Bfiilename%7D/image-20240520100532084.png" srcset="/img/loading.gif" lazyload alt="image-20240520100532084"></p>
+<p><strong>动态库：</strong></p>
+<ul>
+<li><p>优点</p>
+<ul>
+<li>可实现不同进程间的资源共享</li>
+<li>动态库升级简单, 只需要替换库文件, 无需重新编译应用程序</li>
+<li>程序猿可以控制何时加载动态库, 不调用库函数动态库不会被加载</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li>加载速度比静态库慢, 以现在计算机的性能可以忽略</li>
+<li>发布程序需要提供依赖的动态库</li>
+</ul>
+<p><img src="/../imgs/$%7Bfiilename%7D/image-20240520100743111.png" srcset="/img/loading.gif" lazyload alt="image-20240520100743111"></p>
+</li>
+</ul>
+<h1 id="11-压缩及解压缩"><a href="#11-压缩及解压缩" class="headerlink" title="11 压缩及解压缩"></a>11 压缩及解压缩</h1><p>用到再看</p>
+<p><strong>参考：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV13U4y1p7kB?p=34&spm_id_from=pageDriver&vd_source=79a47c5035e6336414e7ccb0cf2a076d">https://www.bilibili.com/video/BV13U4y1p7kB?p=34&amp;spm_id_from=pageDriver&amp;vd_source=79a47c5035e6336414e7ccb0cf2a076d</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Linux</div>
+      <div>http://example.com/2024/05/16/Linux/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>May 16, 2024</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>May 20, 2024</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/05/14/makefile/" title="makefile">
+                        <span class="hidden-mobile">makefile</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+<div>
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("28/03/2024 00:00:00");//此处修改你的建站时间或者网站上线时间
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+      document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+  }  //此次自定义显示内容
+  setInterval("createtime()",250);
+  </script>
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  var relativeDate = function() {
+    var updatedTime = document.getElementById('updated-time');
+    if (updatedTime) {
+      var text = updatedTime.textContent;
+      var reg = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2})/;
+      var matchs = text.match(reg);
+      if (matchs) {
+        var relativeTime = moment(matchs[0]).fromNow();
+        updatedTime.textContent = text.replace(reg, relativeTime);
+      }
+      updatedTime.style.display = '';
+    }
+  };
+  Fluid.utils.createScript('https://lib.baomitu.com/moment.js/2.29.4/moment.min.js', function() {
+    if (!'en'.startsWith('en')) {
+      Fluid.utils.createScript('https://lib.baomitu.com/moment.js/2.29.4/locale/en.min.js', function() {
+        relativeDate();
+      });
+    } else {
+      relativeDate();
+    }
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
