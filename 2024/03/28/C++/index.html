@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165431867.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240423165237625.png">
 <meta property="article:published_time" content="2024-03-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-05-20T08:57:49.284Z">
+<meta property="article:modified_time" content="2024-05-21T02:26:56.955Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165000175.png">
@@ -288,7 +288,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-05-20T16:57:49+08:00
+                    Last updated on 2024-05-21T10:26:56+08:00
                   
                   
 
@@ -1271,7 +1271,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 切换到指定的文件，并列出这行号对应的上下文代码, 默认情况下只显示10行内容</span><br>(gdb) l 文件名:行号<br><br><span class="hljs-comment"># 切换到指定的文件，并显示这个函数的上下文内容, 默认显示10行</span><br>(gdb) l 文件名:函数名<br></code></pre></td></tr></table></figure>
 
 <p><strong>设置显示的行数</strong></p>
-<p>默认通过list只能一次查看10行代码, 如果想显示更多, 可以通过set listsize设置, 同样如果想查看当前显示的行数可以通过 show listsize查看, 这里的listsize可以简写为 list。具体语法格式如下:</p>
+<p>默认通过list只能一次查看10行代码, 如果想显示更多, 可以通过set listsize设置, 同样如果想查看当前显示的行数可以通过 show listsize查看, 这里的listsize可以简写为 list。具体语法格式如下: </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 以下两个命令中的 listsize 都可以写成 list</span><br>(gdb) <span class="hljs-built_in">set</span> listsize 行数<br><br><span class="hljs-comment"># 查看当前list一次显示的行数</span><br>(gdb) show listsize<br></code></pre></td></tr></table></figure>
 
 <h2 id="3-断点操作"><a href="#3-断点操作" class="headerlink" title="3 断点操作"></a>3 断点操作</h2><p>想要通过gdb调试某一行或者得到某个变量在运行状态下的实际值，就需要在在这一行设置断点，程序指定到断点的位置就会阻塞，就可以通过gdb的调试命令得到我们想要的信息了。</p>
@@ -2415,7 +2415,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>May 20, 2024</div>
+          <div>May 21, 2024</div>
         </div>
       
       
