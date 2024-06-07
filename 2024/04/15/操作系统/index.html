@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://example.com/2024/04/15/imgs/$%7Bfiilename%7D/c5e2ab63e6ee4c8db575f3c7c9c85962.png">
 <meta property="og:image" content="http://example.com/2024/04/15/imgs/$%7Bfiilename%7D/6142bc3c917e4a6298bdb62936e0d332.png">
 <meta property="article:published_time" content="2024-04-15T08:17:42.182Z">
-<meta property="article:modified_time" content="2024-05-30T01:37:31.172Z">
+<meta property="article:modified_time" content="2024-06-07T01:48:47.507Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240415162339162.png">
@@ -350,7 +350,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-05-30T09:37:31+08:00
+                    Last updated on 2024-06-07T09:48:47+08:00
                   
                   
 
@@ -1142,7 +1142,7 @@
 <p>也成为先进先出（FIFO）。进程按照请求CPU的顺序进行调度。这种方式易于实现，但可能会导致较短的进程等待较长进程执行完成，从而产生”饥饿“现象。</p>
 <p><img src="/../imgs/$%7Bfiilename%7D/os-93088d03-80c9-46c5-9eaf-eead2adb6e12.png" srcset="/img/loading.gif" lazyload alt="先来先服务"></p>
 <p><strong>短作业优先</strong></p>
-<p>选择预计运行时间最短的进程优先执行。这种方式可以减少平均等待时间和相应时间，但缺点是很难准确预知进程的执行时间，并且可能因为短作业一直在执行，导致长作业持续被推迟执行。</p>
+<p>选择预计运行时间最短的进程优先执行。这种方式可以减少平均等待时间和响应时间，但缺点是很难准确预知进程的执行时间，并且可能因为短作业一直在执行，导致长作业持续被推迟执行。</p>
 <p><img src="/../imgs/$%7Bfiilename%7D/os-517e8392-64fe-4de3-9e1c-b3a944822aba.png" srcset="/img/loading.gif" lazyload alt="短作业优先"></p>
 <p><strong>优先级调度</strong></p>
 <p>在这种调度方式中，每个进程都被分配一个有优先级。CPU首先分配给优先级最高的进程。优先级调度可以是抢占式或非抢占式的。在非抢占式优先级调度中，进程一旦开始执行将一直运行直到完成。在抢占式优先级调度中，更高优先级的进程可以中断正在执行的低优先级进程。</p>
@@ -1178,7 +1178,7 @@
 <p><img src="/../imgs/$%7Bfiilename%7D/os-20240314082438.png" srcset="/img/loading.gif" lazyload alt="Socket"></p>
 <h2 id="14-异步和同步"><a href="#14-异步和同步" class="headerlink" title="14 异步和同步"></a>14 异步和同步</h2><p><strong>同步：</strong>同步就是顺序执行，执行完一个再执行下一个，需要等待、协调运行。</p>
 <p><strong>异步：</strong>异步和同步是相对的，异步就是彼此独立，在等待某事件的过程中继续做自己的事，不需要等待这一事件完成后再工作。</p>
-<h2 id="15-阻塞和非阻塞"><a href="#15-阻塞和非阻塞" class="headerlink" title="15 阻塞和非阻塞"></a>15 阻塞和非阻塞</h2><p><strong>阻塞：</strong>简单说就是发出一个请求不能立刻返回相应，要等所有的逻辑全处理完才能返回相应。</p>
+<h2 id="15-阻塞和非阻塞"><a href="#15-阻塞和非阻塞" class="headerlink" title="15 阻塞和非阻塞"></a>15 阻塞和非阻塞</h2><p><strong>阻塞：</strong>简单说就是发出一个请求不能立刻返回响应，要等所有的逻辑全处理完才能返回响应。</p>
 <p><strong>非阻塞：</strong>发出一个请求立刻返回应答，不用等处理完所有逻辑。</p>
 <p>阻塞与非阻塞指的是<code>单个线程内</code>遇到同步等待时，是否在原地不做任何操作。</p>
 <p>简单理解概念：</p>
@@ -1269,7 +1269,7 @@
 </ul>
 <p><strong>操作系统是如何管理虚拟地址与物理地址之间的关系？</strong></p>
 <p>主要有两种方式：内存分段、内存分页</p>
-<h2 id="26-内存分段"><a href="#26-内存分段" class="headerlink" title="26 内存分段"></a>26 内存分段</h2><p>程序是由若干个逻辑分段组成的，如可由代码分段、数据分段、栈段、堆段组成。不同的段是有不同的属性的，所以就用分段的形式把这些段分离出来。</p>
+<h2 id="26-内存分段"><a href="#26-内存分段" class="headerlink" title="26 内存分段"></a>26 内存分段</h2><p>程序是由若干个逻辑分段组成的，可由代码分段、数据分段、栈段、堆段组成。不同的段是有不同的属性的，所以就用分段的形式把这些段分离出来。</p>
 <p>分段机制下的虚拟地址由两部分组成：段选择因子和段内偏移量</p>
 <img src="../imgs/${fiilename}/a9ed979e2ed8414f9828767592aadc21.png" srcset="/img/loading.gif" lazyload alt="img" style="zoom: 50%;" />
 
@@ -1351,7 +1351,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>May 30, 2024</div>
+          <div>June 7, 2024</div>
         </div>
       
       
