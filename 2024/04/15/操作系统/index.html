@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://example.com/2024/04/15/imgs/$%7Bfiilename%7D/c5e2ab63e6ee4c8db575f3c7c9c85962.png">
 <meta property="og:image" content="http://example.com/2024/04/15/imgs/$%7Bfiilename%7D/6142bc3c917e4a6298bdb62936e0d332.png">
 <meta property="article:published_time" content="2024-04-15T08:17:42.182Z">
-<meta property="article:modified_time" content="2024-06-18T02:51:13.334Z">
+<meta property="article:modified_time" content="2024-07-09T13:05:10.316Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240415162339162.png">
@@ -300,7 +300,7 @@
         
         
         
-          115 mins
+          120 mins
         
       </span>
     
@@ -350,7 +350,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-06-18T10:51:13+08:00
+                    Last updated on 2024-07-09T21:05:10+08:00
                   
                   
 
@@ -1069,7 +1069,23 @@
 <h3 id="3-2-虚拟内存的实现"><a href="#3-2-虚拟内存的实现" class="headerlink" title="3.2 虚拟内存的实现"></a>3.2 虚拟内存的实现</h3><p><strong>请求分页存储管理</strong></p>
 <p><strong>请求分段存储管理</strong></p>
 <p><strong>请求段页式存储管理</strong></p>
-<h1 id="四、面试题"><a href="#四、面试题" class="headerlink" title="四、面试题"></a>四、面试题</h1><h2 id="1-什么是操作系统-1"><a href="#1-什么是操作系统-1" class="headerlink" title="1 什么是操作系统"></a>1 什么是操作系统</h2><p>操作系统是一种运行在<code>内核态</code>的软件</p>
+<h1 id="四、进程线程相关"><a href="#四、进程线程相关" class="headerlink" title="四、进程线程相关"></a>四、进程线程相关</h1><h2 id="1-进程创建"><a href="#1-进程创建" class="headerlink" title="1 进程创建"></a>1 进程创建</h2><p><code>pid_t fork(void)</code></p>
+<ul>
+<li>函数的作用：用于创建子进程</li>
+<li>返回值：<ul>
+<li><code>fork()</code>的返回值会返回两次。一次是在父进程中，一次是在子进程中</li>
+<li>在父进程中返回创建的子进程的pid，在子进程中返回0</li>
+<li>如何区分父进程和子进程：通过<code>fork</code>的返回值</li>
+<li>在父进程中返回-1，表示创建子进程失败。并且设置errno。</li>
+<li>创建子进程失败的主要原因：（1）当前系统的进程数已经达到了系统规定的上限，这时errno的值被设置为EAGAIN；（2）系统内存不足，这时errno的值被设置为ENOMEN。</li>
+</ul>
+</li>
+</ul>
+<p>Linux 的 fork() 使用是通过写时拷贝实现。写时拷贝是一种可以推迟甚至避免拷贝数据的技术。内核并不复制整个进程的地址空间，而是让父子进程共享同一个地址空间。只有在写入时才会复制地址空间（重新开辟一块内存），从而使各个进程拥有自己的地址空间。即资源的复制只有在写入时才会进行，在此之前，只有以只读的方式进行。</p>
+<p>fork() 之后的父子进程共享文件，此时的 fork() 产生的子进程与父进程相同的文件描述符指向相同的文件表，引用计数增加，共享文件偏移指针。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">// 创建子进程</span><br>    <span class="hljs-type">pid_t</span> pid = fork();<br><br>    <span class="hljs-comment">// 判断是父进程还是子进程</span><br>    <span class="hljs-keyword">if</span>(pid &gt; <span class="hljs-number">0</span>)<br>    &#123;<br>        <span class="hljs-comment">// 如果大于0，返回的是创建的子进程的进程号，当前是父进程</span><br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;pid: %d\n&quot;</span>, <span class="hljs-built_in">getpid</span>());<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;i am parent process, pid: %d, ppid: %d\n&quot;</span>, <span class="hljs-built_in">getpid</span>(), <span class="hljs-built_in">getppid</span>());<br>    &#125;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(pid == <span class="hljs-number">0</span>)<br>    &#123;<br>        <span class="hljs-comment">// 当前子进程</span><br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;i am child process, pid: %d, ppid: %d\n&quot;</span>, <span class="hljs-built_in">getpid</span>(), <span class="hljs-built_in">getppid</span>());<br><br>    &#125; <br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++)<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;i: %d, pid: %d\n&quot;</span>, i, <span class="hljs-built_in">getpid</span>()); <span class="hljs-comment">// 父进程和子进程谁执行这行代码，pid就是谁的</span><br>        <span class="hljs-built_in">sleep</span>(<span class="hljs-number">1</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h1 id="五、面试题"><a href="#五、面试题" class="headerlink" title="五、面试题"></a>五、面试题</h1><h2 id="1-什么是操作系统-1"><a href="#1-什么是操作系统-1" class="headerlink" title="1 什么是操作系统"></a>1 什么是操作系统</h2><p>操作系统是一种运行在<code>内核态</code>的软件</p>
 <p>它是应用程序和硬件之间的媒介，向应用程序提供硬件的抽象，以及管理硬件资源。</p>
 <p><img src="/../imgs/$%7Bfiilename%7D/os-eee82952-c96f-45c9-835e-29db37c0f6d8.png" srcset="/img/loading.gif" lazyload alt="操作系统主要功能"></p>
 <h2 id="2-操作系统有哪些功能"><a href="#2-操作系统有哪些功能" class="headerlink" title="2 操作系统有哪些功能"></a>2 操作系统有哪些功能</h2><p>操作系统最主要的功能： </p>
@@ -1139,8 +1155,11 @@
 <li>唤醒：<code>wakeup</code></li>
 <li>撤销：<code>destroy</code></li>
 </ul>
-<h2 id="10-僵尸进程"><a href="#10-僵尸进程" class="headerlink" title="10 僵尸进程"></a>10 僵尸进程</h2><p>僵尸进程是已完成且处于终止状态，但在进程表中仍然存在的进程。</p>
-<p>僵尸进程一般发生在有父子关系的进程中，一个子进程的进程描述符在子进程中退出时不会释放，只有当父进程通过<code>wait()</code>或<code>waitpid()</code>获取了子进程信息后才会释放。如果子进程退出，而父进程并没有调用<code>wait()</code>或<code>waitpid()</code>，那么子进程的进程描述符仍然保存在系统中，此时子进程就是一个僵尸进程。</p>
+<h2 id="10-僵尸进程"><a href="#10-僵尸进程" class="headerlink" title="10 僵尸进程"></a>10 僵尸进程</h2><p>每个进程结束之后，都会释放自己地址空间中的用户区数据，内核区的PCB（进程控制块）没有办法自己释放掉，需要父进程去释放。</p>
+<p>进程终止时，父进程尚未回收，子进程残留资源（PCB）存放于内核中，变成僵尸进程。</p>
+<p>僵尸进程不能被 kill -9 杀死</p>
+<p>这样就会导致一个问题，如果父进程不调用 wait()  或 waitpid() 的话，那么保留的那段信息就不会释放，其进程号就会一直被占用， 但是系统所能使用的进程号是有限的，如果大量的产生僵尸进程，将因为没有可用的进程号而导致系统不能产生新的进程，此即为僵尸进程的危害，应当避免。</p>
+<p><strong>如何避免僵尸进程</strong></p>
 <h2 id="11-孤儿进程"><a href="#11-孤儿进程" class="headerlink" title="11 孤儿进程"></a>11 孤儿进程</h2><p>一个父进程退出，而它的一个或多个子进程还在运行，那么这些子进程将成为孤儿进程。孤儿进程将被<code>init</code>进程（进程ID为1的进程）所收养，并由<code>init</code>进程对它们完成状态收集工作。因为孤儿进程会被<code>init</code>进程收养，所以孤儿进程不会对系统造成危害</p>
 <h2 id="12-进程有哪些调度算法"><a href="#12-进程有哪些调度算法" class="headerlink" title="12 进程有哪些调度算法"></a>12 进程有哪些调度算法</h2><p><strong>先来先服务</strong></p>
 <p>也成为先进先出（FIFO）。进程按照请求CPU的顺序进行调度。这种方式易于实现，但可能会导致较短的进程等待较长进程执行完成，从而产生”饥饿“现象。</p>
@@ -1385,7 +1404,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>June 18, 2024</div>
+          <div>July 9, 2024</div>
         </div>
       
       

@@ -27,7 +27,7 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240520100532084.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240520100743111.png">
 <meta property="article:published_time" content="2024-05-16T02:21:48.616Z">
-<meta property="article:modified_time" content="2024-05-24T03:27:49.911Z">
+<meta property="article:modified_time" content="2024-07-05T02:04:28.756Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240516110954877.png">
@@ -225,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.2k words
+          4.4k words
         
       </span>
     
@@ -236,7 +236,7 @@
         
         
         
-          35 mins
+          37 mins
         
       </span>
     
@@ -286,7 +286,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-05-24T11:27:49+08:00
+                    Last updated on 2024-07-05T10:04:28+08:00
                   
                   
 
@@ -564,7 +564,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">ar工具的三个参数：</span><br>参数c：创建一个库，不管库是否存在，都将创建。<br>参数s：创建目标文件索引，这在创建较大的库时能加快时间。<br>参数r：在库中插入模块(替换)。默认新的成员添加在库的结尾处，如果模块名已经在库中存在，则替换同名的模块<br></code></pre></td></tr></table></figure>
 
 <ul>
-<li>发布静态库：静态库<code>libcalc.a</code>和库对应的头文件<code>head.h</code>一并发布</li>
+<li>发布静态库：静态库<code>libcalc.a</code>和库 对应的头文件<code>head.h</code>一并发布</li>
 </ul>
 <p><strong>静态库的使用：</strong></p>
 <p>得到一个可用的静态库之后，需要将其放到一个目录中，然后根据得到的头文件编写测试代码，对静态库中的函数进行调用。</p>
@@ -598,6 +598,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">.<br>|-- head.h<br>|-- libcalc.so<br>`-- main.cpp<br></code></pre></td></tr></table></figure>
 
 <p>执行：<code>g++ main.cpp -o main -L ./ -lcalc</code></p>
+<p>生成可执行程序<code>main</code>，执行 <code>./main</code></p>
 <p>报错：g++通过指定的动态库信息生成了可执行程序，但是可执行程序运行却提示无法加载到动态库。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">./main: error while loading shared libraries: libcalc.so: cannot open shared object file: No such file or directory<br></code></pre></td></tr></table></figure>
 
@@ -622,7 +623,7 @@
 <ul>
 <li>程序执行的时候会先检测需要的动态库是否可以被加载，加载不到就会提示上边的错误信息</li>
 <li>当动态库中的函数在程序中被调用了, 这个时候动态库才加载到内存，如果不被调用就不加载</li>
-<li>动态库的检测和内存加载操作都是由动态连接器来完成的</li>
+<li>动态库的检测和内存加载操作都是由动态链接器来完成的</li>
 </ul>
 <p>动态链接器：</p>
 <p>动态链接器是一个独立于应用程序的进程, 属于操作系统, 当用户的程序需要加载动态库的时候动态连接器就开始工作了，很显然动态连接器根本就不知道用户通过 gcc 编译程序的时候通过参数 -L指定的路径。</p>
@@ -645,8 +646,8 @@
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:动态库的绝对路径<br>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/work/dynamiclib/test<br></code></pre></td></tr></table></figure>
 
-<p>然后执行<code>source .bashrc</code>使配置生效。使用命令 <code>echo $LD_LIBRARY_PATH</code> 可以查看环境变量的值</p>
-<p>此时，再进入到<code>/work/dynamiclib/test</code>执行<code>main</code>文件就行了</p>
+<p>然后  执行<code>source .bashrc</code>使配置生效。使用命令 <code>echo $LD_LIBRARY_PATH</code> 可以查看环境变量的值</p>
+<p>此时，重新执行<code>main</code>文件就可以</p>
 <p>方案2：更新 &#x2F;etc&#x2F;ld.so.cache 文件</p>
 <ul>
 <li><p>找到动态库所在的绝对路径（不包括库的名字）比如：<code>/work/dynamiclib/test</code></p>
@@ -664,7 +665,11 @@
 <p>方案3：拷贝动态库文件到系统库目录 <code>/lib/ </code>或者 <code>/usr/lib</code> 中 (或者将库的软链接文件放进去)</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">库拷贝(不推荐)</span><br>sudo cp /xxx/xxx/libxxx.so /usr/lib<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">创建软连接</span><br>sudo ln -s /xxx/xxx/libxxx.so /usr/lib/libxxx.so<br></code></pre></td></tr></table></figure>
 
-<h2 id="10-3-静态库和动态库的优缺点"><a href="#10-3-静态库和动态库的优缺点" class="headerlink" title="10.3 静态库和动态库的优缺点"></a>10.3 静态库和动态库的优缺点</h2><p><strong>静态库：</strong></p>
+<h2 id="10-3-静态库和动态库的区别"><a href="#10-3-静态库和动态库的区别" class="headerlink" title="10.3 静态库和动态库的区别"></a>10.3 静态库和动态库的区别</h2><p>静态库：编译器进行链接时，会把静态库中代码打包到可执行程序中（静态库和代码是一体的）</p>
+<p>动态库：编译器进行链接时，动态库的代码不会被打包到可执行程序中，程序运行之后，动态库会被加载到内存中。</p>
+<h2 id="10-4-静态库和动态库的优缺点"><a href="#10-4-静态库和动态库的优缺点" class="headerlink" title="10.4 静态库和动态库的优缺点"></a>10.4 静态库和动态库的优缺点</h2><p>比如要发布一个程序app，对于静态库场景：程序中需要把静态库包含进去，如果静态库中有代码变动，那么程序也要重新编译</p>
+<p>对于动态库的场景：程序不用把动态库包含进去，如果动态库中有代码变动，那么只需要更新动态库，而不需要重新编译程序app</p>
+<p><strong>静态库：</strong></p>
 <ul>
 <li>优点：<ul>
 <li>静态库被打包到应用程序中加载速度快</li>
@@ -673,7 +678,7 @@
 </li>
 <li>缺点：<ul>
 <li>相同的库文件数据可能在内存中被加载多份, 消耗系统资源，浪费内存</li>
-<li>库文件更新需要重新编译项目文件, 生成新的可执行程序, 浪费时间（链接时完整地拷贝至可执行文件中，被多次使用就有多分拷贝，如果库更新，那么需要重新编译应用程序，也就是重新链接拷贝）。</li>
+<li>库文件更新需要重新编译项目文件, 生成新的可执行程序, 浪费时间（链接时完整地拷贝至可执行文件中，被多次使用就有多份拷贝，如果库更新，那么需要重新编译应用程序，也就是重新链接拷贝）。</li>
 </ul>
 </li>
 </ul>
@@ -734,7 +739,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>May 24, 2024</div>
+          <div>July 5, 2024</div>
         </div>
       
       

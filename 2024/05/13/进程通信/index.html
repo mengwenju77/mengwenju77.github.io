@@ -16,19 +16,24 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1 消息队列消息队列解决了什么问题解耦 有序性 异步处理 削峰 写进程消息队列通过msgsnd函数发送消息，其声明为： 1int  msgsnd(int msgid, const void *msg_ptr, size_t msg_sz, int msgflg);   int msgid：消息队列标识符，由msgget函数返回  msgget函数：创建一个消息队列，返回以key命名的消息队列的标识">
+    <meta name="description" content="1 进程间通信的目的进程是一个独立的资源分配单元，不同进程（这里所说的进程通常指的是用户进程）之间的资源是独立的，没有关联，不能在一个进程中直接访问另一个进程的资源。  但进程不是孤立的，不同的进程需要进行信息的交互和状态的传递等，因此需要进程间通信( IPC：Inter Processes Communication )。  进程间通信的目的：  数据传输：一个进程需要将它的数据发送给另一个进程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="进程通信">
 <meta property="og:url" content="http://example.com/2024/05/13/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1 消息队列消息队列解决了什么问题解耦 有序性 异步处理 削峰 写进程消息队列通过msgsnd函数发送消息，其声明为： 1int  msgsnd(int msgid, const void *msg_ptr, size_t msg_sz, int msgflg);   int msgid：消息队列标识符，由msgget函数返回  msgget函数：创建一个消息队列，返回以key命名的消息队列的标识">
+<meta property="og:description" content="1 进程间通信的目的进程是一个独立的资源分配单元，不同进程（这里所说的进程通常指的是用户进程）之间的资源是独立的，没有关联，不能在一个进程中直接访问另一个进程的资源。  但进程不是孤立的，不同的进程需要进行信息的交互和状态的传递等，因此需要进程间通信( IPC：Inter Processes Communication )。  进程间通信的目的：  数据传输：一个进程需要将它的数据发送给另一个进程">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240710152349218.png">
+<meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240710152455299.png">
+<meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240710152647850.png">
+<meta property="og:image" content="http://example.com/2024/05/13/imgs/$%7Bfiilename%7D/image-20240710152712768.png">
+<meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240710152738769.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240513212522806.png">
 <meta property="article:published_time" content="2024-05-13T13:19:59.503Z">
-<meta property="article:modified_time" content="2024-05-15T08:24:29.273Z">
+<meta property="article:modified_time" content="2024-07-11T03:36:19.385Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240513212522806.png">
+<meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240710152349218.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -223,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k words
+          4.1k words
         
       </span>
     
@@ -234,7 +239,7 @@
         
         
         
-          10 mins
+          35 mins
         
       </span>
     
@@ -284,7 +289,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-05-15T16:24:29+08:00
+                    Last updated on 2024-07-11T11:36:19+08:00
                   
                   
 
@@ -294,7 +299,133 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-消息队列"><a href="#1-消息队列" class="headerlink" title="1 消息队列"></a>1 消息队列</h1><h2 id="消息队列解决了什么问题"><a href="#消息队列解决了什么问题" class="headerlink" title="消息队列解决了什么问题"></a>消息队列解决了什么问题</h2><p><strong>解耦</strong></p>
+                <h1 id="1-进程间通信的目的"><a href="#1-进程间通信的目的" class="headerlink" title="1 进程间通信的目的"></a>1 进程间通信的目的</h1><p>进程是一个独立的资源分配单元，不同进程（这里所说的进程通常指的是用户进程）之间的资源是独立的，没有关联，不能在一个进程中直接访问另一个进程的资源。 </p>
+<p>但进程不是孤立的，不同的进程需要进行信息的交互和状态的传递等，因此需要进程间通信( IPC：Inter Processes Communication )。 </p>
+<p>进程间通信的目的：</p>
+<ul>
+<li>数据传输：一个进程需要将它的数据发送给另一个进程。</li>
+<li>通知事件：一个进程需要向另一个或一组进程发送消息，通知它（它们）发生了某种事件（如进程终止时要通知父进程）。 </li>
+<li>资源共享：多个进程之间共享同样的资源。为了做到这一点，需要内核提供互斥和同 步机制。</li>
+<li>进程控制：有些进程希望完全控制另一个进程的执行（如 Debug 进程），此时控制进程希望能够拦截另一个进程的所有陷入和异常，并能够及时知道它的状态改变。</li>
+</ul>
+<h1 id="2-进程间通信方式"><a href="#2-进程间通信方式" class="headerlink" title="2 进程间通信方式"></a>2 进程间通信方式</h1><p><img src="/../imgs/$%7Bfiilename%7D/image-20240710152349218.png" srcset="/img/loading.gif" lazyload alt="image-20240710152349218"></p>
+<h2 id="1-匿名管道"><a href="#1-匿名管道" class="headerlink" title="1 匿名管道"></a>1 匿名管道</h2><p> 管道也叫无名（匿名）管道，它是 UNIX 系统 IPC（进程间通信）的最古老形式， 所有的 UNIX 系统都支持这种通信机制。 </p>
+<p>举例：统计一个目录中文件的数目命令：ls | wc –l，为了执行该命令，shell 创建了两 个进程来分别执行 ls 和 wc。</p>
+<p><img src="/../imgs/$%7Bfiilename%7D/image-20240710152455299.png" srcset="/img/loading.gif" lazyload alt="image-20240710152455299"></p>
+<p><strong>管道的特点</strong>：</p>
+<ul>
+<li>管道其实是一个在内核内存中维护的缓冲器，这个缓冲器的存储能力是有限的，不同的 操作系统大小不一定相同。</li>
+<li>管道拥有文件的特质：读操作、写操作，匿名管道没有文件实体，有名管道有文件实体， 但不存储数据。可以按照操作文件的方式对管道进行操作。</li>
+<li>一个管道是一个字节流，使用管道时不存在消息或者消息边界的概念，从管道读取数据 的进程可以读取任意大小的数据块，而不管写入进程写入管道的数据块的大小是多少。</li>
+<li>通过管道传递的数据是顺序的，从管道中读取出来的字节的顺序和它们被写入管道的顺 序是完全一样的。</li>
+<li>在管道中的数据的传递方向是单向的，一端用于写入，一端用于读取，管道是半双工的。</li>
+<li>从管道读数据是一次性操作，数据一旦被读走，它就从管道中被抛弃，释放空间以便写 更多的数据，在管道中无法使用 lseek() 来随机的访问数据。</li>
+<li>匿名管道只能在具有关系之间的进程（父进程与子进程，或者两个兄弟进程，具有亲缘关系）之间使用。</li>
+</ul>
+<p><img src="/../imgs/$%7Bfiilename%7D/image-20240710152647850.png" srcset="/img/loading.gif" lazyload alt="image-20240710152647850"></p>
+<p><strong>为什么可以使用管道进行进程间通信</strong></p>
+<img src="../imgs/${fiilename}/image-20240710152712768.png" srcset="/img/loading.gif" lazyload alt="image-20240710152712768" style="zoom: 67%;" />
+
+<p>左边为父进程的虚拟空间（内核空间+用户空间），右边是父进程创建出来的子进程的虚拟空间。</p>
+<p>子进程创建之后，被拷贝一份数据，和父进程共享管道缓冲区。</p>
+<p>父进程的5号文件操作符，对应管道的写端，6号文件操作符对应管道的读端。</p>
+<p>那么拷贝出来的子进程的5号文件操作符，也就是对应管道的写端，6号文件操作符对应管道的读端。</p>
+<p>那么父进程使用5号文件操作符向管道写入数据时，子进程的6号文件操作符就能够读取到数据，反之也一样。</p>
+<p><strong>管道的数据结构</strong></p>
+<p>环形队列</p>
+<p><img src="/../imgs/$%7Bfiilename%7D/image-20240710152738769.png" srcset="/img/loading.gif" lazyload alt="image-20240710152738769"></p>
+<p><strong>管道的使用</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><code class="hljs c++">  <span class="hljs-comment">/*</span><br><span class="hljs-comment">    #include &lt;unistd.h&gt;</span><br><span class="hljs-comment">    int pipe(int pipefd[2]);</span><br><span class="hljs-comment">        功能：创建一个匿名管道，用来进程间通信。</span><br><span class="hljs-comment">        参数：int pipefd[2] 这个数组是一个传出参数。</span><br><span class="hljs-comment">            pipefd[0] 对应的是管道的读端</span><br><span class="hljs-comment">            pipefd[1] 对应的是管道的写端</span><br><span class="hljs-comment">        返回值：</span><br><span class="hljs-comment">            成功 0</span><br><span class="hljs-comment">            失败 -1</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    管道默认是阻塞的：如果管道中没有数据，read阻塞，如果管道满了，write阻塞</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    注意：匿名管道只能用于具有关系的进程之间的通信（父子进程，兄弟进程）</span><br><span class="hljs-comment">    	一个进程要么只进行读，要么只进行写，用同一个管道并且同时进行读写时，会产生问题。</span><br><span class="hljs-comment">*/</span><br><br><span class="hljs-comment">// 需求：子进程发送数据给父进程，父进程读取到数据输出</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/types.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br><br>    <span class="hljs-comment">// 在fork之前创建管道，否则父进程和子进程之间用的不是同一个管道了，无法通信</span><br>    <span class="hljs-type">int</span> pipefd[<span class="hljs-number">2</span>];<br>    <span class="hljs-type">int</span> ret = <span class="hljs-built_in">pipe</span>(pipefd);<br>    <span class="hljs-keyword">if</span>(ret == <span class="hljs-number">-1</span>) &#123;<br>        <span class="hljs-built_in">perror</span>(<span class="hljs-string">&quot;pipe&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>    &#125;<br><br>    <span class="hljs-comment">// 创建子进程</span><br>    <span class="hljs-type">pid_t</span> pid = fork();<br>    <span class="hljs-keyword">if</span>(pid &gt; <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-comment">// 父进程</span><br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;i am parent process, pid : %d\n&quot;</span>, <span class="hljs-built_in">getpid</span>());<br><br>        <span class="hljs-comment">// 关闭写端</span><br>        <span class="hljs-comment">// close(pipefd[1]);</span><br>        <br>        <span class="hljs-comment">// 从管道的读取端读取数据</span><br>        <span class="hljs-type">char</span> buf[<span class="hljs-number">1024</span>] = &#123;<span class="hljs-number">0</span>&#125;;<br>        <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>) &#123;<br>            <span class="hljs-type">int</span> len = <span class="hljs-built_in">read</span>(pipefd[<span class="hljs-number">0</span>], buf, <span class="hljs-built_in">sizeof</span>(buf));<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;parent recv : %s, pid : %d\n&quot;</span>, buf, <span class="hljs-built_in">getpid</span>());<br>            <br>            <span class="hljs-comment">// 向管道中写入数据</span><br>            <span class="hljs-comment">// const char * str = &quot;hello,i am parent&quot;;</span><br>            <span class="hljs-comment">// write(pipefd[1], str, strlen(str));</span><br>            <span class="hljs-comment">// sleep(1);</span><br>        &#125;<br><br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(pid == <span class="hljs-number">0</span>)&#123;<br>        <span class="hljs-comment">// 子进程</span><br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;i am child process, pid : %d\n&quot;</span>, <span class="hljs-built_in">getpid</span>());<br>        <span class="hljs-comment">// 关闭读端</span><br>        <span class="hljs-comment">// close(pipefd[0]);</span><br><br>        <span class="hljs-type">char</span> buf[<span class="hljs-number">1024</span>] = &#123;<span class="hljs-number">0</span>&#125;;<br>        <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>) &#123;<br>            <span class="hljs-comment">// 向管道中写入数据</span><br>            <span class="hljs-type">const</span> <span class="hljs-type">char</span> * str = <span class="hljs-string">&quot;hello,i am child&quot;</span>;<br>            <span class="hljs-built_in">write</span>(pipefd[<span class="hljs-number">1</span>], str, <span class="hljs-built_in">strlen</span>(str));<br>            <span class="hljs-built_in">sleep</span>(<span class="hljs-number">1</span>);<br><br>            <span class="hljs-comment">// 从管道中读数据</span><br>            <span class="hljs-comment">// int len = read(pipefd[0], buf, sizeof(buf));</span><br>            <span class="hljs-comment">// printf(&quot;child recv : %s, pid : %d\n&quot;, buf, getpid());</span><br>            <span class="hljs-comment">// bzero(buf, 1024);</span><br>        &#125;<br>        <br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>管道的读写特点：</strong><br>使用管道时，需要注意以下几种特殊的情况（假设都是阻塞I&#x2F;O操作）</p>
+<ul>
+<li><p>所有的指向管道写端的文件描述符都关闭了（管道写端引用计数为0），有进程从管道的读端读数据，那么管道中剩余的数据被读取以后，再次read会返回0，就像读到文件末尾一样。</p>
+</li>
+<li><p>如果有指向管道写端的文件描述符没有关闭（管道的写端引用计数大于0），而持有管道写端的进程<br>也没有往管道中写数据，这个时候有进程从管道中读取数据，那么管道中剩余的数据被读取后，<br>再次read会阻塞，直到管道中有数据可以读了才读取数据并返回。</p>
+</li>
+<li><p>如果所有指向管道读端的文件描述符都关闭了（管道的读端引用计数为0），这个时候有进程<br>向管道中写数据，那么该进程会收到一个信号SIGPIPE, 通常会导致进程异常终止。</p>
+</li>
+<li><p>如果有指向管道读端的文件描述符没有关闭（管道的读端引用计数大于0），而持有管道读端的进程<br>也没有从管道中读数据，这时有进程向管道中写数据，那么在管道被写满的时候再次write会阻塞，<br>直到管道中有空位置才能再次写入数据并返回。</p>
+</li>
+</ul>
+<p><strong>总结：</strong></p>
+<ul>
+<li><p>读管道：</p>
+<ul>
+<li>管道中有数据，read返回实际读到的字节数。</li>
+<li>管道中无数据：<ul>
+<li>写端被全部关闭，read返回0（相当于读到文件的末尾）</li>
+<li>写端没有完全关闭，read阻塞等待</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>写管道：</p>
+<ul>
+<li>管道读端全部被关闭，进程异常终止（进程收到SIGPIPE信号）</li>
+<li>管道读端没有全部关闭：<ul>
+<li>管道已满，write阻塞</li>
+<li>管道没有满，write将数据写入，并返回实际写入的字节数</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-有名管道"><a href="#2-有名管道" class="headerlink" title="2 有名管道"></a>2 有名管道</h2><p>匿名管道，由于没有名字，只能用于亲缘关系的进程间通信。为了克服这个缺点，提出了有名管道（FIFO），也叫命名管道、FIFO文件。</p>
+<p>有名管道（FIFO）不同于匿名管道之处在于它提供了一个路径名与之关联，以 FIFO  的文件形式存在于文件系统中，并且其打开方式与打开一个普通文件是一样的，这样 即使与 FIFO 的创建进程不存在亲缘关系的进程，只要可以访问该路径，就能够彼此 通过 FIFO 相互通信，因此，通过 FIFO 不相关的进程也能交换数据。</p>
+<p>一旦打开了 FIFO，就能在它上面使用与操作匿名管道和其他文件的系统调用一样的 I&#x2F;O系统调用了（如read()、write()和close()）。与管道一样，FIFO 也有一 个写入端和读取端，并且从管道中读取数据的顺序与写入的顺序是一样的。FIFO 的 名称也由此而来：先入先出</p>
+<p>有名管道（FIFO)和匿名管道（pipe）有一些特点是相同的，不一样的地方在于： </p>
+<ul>
+<li>FIFO 在文件系统中作为一个特殊文件存在，但 FIFO 中的内容却存放在内存中，并不存放在文件实体中。</li>
+<li>当使用 FIFO 的进程退出后，FIFO 文件将继续保存在文件系统中以便以后使用。</li>
+<li>FIFO 有名字，不相关的进程可以通过打开有名管道进行通信。</li>
+</ul>
+<p><strong>有名管道的使用</strong><br>创建fifo文件</p>
+<ul>
+<li>通过命令：<code>mkfifo</code> 名字</li>
+<li>通过函数：<code>int mkfifo(const char *pathname, mode_t mode);</code><ul>
+<li>参数：<ul>
+<li>pathname: 管道名称的路径</li>
+<li>mode: 文件的权限 和 open 的 mode 是一样的是一个八进制的数</li>
+</ul>
+</li>
+<li>返回值：成功返回0，失败返回-1，并设置错误号</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/types.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/stat.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// 判断文件是否存在</span><br>    <span class="hljs-type">int</span> ret = <span class="hljs-built_in">access</span>(<span class="hljs-string">&quot;fifo1&quot;</span>, F_OK);<br>    <span class="hljs-keyword">if</span>(ret == <span class="hljs-number">-1</span>) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;管道不存在，创建管道\n&quot;</span>);<br>        <br>        ret = <span class="hljs-built_in">mkfifo</span>(<span class="hljs-string">&quot;fifo1&quot;</span>, <span class="hljs-number">0664</span>);<br><br>        <span class="hljs-keyword">if</span>(ret == <span class="hljs-number">-1</span>) &#123;<br>            <span class="hljs-built_in">perror</span>(<span class="hljs-string">&quot;mkfifo&quot;</span>);<br>            <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>案例：</strong></p>
+<p>读管道：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/types.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/stat.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;fcntl.h&gt;</span></span><br><br><span class="hljs-comment">// 从管道中读取数据</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br><br>    <span class="hljs-comment">// 1.打开管道文件</span><br>    <span class="hljs-type">int</span> fd = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test&quot;</span>, O_RDONLY);<br>    <span class="hljs-keyword">if</span>(fd == <span class="hljs-number">-1</span>) &#123;<br>        <span class="hljs-built_in">perror</span>(<span class="hljs-string">&quot;open&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>    &#125;<br><br>    <span class="hljs-comment">// 读数据</span><br>    <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-type">char</span> buf[<span class="hljs-number">1024</span>] = &#123;<span class="hljs-number">0</span>&#125;;<br>        <span class="hljs-type">int</span> len = <span class="hljs-built_in">read</span>(fd, buf, <span class="hljs-built_in">sizeof</span>(buf));<br>        <span class="hljs-keyword">if</span>(len == <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;写端断开连接了...\n&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;recv buf : %s\n&quot;</span>, buf);<br>    &#125;<br><br>    <span class="hljs-built_in">close</span>(fd);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>写管道</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/types.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/stat.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;fcntl.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><br><span class="hljs-comment">// 向管道中写数据</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br><br>    <span class="hljs-comment">// 1.判断文件是否存在</span><br>    <span class="hljs-type">int</span> ret = <span class="hljs-built_in">access</span>(<span class="hljs-string">&quot;test&quot;</span>, F_OK);<br>    <span class="hljs-keyword">if</span>(ret == <span class="hljs-number">-1</span>) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;管道不存在，创建管道\n&quot;</span>);<br>        <br>        <span class="hljs-comment">// 2.创建管道文件</span><br>        ret = <span class="hljs-built_in">mkfifo</span>(<span class="hljs-string">&quot;test&quot;</span>, <span class="hljs-number">0664</span>);<br><br>        <span class="hljs-keyword">if</span>(ret == <span class="hljs-number">-1</span>) &#123;<br>            <span class="hljs-built_in">perror</span>(<span class="hljs-string">&quot;mkfifo&quot;</span>);<br>            <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>        &#125;       <br>    &#125;<br><br>    <span class="hljs-comment">// 3.以只写的方式打开管道</span><br>    <span class="hljs-type">int</span> fd = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test&quot;</span>, O_WRONLY);<br>    <span class="hljs-keyword">if</span>(fd == <span class="hljs-number">-1</span>) &#123;<br>        <span class="hljs-built_in">perror</span>(<span class="hljs-string">&quot;open&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>    &#125;<br><br>    <span class="hljs-comment">// 写数据</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++) &#123;<br>        <span class="hljs-type">char</span> buf[<span class="hljs-number">1024</span>];<br>        <span class="hljs-built_in">sprintf</span>(buf, <span class="hljs-string">&quot;hello, %d\n&quot;</span>, i);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;write data : %s\n&quot;</span>, buf);<br>        <span class="hljs-built_in">write</span>(fd, buf, <span class="hljs-built_in">strlen</span>(buf));<br>        <span class="hljs-built_in">sleep</span>(<span class="hljs-number">1</span>);<br>    &#125;<br><br>    <span class="hljs-built_in">close</span>(fd);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>总结：</strong></p>
+<ul>
+<li>一个为只读而打开一个管道的进程会阻塞，直到另外一个进程为只写打开管道</li>
+<li>一个为只写而打开一个管道的进程会阻塞，直到另外一个进程为只读打开管道</li>
+</ul>
+<p>读管道：</p>
+<ul>
+<li>管道中有数据，read返回实际读到的字节数</li>
+<li>管道中无数据：<ul>
+<li>管道写端被全部关闭，read返回0，（相当于读到文件末尾）</li>
+<li>写端没有全部被关闭，read阻塞等待</li>
+</ul>
+</li>
+</ul>
+<p>写管道：</p>
+<ul>
+<li>管道读端被全部关闭，进行异常终止（收到一个SIGPIPE信号）</li>
+<li>管道读端没有全部关闭：<ul>
+<li>管道已经满了，write会阻塞</li>
+<li>管道没有满，write将数据写入，并返回实际写入的字节数。</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-内存映射"><a href="#3-内存映射" class="headerlink" title="3 内存映射"></a>3 内存映射</h2><h2 id="1-消息队列"><a href="#1-消息队列" class="headerlink" title="1 消息队列"></a>1 消息队列</h2><h2 id="消息队列解决了什么问题"><a href="#消息队列解决了什么问题" class="headerlink" title="消息队列解决了什么问题"></a>消息队列解决了什么问题</h2><p><strong>解耦</strong></p>
 <p><strong>有序性</strong></p>
 <p><strong>异步处理</strong></p>
 <p><strong>削峰</strong></p>
@@ -425,7 +556,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>May 15, 2024</div>
+          <div>July 11, 2024</div>
         </div>
       
       
