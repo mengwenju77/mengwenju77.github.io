@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240625152725408.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240423165237625.png">
 <meta property="article:published_time" content="2024-03-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-07-11T13:39:53.038Z">
+<meta property="article:modified_time" content="2024-07-19T02:46:33.670Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165000175.png">
@@ -290,7 +290,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-07-11T21:39:53+08:00
+                    Last updated on 2024-07-19T10:46:33+08:00
                   
                   
 
@@ -1446,7 +1446,7 @@
 <blockquote>
 <p>虚函数表不是对象的一部分，虚表指针是对象的一部分</p>
 </blockquote>
-<p><strong>多态的底层原理：</strong>多态使用有前提条件：（1）有继承关系（2）子类重写父类的虚函数（3）父类指针或引用指向子类对象。当派生类创建对象时，会先调用父类的构造函数，创建父类的虚表指针指向父类的虚函数地址。当子类继承父类时，子类会继承父类的虚表指针，这时候子类的虚表指针还是指向父类的虚表地址。当子类重写父类的虚函数时，子类的虚表指针就会指向自己的虚函数地址。这种情况下，如果父类的指针或引用指向子类的对象时，就会根据不同的对象调用当前对象的虚函数，实现多态。</p>
+<p><strong>多态的底层原理：</strong>多态使用有前提条件：（1）有继承关系（2）子类重写父类的虚函数（3）父类指针或引用指向子类对象。当派生类创建对象时，会先调用父类的构造函数，创建父类的虚表指针指向父类的虚函数地址。然后再调用子类的构造函数，子类会继承父类的虚表指针，这时候子类的虚表指针还是指向父类的虚表地址。当子类重写父类的虚函数时，子类的虚表指针就会指向自己的虚函数地址。这种情况下，如果父类的指针或引用指向子类的对象时，就会根据不同的对象调用当前对象的虚函数，实现多态。</p>
 <p>&#x3D;&#x3D; &#x3D;&#x3D; &#x3D;&#x3D; &#x3D;&#x3D; &#x3D;&#x3D; &#x3D;&#x3D; &#x3D;&#x3D; &#x3D;&#x3D;</p>
 <p>在派生类定义对象时，程序运行会自动调用构造函数，在构造函数中创建虚表并对虚表初始化。在构造子类对象时，会先调用父类的构造函数，以确保父类的部分被正确初始化，此时，编译器只“看到了”父类，并为父类对象初始化虚表指针，令它指向父类的虚表；再调用子类的构造函数，此时子类继承了父类的虚表指针，当子类重写父类的虚函数时，编译器会修改子类的虚表指针，令它指针指向子类的虚表。</p>
 <p>当派生类对基类的虚函数没有重写时，派生类的虚表指针指向的是基类的虚表；当派生类对基类的虚函数重写时，派生类的虚表指针指向的是自身的虚表。当派生类中有自己的虚函数时，再自己的虚表中将此虚函数地址添加再后面</p>
@@ -1702,7 +1702,7 @@
 <h2 id="5-多进程调试"><a href="#5-多进程调试" class="headerlink" title="5 多进程调试"></a>5 多进程调试</h2><p>使用 GDB 调试的时候，GDB 默认只能跟踪一个进程，可以在 fork 函数调用之前，通过指令设置 GDB 调试工具跟踪父进程或者是跟踪子进程，默认跟踪父进程。 </p>
 <p>设置调试父进程或者子进程：<code>set follow-fork-mode [parent（默认）| child] </code></p>
 <p>设置调试模式：<code>set detach-on-fork [on | off] </code></p>
-<p>默认为 on，表示调试当前进程的时候，其它的进程继续运行，如果为 off，调试当前进 程的时候，其它进程被 GDB 挂起。 </p>
+<p>默认为 on，表示调试当前进程的时候，其它的进程继续运行，如果为 off，调试当前进程的时候，其它进程被 GDB 挂起。 </p>
 <p>查看调试的进程：<code>info inferiors</code></p>
 <p>切换当前调试的进程：<code>inferior id </code></p>
 <p>使进程脱离 GDB 调试：<code>detach inferiors id</code></p>
@@ -1725,7 +1725,7 @@
 <li>在函数调用结束后，返回值<strong>仍然保留在寄存器中</strong>，并且在函数退出时不会被销毁。这意味着返回值可以被调用函数使用，即使临时变量已经被销毁。</li>
 </ul>
 <p><strong>临时变量的生命周期</strong></p>
-<p>临时变量，在函数调用过程中是被压到程序进程的栈中的，当函数退出时，临时变量出栈，即临时变量已经被销毁，临时变量占用的内存空间没有被清空，但是可以被分配给其他变量，所以有可能在函数退出时，该内存已经被修改了，对于临时变量来说已经是没有意义的值了</p>
+<p>临时变量在函数调用过程中是被压到程序进程的栈中的，当函数退出时，临时变量出栈，即临时变量已经被销毁，临时变量占用的内存空间没有被清空，但是可以被分配给其他变量，所以有可能在函数退出时，该内存已经被修改了，对于临时变量来说已经是没有意义的值了</p>
 <p><strong>函数返回值的使用</strong></p>
 <p>如果需要返回值，一般使用赋值语句就可以。</p>
 <h1 id="58-程序的内存模型"><a href="#58-程序的内存模型" class="headerlink" title="58 程序的内存模型"></a>58 程序的内存模型</h1><h2 id="1-内存分区模型"><a href="#1-内存分区模型" class="headerlink" title="1 内存分区模型"></a>1 内存分区模型</h2><p>C++程序在执行时，将<strong>内存</strong>大方向划分为4个区域</p>
@@ -2701,7 +2701,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>July 11, 2024</div>
+          <div>July 19, 2024</div>
         </div>
       
       
