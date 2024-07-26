@@ -30,8 +30,9 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240702143507545.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240625152725408.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240423165237625.png">
+<meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240726163629702.png">
 <meta property="article:published_time" content="2024-03-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-07-23T07:25:49.344Z">
+<meta property="article:modified_time" content="2024-07-26T10:09:01.962Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165000175.png">
@@ -229,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          43k words
+          44k words
         
       </span>
     
@@ -240,7 +241,7 @@
         
         
         
-          363 mins
+          367 mins
         
       </span>
     
@@ -290,7 +291,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-07-23T15:25:49+08:00
+                    Last updated on 2024-07-26T18:09:01+08:00
                   
                   
 
@@ -2701,11 +2702,59 @@
 <blockquote>
 <p>拷贝初始化是依靠拷贝构造函数或移动构造函数来完成的 </p>
 </blockquote>
-<p>非静态成员</p>
-<p>虚函数，加上虚表指针</p>
-<p>内存对齐的影响</p>
-<p>派生类，加上基类的成员</p>
-<p>默认为1，如果有</p>
+<ol>
+<li><strong>编程范式</strong>:<ul>
+<li><strong>C</strong>: 主要是一种过程式编程语言，强调函数调用和顺序执行。</li>
+<li><strong>C++</strong>: 支持面向对象编程（OOP），允许使用类和对象，从而促进代码的封装、继承和多态。</li>
+</ul>
+</li>
+<li><strong>数据抽象</strong>:<ul>
+<li><strong>C</strong>: 通过结构体（struct）支持基本的数据抽象，但没有封装规则。</li>
+<li><strong>C++</strong>: 提供类（class）作为数据结构的增强版，支持更强的封装和访问控制（public、protected、private）。</li>
+</ul>
+</li>
+<li><strong>标准库</strong>:<ul>
+<li><strong>C</strong>: 标准库相对简单，主要提供基础数据处理和输入输出功能。</li>
+<li><strong>C++</strong>: 拥有更丰富的标准库，包括STL（标准模板库），提供模板、容器（如向量、列表、集合）、算法等功能。</li>
+</ul>
+</li>
+<li><strong>内存管理</strong>:<ul>
+<li><strong>C</strong>: 通过malloc、calloc、realloc和free手动管理内存。</li>
+<li><strong>C++</strong>: 使用new和delete进行动态内存管理，并支持构造函数和析构函数自动管理资源。</li>
+</ul>
+</li>
+<li><strong>名称空间</strong>:<ul>
+<li><strong>C</strong>: 没有名称空间的概念，所有符号都在全局范围内。</li>
+<li><strong>C++</strong>: 引入了名称空间（namespace），允许在同一程序中定义同名的函数和类。</li>
+</ul>
+</li>
+<li><strong>函数重载和默认参数</strong>:<ul>
+<li><strong>C</strong>: 不支持函数重载和默认参数。</li>
+<li><strong>C++</strong>: 支持函数重载，允许定义多个同名函数，只要其参数列表不同，同时支持默认参数。</li>
+</ul>
+</li>
+<li><strong>模板编程</strong>:<ul>
+<li><strong>C</strong>: 不支持模板，函数和数据结构通常需要为不同类型重复定义。</li>
+<li><strong>C++</strong>: 支持模板编程，允许编写通用的、类型安全的代码，例如函数模板和类模板。</li>
+</ul>
+</li>
+<li><strong>异常处理</strong>:<ul>
+<li><strong>C</strong>: 通过返回值和全局变量检测错误，缺乏结构化的异常处理机制。</li>
+<li><strong>C++</strong>: 提供异常处理机制（try、catch、throw），使得错误处理更为优雅。</li>
+</ul>
+</li>
+<li><strong>兼容性</strong>:<ul>
+<li><strong>C</strong>: C++是对C的扩展，但并不是C的超集。在C++中，有些C代码可能无法直接编译，如某些不符合类型安全的用法。</li>
+<li><strong>C++</strong>: 支持对C的代码的兼容性，但不支持所有C的特性。</li>
+</ul>
+</li>
+<li><strong>使用场景</strong>:<ul>
+<li><strong>C</strong>: 常用于系统编程、嵌入式开发和需要高性能的底层开发。</li>
+<li><strong>C++</strong>: 常用于开发大型软件应用、游戏、图形界面应用和需要对象导向的程序。</li>
+</ul>
+</li>
+</ol>
+<p><img src="/../imgs/$%7Bfiilename%7D/image-20240726163629702.png" srcset="/img/loading.gif" lazyload alt="image-20240726163629702"></p>
 
                 
               </div>
@@ -2742,7 +2791,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>July 23, 2024</div>
+          <div>July 26, 2024</div>
         </div>
       
       
