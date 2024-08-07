@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240423165237625.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240726163629702.png">
 <meta property="article:published_time" content="2024-03-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-08-07T03:24:42.966Z">
+<meta property="article:modified_time" content="2024-08-07T08:33:39.788Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165000175.png">
@@ -241,7 +241,7 @@
         
         
         
-          376 mins
+          374 mins
         
       </span>
     
@@ -291,7 +291,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-08-07T11:24:42+08:00
+                    Last updated on 2024-08-07T16:33:39+08:00
                   
                   
 
@@ -1481,17 +1481,32 @@
 <p>形参在函数未调用之前都是没有分配存储空间的，在函数调用结束之后，形参弹出栈空间，清除形参空间。</p>
 <p>数组作为参数的函数调用方式是地址传递，形参和实参都指向相同的内存空间，调用完成后，形参指针被销毁，但是所指向的内存空间依然存在，不会被销毁也不能被销毁。</p>
 <p>当函数有多个返回值的时候，不能用普通的 return 的方式实现，需要通过传回地址的形式进行，即地址&#x2F;指针传递。</p>
-<h1 id="55-GDB"><a href="#55-GDB" class="headerlink" title="55  GDB"></a>55  GDB</h1><h2 id="GDB能调试哪些问题"><a href="#GDB能调试哪些问题" class="headerlink" title="GDB能调试哪些问题"></a>GDB能调试哪些问题</h2><p><img src="/../imgs/$%7Bfiilename%7D/image-20240625152725408.png" srcset="/img/loading.gif" lazyload alt="image-20240625152725408"></p>
-<p>core文件会包含了程序运行时的内存，寄存	器状态，堆栈指针，内存管理信息还有各种函数调用堆栈信息</p>
-<p><strong>产生coredump的情况：</strong></p>
-<ul>
-<li><p>数组越界</p>
-</li>
-<li><p>使用未初始化的指针</p>
-</li>
-<li><p>堆栈溢出（使用大量的局部变量）</p>
-</li>
+<h1 id="55-GDB"><a href="#55-GDB" class="headerlink" title="55  GDB"></a>55  GDB</h1><h2 id="GDB能做什么事情"><a href="#GDB能做什么事情" class="headerlink" title="GDB能做什么事情"></a>GDB能做什么事情</h2><ul>
+<li>调试：当程序停止运行后，调试bug</li>
+<li>启动程序：设置参数启动程序</li>
+<li>暂停程序：让程序在特定情况下暂停执行</li>
+<li>修改程序：让程序修复了某个bug后可以继续执行，寻找其它bug</li>
 </ul>
+<h2 id="什么情况下会产生core-dump"><a href="#什么情况下会产生core-dump" class="headerlink" title="什么情况下会产生core dump"></a>什么情况下会产生core dump</h2><ul>
+<li>段错误（segmentation fault）：使用空指针：访问未分配的内存区域</li>
+<li>内存访问越界（Out of Bounds Memory Access）：访问超出数组边界，或释放已经释放的内存</li>
+<li>堆栈溢出（Stack Overflow）：使用大量的局部变量</li>
+</ul>
+<h2 id="什么是符号信息"><a href="#什么是符号信息" class="headerlink" title="什么是符号信息"></a>什么是符号信息</h2><p>core文件：包含了程序运行时的内存，寄存器状态，堆栈指针，内存管理信息还有各种函数调用堆栈信息</p>
+<h2 id="程序崩溃时如何生成core文件"><a href="#程序崩溃时如何生成core文件" class="headerlink" title="程序崩溃时如何生成core文件"></a>程序崩溃时如何生成core文件</h2><p>使用<code>ulimit -a</code>可以查看core文件的限制大小，默认为0</p>
+<p>使用<code>ulimit -c unlimited</code>不限制core文件的大小</p>
+<p>这样，程序崩溃时就会生成core文件</p>
+<p>调试时，使用<code>gdb ./a.out core.1111</code></p>
+<h2 id="没有生成符号信息怎么调试"><a href="#没有生成符号信息怎么调试" class="headerlink" title="没有生成符号信息怎么调试"></a>没有生成符号信息怎么调试</h2><p>反汇编</p>
+<h2 id="说一个之前GDB调试的例子"><a href="#说一个之前GDB调试的例子" class="headerlink" title="说一个之前GDB调试的例子"></a>说一个之前GDB调试的例子</h2><p>段错误：使用空指针</p>
+<p>调试思路：</p>
+<ul>
+<li>查看调用堆栈，寻找崩溃原因</li>
+<li>根据崩溃点，查找代码，分析原因</li>
+<li>修复bug</li>
+</ul>
+<p><img src="/../imgs/$%7Bfiilename%7D/image-20240625152725408.png" srcset="/img/loading.gif" lazyload alt="image-20240625152725408"></p>
+<p>core文件会包含了程序运行时的内存，寄存器状态，堆栈指针，内存管理信息还有各种函数调用堆栈信息</p>
 <p><strong>使用gdb进行调试：</strong></p>
 <ul>
 <li>l(list) ，显示源代码，并且可以看到对应的行号；</li>
@@ -1509,7 +1524,7 @@
 
 <p><strong>命令行传参</strong></p>
 <ul>
-<li>第一步: 编译出带条信息的可执行程序，如果不加<code>-o</code>，会默认输出<code>a.out</code>可执行程序</li>
+<li>第一步: 编译出带调试信息的可执行程序，如果不加<code>-o</code>，会默认输出<code>a.out</code>可执行程序</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">g++ GdbDebug.cpp -o app -g<br></code></pre></td></tr></table></figure>
 
@@ -1725,7 +1740,7 @@
 </li>
 </ul>
 <h2 id="7-调试core文件"><a href="#7-调试core文件" class="headerlink" title="7 调试core文件"></a>7 调试core文件</h2><ul>
-<li>生成core文件：首先需要确认当前会话的ulimit –c，若为0，则不会产生对应的core文件</li>
+<li>生成core文件：首先需要确认当前会话的ulimit –a，若为0，则不会产生对应的core文件</li>
 <li>如果为0：ulimit -c unlimied</li>
 <li>更改core dump生成路径（echo命令）：echo &#x2F;coredump&#x2F;core.%e.%p&gt; &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;core_pattern</li>
 <li>编译程序，生成.core文件，然后：gdb core.12345</li>
@@ -2251,17 +2266,16 @@
 <p><strong>全局&#x2F;静态存储区：</strong>静态变量（局部static对象、类static数据成员）、全局变量</p>
 <p><strong>常量存储区：</strong>存放的是常量，不允许修改</p>
 <p><strong>代码区：</strong>存放函数体的二进制代码</p>
-<h1 id="99-智能指针"><a href="#99-智能指针" class="headerlink" title="99 智能指针"></a>99 智能指针</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>指针的使用很容易出问题，确保在正确的时间释放内存是很困难的</p>
+<h1 id="99-智能指针"><a href="#99-智能指针" class="headerlink" title="99 智能指针"></a>99 智能指针</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>指针的使用时确保在正确的时间释放内存很容器出错：</p>
 <ul>
-<li>如果忘记释放内存，会产生内存泄漏（在堆中使用new创建一块内存，不用了之后没有及时释放掉（delete），程序执行结束这种不会再归还给堆了）。</li>
+<li>没有释放内存，会产生内存泄漏（在堆中使用new创建一块内存，函数提前返回，内存不用了之后没有及时释放掉（delete））。</li>
 <li>使用已经释放掉的对象</li>
 </ul>
-<p>为了更安全和更容器地使用动态内存，产生了智能指针。智能指针的行为类似于常规指针，重要的区别就是它负责自动释放所指向的对象。新标准库中提供了两种智能指针。<code>unique_ptr</code>和<code>shared_ptr</code>这两种智能指针的区别在于管理底层指针的方式：</p>
+<p>智能指针它负责自动释放所指向的对象。</p>
 <ul>
 <li><code>shared_ptr</code>允许多个指针指向同一个对象</li>
 <li><code>unique_ptr</code>则独占所指向的对象</li>
 </ul>
-<p>标准库中还定义了一个名为<code>week_ptr</code>的伴随类，它是一种弱引用，指向<code>shared_ptr</code>所管理的对象</p>
 <p><code>share_ptr</code>和<code>unique_ptr</code>都支持的操作</p>
 <table>
 <thead>
@@ -2295,7 +2309,14 @@
 <td>交换p和q中的指针</td>
 </tr>
 </tbody></table>
-<h2 id="shared-ptr类（共享指针）"><a href="#shared-ptr类（共享指针）" class="headerlink" title="shared_ptr类（共享指针）"></a>shared_ptr类（共享指针）</h2><p><strong>创建<code>shared_ptr</code>指针</strong>：<code>make_shared</code>函数</p>
+<h2 id="shared-ptr类（共享指针）"><a href="#shared-ptr类（共享指针）" class="headerlink" title="shared_ptr类（共享指针）"></a>shared_ptr类（共享指针）</h2><p><strong>使用场景：</strong>在对象所有权需要共享的时候用</p>
+<ul>
+<li><p>容器中管理：容器中保存对象，如果容器中保存的是普通指针，当我们在清空某个容器时，先要释放容器中指针所指向的资源，然后才能清空容器。使用指针指针时可以直接清空容器。</p>
+</li>
+<li><p>函数传参：也可以传裸指针，但是传裸指针后如果在函数调用期间提前返回，导致指针没有delete，资源没有释放，内存泄漏</p>
+</li>
+</ul>
+<p><strong>创建<code>shared_ptr</code>指针</strong>：<code>make_shared</code>函数</p>
 <p><code>make_shared</code>函数：在动态内存中分配一个对象并初始化它，返回指向此对象的<code>shared_ptr</code>（最安全的分配和使用动态内存的方式）</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++">shared_ptr&lt;<span class="hljs-type">int</span>&gt; p3 = <span class="hljs-built_in">make_shared</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">42</span>); <span class="hljs-comment">// 指向一个值为42的int的shared_ptr</span><br>shared_ptr&lt;string&gt; p4 = <span class="hljs-built_in">make_shared</span>&lt;string&gt;(<span class="hljs-number">3</span>, <span class="hljs-string">&#x27;9&#x27;</span>); <span class="hljs-comment">// 指向一个值为&quot;999&quot;的string的shared_ptr</span><br>shared_ptr&lt;<span class="hljs-type">int</span>&gt; p5 = <span class="hljs-built_in">make_shared</span>&lt;<span class="hljs-type">int</span>&gt;(); <span class="hljs-comment">// 指向一个值初始化的int，即值为0</span><br><span class="hljs-keyword">auto</span> p6 = make_shared&lt;vector&lt;string&gt;&gt;; <span class="hljs-comment">// p6指向一个动态分配的空vector&lt;string&gt;</span><br></code></pre></td></tr></table></figure>
 
@@ -2303,20 +2324,17 @@
 <p>当进行拷贝或者赋值操作时，每个<code>shared_ptr</code>都会记录有多少个其它<code>shared_ptr</code>指向相同的对象。可以认为每个<code>shared_ptr</code>都有一个关联的计数器，通常称其为<code>引用计数</code></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">auto</span> p = <span class="hljs-built_in">make_shared</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">42</span>); <span class="hljs-comment">// p的指向放到对象只有p一个引用者</span><br><span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">q</span><span class="hljs-params">(p)</span></span>; <span class="hljs-comment">// p和q指向相同的对象，此对象有两个引用者</span><br></code></pre></td></tr></table></figure>
 
-<p>计数器增加的情况：拷贝一个<code>shared_ptr</code></p>
+<p><strong>计数器增加的情况</strong>：拷贝一个<code>shared_ptr</code></p>
 <ul>
 <li>当用一个<code>shared_ptr</code>初始化另一个<code>shared_ptr</code></li>
 <li>将一个<code>shared_ptr</code>作为参数传递给一个函数</li>
 <li>作为函数的返回值</li>
 </ul>
-<p>计数器减少的情况：</p>
+<p><strong>计数器减少的情况：</strong></p>
 <ul>
 <li>当给<code>shared_ptr</code>赋予一个新值</li>
 <li><code>shared_ptr</code>被销毁（例如一个局部的<code>shared_ptr</code>离开作用域）</li>
 </ul>
-<blockquote>
-<p>一旦一个<code>shared_ptr</code>的计数器变为0，它就会自动释放自己所管理的对象</p>
-</blockquote>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">auto</span> q = <span class="hljs-built_in">make_shared</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">41</span>);<br><span class="hljs-keyword">auto</span> r = <span class="hljs-built_in">make_shared</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">42</span>); <span class="hljs-comment">// r指向的int只有一个使用者</span><br><span class="hljs-comment">//给r赋值，令它指向另一个地址</span><br><span class="hljs-comment">//递增q指向的对象的引用计数</span><br><span class="hljs-comment">//递减r原来指向的对象的引用计数</span><br><span class="hljs-comment">//r原来指向的对象已经没有引用者,会自动释放</span><br>r = q; <br></code></pre></td></tr></table></figure>
 
 <blockquote>
@@ -2327,7 +2345,12 @@
 <p><code>shared_ptr</code>的析构函数会递减它所指向的对象的引用计数。如果引用计数变为0，<code>shared_ptr</code>的析构函数就会销毁对象，并释放它占用的内存。</p>
 <p><strong>shared_ptr自动释放相关联的内存</strong></p>
 <p>当动态对象不再被使用时，<code>shared_ptr</code>类会自动释放动态对象</p>
-<h2 id="unique-ptr类（独占指针）"><a href="#unique-ptr类（独占指针）" class="headerlink" title="unique_ptr类（独占指针）"></a>unique_ptr类（独占指针）</h2><p><strong>含义：</strong>某个时刻只能有一个<code>unique_ptr</code>指向一个给定对象</p>
+<p><strong>引用计数存在哪里？</strong></p>
+<h2 id="unique-ptr类（独占指针）"><a href="#unique-ptr类（独占指针）" class="headerlink" title="unique_ptr类（独占指针）"></a>unique_ptr类（独占指针）</h2><p><strong>使用场景：</strong></p>
+<p><strong>注意事项：</strong></p>
+<p><strong>独占指针怎么实现自动管理内存</strong></p>
+<p><strong>既然数据不能共享，使用全局的变量不行吗？</strong></p>
+<p><strong>含义：</strong>某个时刻只能有一个<code>unique_ptr</code>指向一个给定对象</p>
 <p><strong>特点：</strong></p>
 <ul>
 <li>由于一个<code>unique_ptr</code>拥有它指向的对象，因此<code>unique_ptr</code>不支持普通的拷贝或赋值操作</li>
@@ -2341,7 +2364,7 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">auto</span> up = <span class="hljs-built_in">make_unique</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">123</span>);<br><span class="hljs-built_in">func</span>(*up); <span class="hljs-comment">// 传递unique_ptr的指向的对象（解引用）</span><br><span class="hljs-built_in">func1</span>(up.<span class="hljs-built_in">get</span>()); <span class="hljs-comment">// 传递裸指针：.get()函数获取unique_ptr的裸指针</span><br></code></pre></td></tr></table></figure>
 
-<p>上述两种防止只能访问unique_ptr指向的资源，如果希望改变unique_ptr本身可以用下述方法：</p>
+<p>上述两种方式只能访问unique_ptr指向的资源，如果希望改变unique_ptr本身可以用下述方法：</p>
 <ul>
 <li>需要把函数的参数，设置为unique_ptr的引用</li>
 </ul>
@@ -2367,7 +2390,10 @@
 <blockquote>
 <p>调用release会切断unique_ptr和它原来管理的对象间的联系。release返回的指针通常被用来初始化另一个智能指针或给另一个智能指针赋值。</p>
 </blockquote>
-<h2 id="weak-ptr"><a href="#weak-ptr" class="headerlink" title="weak_ptr"></a>weak_ptr</h2><p>weak_ptr专门用于解决<code>share_ptr</code>循环引用的问题。<code>weak_ptr</code>不会修改引用计数，也就是它的存在并不影响对象的引用计数器。循环引用就是：两个对象互相使用一个<code>shared_ptr</code>成员变量指向对方。弱引用并不对对象的内存进行管理，在功能上类似于普通指针，与普通指针比较大的区别是，弱指针能检测到所管理的对象是否已经释放，从而避免访问非法内存。</p>
+<h2 id="weak-ptr"><a href="#weak-ptr" class="headerlink" title="weak_ptr"></a>weak_ptr</h2><p>weak_ptr专门用于解决<code>share_ptr</code>循环引用的问题。<code>weak_ptr</code>不会修改引用计数。循环引用就是：两个对象互相使用一个<code>shared_ptr</code>成员变量指向对方。弱引用并不对对象的内存进行管理，在功能上类似于普通指针，与普通指针比较大的区别是，弱指针能检测到所管理的对象是否已经释放，从而避免访问非法内存。</p>
+<blockquote>
+<p>即A内部有指向B，B内部有指向A，这样对于A，B必定是在A析构后B才析构，对于B，A必定是在B析构后才析构A，这就是循环引用问题，导致内存泄露</p>
+</blockquote>
 <p>当创建一个<code>weak_ptr</code>时，要用一个<code>shared_ptr</code>来初始化它</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">auto</span> p = <span class="hljs-built_in">make_shared</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">42</span>);<br><span class="hljs-function">weak_ptr&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">wp</span><span class="hljs-params">(p)</span></span>;<br></code></pre></td></tr></table></figure>
 
@@ -2407,34 +2433,19 @@
 <td>如果expired为true，返回一个空shared_ptr；否则返回一个指向w的对象的shared_ptr</td>
 </tr>
 </tbody></table>
-<p><strong>用法：</strong></p>
+<p><strong>用法：</strong>weak_ptr怎么解决循环引用</p>
 <ul>
 <li>有一个全局的<code>weak_ptr wp</code></li>
 <li>使用<code>share_ptr</code>创建对象</li>
 <li>使用<code>weak_ptr wp</code>接管</li>
-<li>使用对象的时候，用wp.lock()获取临时share_ptr对象，作用域结束之后，临时share_ptr销毁</li>
+<li>使用对象的时候，用wp.lock()获取临时<code>share_ptr</code>对象，作用域结束之后，临时share_ptr销毁</li>
 </ul>
-<h1 id="100-智能指针相关问题"><a href="#100-智能指针相关问题" class="headerlink" title="100 智能指针相关问题"></a>100 智能指针相关问题</h1><h2 id="1-讲一下什么是智能指针-智能指针有哪几种"><a href="#1-讲一下什么是智能指针-智能指针有哪几种" class="headerlink" title="1 讲一下什么是智能指针&#x2F;智能指针有哪几种"></a>1 讲一下什么是智能指针&#x2F;智能指针有哪几种</h2><p>相比于裸指针，智能指针是对裸指针的一种封装，初衷是让程序员无需手动释放内存，来避免内存泄漏。常见的智能指针有<code>auto_ptr</code>、<code>unique_ptr</code>、<code>shared_ptr</code>、<code>weak_ptr</code></p>
-<h2 id="2-讲一下这几种智能指针的区别和优缺点"><a href="#2-讲一下这几种智能指针的区别和优缺点" class="headerlink" title="2 讲一下这几种智能指针的区别和优缺点"></a>2 讲一下这几种智能指针的区别和优缺点</h2><ul>
-<li><code>auto_ptr</code>在C++11中就已经标为废弃了，代替它的是<code>unique_ptr</code>，相比之下，<code>unique_ptr</code>语义更加清晰，更加安全，不允许复制，更加高效，并且更好地支持数组。</li>
-<li><code>weak_ptr</code>本身不具备内存管理的能力，它主要是为了解决<code>shared_ptr</code>可能导致的循环引用问题，<code>weak_ptr</code>的原理就是指向某个资源时，它不会增加这个资源的引用计数，因此实际上真正意义上的智能指针就是<code>unique_ptr</code>和<code>shared_ptr</code></li>
+<blockquote>
+<p>不能直接通过weak_ptr来访问资源。那么如何通过weak_ptr来间接访问资源呢？</p>
+<p>在需要访问资源的时候weak_ptr为你生成一个shared_ptr，shared_ptr能够保证在shared_ptr没有被释放之前，其所管理的资源是不会被释放的。创建shared_ptr的方法就是lock()方法。</p>
+</blockquote>
+<h1 id="100-智能指针相关问题"><a href="#100-智能指针相关问题" class="headerlink" title="100 智能指针相关问题"></a>100 智能指针相关问题</h1><h2 id="1-讲一下这几种智能指针的区别和优缺点"><a href="#1-讲一下这几种智能指针的区别和优缺点" class="headerlink" title="1 讲一下这几种智能指针的区别和优缺点"></a>1 讲一下这几种智能指针的区别和优缺点</h2><ul>
 <li><code>unique_ptr</code>最主要的特点就是对资源是独占的，它不可以复制和用来拷贝。它<strong>通过在析构函数中释放资源来管理对象的生命周期</strong>，来自动管理资源。可以防止多个智能指针指向同一个对象，更加方便于管理。相比<code>shared_ptr</code>，它的优点是高效，避免了循环引用的问题</li>
-<li>当一个资源需要在多个对象之间共享时，就无法使用<code>unique_ptr</code>了。这时就需要使用到<code>shared_ptr</code>，它<strong>通过引用计数的方式来对资源进行控制</strong>，但是它存在循环引用的问题。需要结合<code>weak_ptr</code>来避免。</li>
-</ul>
-<h2 id="3-讲一下循环引用是如何发生的，以及如何解决"><a href="#3-讲一下循环引用是如何发生的，以及如何解决" class="headerlink" title="3 讲一下循环引用是如何发生的，以及如何解决"></a>3 讲一下循环引用是如何发生的，以及如何解决</h2><p>在两个或多个对象相互引用，或者一些复杂的数据结构，如图、双向链表中，存在多个引用路径等情况下，可能会出现循环引用的问题，导致资源无法被释放掉，这时候就需要使用<code>weak_ptr</code>来打破循环引用。因为使用<code>weak_ptr</code>指向某一个资源时，它不会增加这个资源的引用计数</p>
-<h2 id="4-weak-ptr是弱引用，它弱在哪里？"><a href="#4-weak-ptr是弱引用，它弱在哪里？" class="headerlink" title="4 weak_ptr是弱引用，它弱在哪里？"></a>4 weak_ptr是弱引用，它弱在哪里？</h2><p>使用<code>weak_ptr</code>指向某一个资源时，它不会增加这个资源的引用计数</p>
-<h2 id="5-具体讲一下shared-ptr自动管理内存的原理-引用计数的具体原理-shared-ptr引用计数什么时候会增加，什么时候减少"><a href="#5-具体讲一下shared-ptr自动管理内存的原理-引用计数的具体原理-shared-ptr引用计数什么时候会增加，什么时候减少" class="headerlink" title="5 具体讲一下shared_ptr自动管理内存的原理&#x2F;引用计数的具体原理&#x2F;shared_ptr引用计数什么时候会增加，什么时候减少"></a>5 具体讲一下shared_ptr自动管理内存的原理&#x2F;引用计数的具体原理&#x2F;shared_ptr引用计数什么时候会增加，什么时候减少</h2><p><strong>引用计数的核心原理</strong></p>
-<p>在shared_ptr的内部维护了一个计数器，来跟踪有多少个shared_ptr对象指向了某一个资源。当计数器的值减少到0的时候，shared_ptr就会调用delete来释放资源（或者用户自定义的方法）</p>
-<p><strong>计数器增加的情况：拷贝一个<code>shared_ptr</code></strong></p>
-<ul>
-<li>当用一个<code>shared_ptr</code>初始化另一个<code>shared_ptr</code></li>
-<li>将一个<code>shared_ptr</code>作为参数传递给一个函数</li>
-<li>作为函数的返回值</li>
-</ul>
-<p><strong>计数器减少的情况：</strong></p>
-<ul>
-<li>当给<code>shared_ptr</code>赋予一个新值</li>
-<li><code>shared_ptr</code>被销毁（例如一个局部的<code>shared_ptr</code>离开作用域）</li>
 </ul>
 <h1 id="101-左值引用和右值引用"><a href="#101-左值引用和右值引用" class="headerlink" title="101 左值引用和右值引用"></a>101 左值引用和右值引用</h1><p><strong>区分左值和右值：</strong></p>
 <ul>
