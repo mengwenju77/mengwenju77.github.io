@@ -59,7 +59,7 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240725164720092.png">
 <meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/30/1739d1d409e3174b~tplv-t2oaga2asx-zoom-in-crop-mark:1512:0:0:0.awebp">
 <meta property="article:published_time" content="2024-02-22T13:42:55.852Z">
-<meta property="article:modified_time" content="2024-07-26T10:08:52.736Z">
+<meta property="article:modified_time" content="2024-08-01T06:52:15.443Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240224125924309.png">
@@ -257,7 +257,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          11k words
+          12k words
         
       </span>
     
@@ -268,7 +268,7 @@
         
         
         
-          93 mins
+          100 mins
         
       </span>
     
@@ -318,7 +318,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-07-26T18:08:52+08:00
+                    Last updated on 2024-08-01T14:52:15+08:00
                   
                   
 
@@ -682,7 +682,7 @@
 <ul>
 <li><p><strong>面向连接的：</strong>一定是一对一才能连接，不能像 UDP 协议可以一个主机同时向多个主机发送消息，也就是一对多是无法做到的；</p>
 </li>
-<li><p><strong>可靠的</strong>：无论的网络链路中出现了怎样的链路变化，TCP 都可以保证一个报文一定能够到达接收端；</p>
+<li><p><strong>可靠的</strong>：无论的网络链路中出现了怎样的链路变化，TCP 都可以保证一个 报文一定能够到达接收端；</p>
 </li>
 </ul>
 <h2 id="4-TCP头部报文字段"><a href="#4-TCP头部报文字段" class="headerlink" title="4 TCP头部报文字段"></a>4 TCP头部报文字段</h2><img src="../imgs/${fiilename}/image-20240725123043687.png" srcset="/img/loading.gif" lazyload alt="image-20240725123043687" style="zoom:50%;" />
@@ -911,7 +911,57 @@
 <li>VoIP（语音传输协议）：如SIP（会话发起协议）和RTP，广泛应用于语音通话和视频会议，利用UDP处理实时数据传输</li>
 </ul>
 <h2 id="26-四层网络模型及对应协议"><a href="#26-四层网络模型及对应协议" class="headerlink" title="26 四层网络模型及对应协议"></a>26 四层网络模型及对应协议</h2><p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/30/1739d1d409e3174b~tplv-t2oaga2asx-zoom-in-crop-mark:1512:0:0:0.awebp" srcset="/img/loading.gif" lazyload alt="计算机网络模型"></p>
-
+<ul>
+<li>应用层：各种应用软件，包括web应用</li>
+<li>表示层：数据格式标识，基本压缩加密功能</li>
+<li>会话层：控制应用程序之间会话能力，如不同软件数据分发给不同软件</li>
+<li>传输层：端到端传输数据的基本功能，TCP，UDP</li>
+<li>网络层：定义IP编址，定义路由功能，如IP协议</li>
+<li>数据链路层：定义数据的基本格式，如何传输，如何标识，如网卡MAC地址</li>
+<li>物理层：底层数据传输，如网线</li>
+</ul>
+<p><strong>网络四层模型及对应协议：</strong></p>
+<p>应用层：</p>
+<ul>
+<li>HTTP: Hypertext Transfer Protocol，超文本传输协议。</li>
+<li>HTTPS: HyperText Transfer Protocol over SecureSocketLayer，HTTP下面加了一个SSL层</li>
+<li>FTP：File Trasfer Protocol，文件传输协议。是一种在上传、下载文件使用的协议</li>
+<li>DNS：Domain Name System，域名服务系统，是域名和IP地址相互映射的数据库，可以将域名转换为IP地址。</li>
+</ul>
+<p>传输层：</p>
+<ul>
+<li>TCP：Transmission Control Protocol 传输控制协议，是一种面向连接的、可靠的传输层通信协议</li>
+<li>UDP：User Datagram Protocol，用户数据报协议，是无连接的，支持一对一、一对多、多对一和多对多的交互通信。</li>
+</ul>
+<p>网络层：</p>
+<ul>
+<li>IP：Internet Protocol，网络之间互连的协议，也就是为计算机网络相互连接进行通信而设计的协议</li>
+<li>ICMP：用于告知网络包传送过程中产生的错误以及各种控制消息<ul>
+<li>如果返回的包的接收方IP地址就是本机的网卡地址，说明这个包是发给自己的</li>
+<li>如果不是，说明这个包不是发给自己的，说明发生了什么错误，IP模块会通过ICMP消息将错误告知对方（ICMP中有错误码）</li>
+</ul>
+</li>
+<li>ARP：用于根据 IP 地址查询相应的以太网 MAC 地址</li>
+<li>RARP：反向地址转换协议，根据MAC地址查询IP地址<ul>
+<li>主机从网卡上读取MAC地址，然后在网络上发送一个RARP请求的广播数据包，请求RARP服务器回复该主机的IP地址</li>
+<li>RARP服务器收到了RARP请求数据包，为其分配IP地址，并将RARP响应发送给主机</li>
+<li>主机收到RARP响应后，就使用得到的IP地址进行通讯</li>
+</ul>
+</li>
+</ul>
+<p>链路层：</p>
+<ul>
+<li>MTU：Maximum Transmission Unit，最大传输单元，一个包能传输的最大数据长度，以太网中一般为 1500 字节</li>
+</ul>
+<h2 id="27-MTU和MSS"><a href="#27-MTU和MSS" class="headerlink" title="27 MTU和MSS"></a>27 MTU和MSS</h2><p>MTU 表示一个网络包的最大长度，在以太网中一般是 1500 字节。MTU 是包含头部的总长度，因此需要从 MTU 减去头部的长度，然后得到的长度就是一个网络包中所能容纳的最大数据长度，这一长度叫作 MSS。当从应用程序收到的数据长度超过或者接近 MSS 时再发送出去，就可以避免发送大量小包的问题了。</p>
+<p>TCP 和 IP 的头部加起来一般是 40 字节，因此 MTU 减去这个长度就是 MSS。例如，在以太网中， MTU 为 1500，因此 MSS 就 是 1460。TCP&#x2F;IP 可以使用一些可选参数 ，如加密等，这时头部的长度会增加，那么 MSS 就会随着头部长度增加而相应缩短</p>
+<ul>
+<li><p>MTU：一个网络包的最大长度，以太网中一般为 1500 字节。</p>
+</li>
+<li><p>MSS：除去头部之后，一个网络包所能容纳的 TCP 数据的最大 长度。</p>
+</li>
+</ul>
+<h2 id="28-SSL是什么"><a href="#28-SSL是什么" class="headerlink" title="28 SSL是什么"></a>28 SSL是什么</h2>
                 
               </div>
             
@@ -947,7 +997,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>July 26, 2024</div>
+          <div>August 1, 2024</div>
         </div>
       
       
