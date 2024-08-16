@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240423165237625.png">
 <meta property="og:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240726163629702.png">
 <meta property="article:published_time" content="2024-03-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-08-07T08:33:39.788Z">
+<meta property="article:modified_time" content="2024-08-13T07:41:25.631Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/imgs/$%7Bfiilename%7D/image-20240326165000175.png">
@@ -241,7 +241,7 @@
         
         
         
-          374 mins
+          377 mins
         
       </span>
     
@@ -291,7 +291,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2024-08-07T16:33:39+08:00
+                    Last updated on 2024-08-13T15:41:25+08:00
                   
                   
 
@@ -809,18 +809,7 @@
 
 
 
-<h1 id="28-vector相关"><a href="#28-vector相关" class="headerlink" title="28 vector相关"></a>28 vector相关</h1><h2 id="vector基类介绍"><a href="#vector基类介绍" class="headerlink" title="vector基类介绍"></a>vector基类介绍</h2><p><code>vector</code>声明：两个模板参数，第一个是数据类型，第二个std::allocator是标准库中动态内存分配器，最终其实是调用了new运算符</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> _Tp, <span class="hljs-keyword">typename</span> _Alloc = std::allocator&lt;_Tp&gt; &gt;<br>  <span class="hljs-keyword">class</span> vector : <span class="hljs-keyword">protected</span> _Vector_base&lt;_Tp, _Alloc&gt;<br>  &#123;...&#125;<br></code></pre></td></tr></table></figure>
-
-<p><code>vecotor</code>继承了<code>_Vector_base</code></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs c++">  <span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> _Tp, <span class="hljs-keyword">typename</span> _Alloc&gt;<br>    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">_Vector_base</span><br>    &#123;<br>	  ...<br>      <span class="hljs-keyword">struct</span> <span class="hljs-title class_">_Vector_impl</span> <br>      : <span class="hljs-keyword">public</span> _Tp_alloc_type<br>      &#123;<br>	pointer _M_start;<br>	pointer _M_finish;<br>	pointer _M_end_of_storage;<br><br>	_Vector_impl()<br>	: _Tp_alloc_type(), _M_start(<span class="hljs-number">0</span>), _M_finish(<span class="hljs-number">0</span>), _M_end_of_storage(<span class="hljs-number">0</span>)<br>	&#123; &#125;<br><br>	_Vector_impl(_Tp_alloc_type <span class="hljs-type">const</span>&amp; __a)<br>	: _Tp_alloc_type(__a), _M_start(<span class="hljs-number">0</span>), _M_finish(<span class="hljs-number">0</span>), _M_end_of_storage(<span class="hljs-number">0</span>)<br>	&#123; &#125;<br><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> __cplusplus &gt;= 201103L</span><br>	_Vector_impl(_Tp_alloc_type&amp;&amp; __a)<br>	: _Tp_alloc_type(std::<span class="hljs-built_in">move</span>(__a)),<br>	  _M_start(<span class="hljs-number">0</span>), _M_finish(<span class="hljs-number">0</span>), _M_end_of_storage(<span class="hljs-number">0</span>)<br>	&#123; &#125;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>		...<br>      &#125;; <span class="hljs-comment">// _Vector_impl 结束</span><br>      <br>    <span class="hljs-keyword">public</span>:<br>      <span class="hljs-keyword">typedef</span> _Alloc allocator_type;<br><br>	  ...<br>	<br>      <span class="hljs-comment">// 一些构造函数</span><br>      _Vector_base()<br>      : _M_impl() &#123; &#125;<br><br>      _Vector_base(<span class="hljs-type">const</span> allocator_type&amp; __a)<br>      : _M_impl(__a) &#123; &#125;<br><br>      _Vector_base(<span class="hljs-type">size_t</span> __n)<br>      : _M_impl()<br>      &#123; _M_create_storage(__n); &#125;<br><br>      _Vector_base(<span class="hljs-type">size_t</span> __n, <span class="hljs-type">const</span> allocator_type&amp; __a)<br>      : _M_impl(__a)<br>      &#123; _M_create_storage(__n); &#125;<br><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> __cplusplus &gt;= 201103L</span><br>      _Vector_base(_Tp_alloc_type&amp;&amp; __a)<br>      : _M_impl(std::<span class="hljs-built_in">move</span>(__a)) &#123; &#125;<br><br>      _Vector_base(_Vector_base&amp;&amp; __x)<br>      : _M_impl(std::<span class="hljs-built_in">move</span>(__x._M_get_Tp_allocator()))<br>      &#123; <span class="hljs-keyword">this</span>-&gt;_M_impl._M_swap_data(__x._M_impl); &#125;<br><br>      _Vector_base(_Vector_base&amp;&amp; __x, <span class="hljs-type">const</span> allocator_type&amp; __a)<br>      : _M_impl(__a)<br>      &#123;<br>	  ...<br>      &#125;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>      ...<br><br>    <span class="hljs-keyword">public</span>:<br>      _Vector_impl _M_impl;<br><br> 	  ...<br>    &#125;;<br></code></pre></td></tr></table></figure>
-
-<p><code>_Vector_base</code>基类的功能：</p>
-<ul>
-<li>保存容器开始位置、结束位置以及所申请内存空间的的下一个位置；</li>
-<li>申请动态内存空间</li>
-</ul>
-<p>注：</p>
+<h1 id="28-vector相关"><a href="#28-vector相关" class="headerlink" title="28 vector相关"></a>28 vector相关</h1><p>注：</p>
 <p>1、对于形如<code>vector&lt;int&gt; vec</code>这样的声明，vector其实就是调用了这个基类的无参构造函数，<strong>此时也没有申请动态内存</strong>。</p>
 <p>无参构造为什么没有申请动态内存：涉及到节约资源的原则，假设申请了一块动态内存，但是后面却没有使用这个vector，那这个申请和释放这块动态内存的动作就产生了时间和空间的浪费。</p>
 <p>2、如果vector在构造的时候给基类传入元素大小n，这时就会调用成员函数<code>_M_create_storage</code>，申请动态内存和给成员变量赋值。</p>
@@ -864,6 +853,10 @@
 <ul>
 <li>不能使用reverse(0)进行释放内存。这个函数只有在传入大小比原有内存大时才会有动作，否则不进行任何动作。</li>
 <li>也不能通过resize或者clear函数释放内存。这些函数都只会对当前已保存在容器中的所有元素进行析构，但对容器本身所在的内存空间是不会进行释放的。</li>
+</ul>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><ul>
+<li>当不确定数据集的大小，或者数据集的大小会随时间变化时。例如，在处理用户输入或读取文件数据时，<code>vector</code> 可以根据需要动态地增长。</li>
+<li>替代数组：在 C++ 编程中，<code>vector</code> 通常被用来替代传统的固定大小数组，因为它更加灵活，自动管理内存，并提供了许多便利的功能（如自动扩容、迭代器支持等）。</li>
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>vector是一个动态数组，它维护了一段连续的动态内存空间，然后有三个成员变量分别保存开始位置、当前已使用位置、申请的动态内存的最后一个位置的下一个位置，每当当前所申请的动态内存已经使用完时，它按照原有空间大小双倍重新申请，并把原来的元素都拷贝过去。</p>
 <p>对于vector操作的时间复杂度：</p>
@@ -1109,18 +1102,10 @@
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1tZ421q72h/?spm_id_from=333.788&vd_source=79a47c5035e6336414e7ccb0cf2a076d">https://www.bilibili.com/video/BV1tZ421q72h/?spm_id_from=333.788&amp;vd_source=79a47c5035e6336414e7ccb0cf2a076d</a></p>
 </blockquote>
-<h1 id="30-野指针和悬空指针"><a href="#30-野指针和悬空指针" class="headerlink" title="30 野指针和悬空指针"></a>30 野指针和悬空指针</h1><p>都是指向无效内存区域(这里的无效指的是”不安全不可控”)的指针，访问行为将会导致未定义行为。</p>
+<h1 id="30-vector和map是线程安全的吗"><a href="#30-vector和map是线程安全的吗" class="headerlink" title="30 vector和map是线程安全的吗"></a>30 vector和map是线程安全的吗</h1><p>C++标准模板库（STL）的容器本身不是线程安全的。这意味着在没有适当的外部同步机制的情况下，从多个线程同时访问同一个STL容器可能会导致数据竞争和不可预测的行为。</p>
 <ul>
-<li>野指针：指的是未初始化过的指针，未初始化就被调用<ul>
-<li>产生原因：指针变量未初始化</li>
-<li>解决方法：将指针变量初始化或者置空</li>
-</ul>
-</li>
-<li>悬空指针：指针最初指向的内存已经被释放的一种指针<ul>
-<li>产生原因：指针free或者delete之后没有及时置空，指针仍然保存着已经释放了的内存的地址</li>
-<li>解决方法：释放操作后立即置空</li>
-</ul>
-</li>
+<li><strong>并发读取</strong>：如果多个线程仅仅是读取STL容器的数据，而没有任何写入操作，通常是安全的。</li>
+<li><strong>读写操作</strong>：如果至少有一个线程在修改容器（如添加、删除元素），而其他线程正在读取或写入同一个容器，则必须使用适当的同步机制（如互斥锁）来保护对容器的访问。</li>
 </ul>
 <h1 id="31-拷贝初始化和直接初始化"><a href="#31-拷贝初始化和直接初始化" class="headerlink" title="31 拷贝初始化和直接初始化"></a>31 拷贝初始化和直接初始化</h1><ul>
 <li>如果不使用等号，则执行的是直接初始化。直接初始化直接调用与实参匹配的构造函数</li>
@@ -1245,7 +1230,20 @@
 <p>基类的公有成员和保护成员都作为派生类的保护成员，而基类的私有成员仍然是私有的，不能被这个派生类及其子类访问</p>
 <p><strong>private继承</strong></p>
 <p>基类的公有成员和保护成员都作为派生类的私有成员，并不被它的派生类访问，而基类的私有成员仍然是私有的，不能被这个派生类及其子类访问</p>
-<h1 id="40"><a href="#40" class="headerlink" title="40"></a>40</h1><h1 id="41-静态变量什么时候初始化"><a href="#41-静态变量什么时候初始化" class="headerlink" title="41 静态变量什么时候初始化"></a>41 静态变量什么时候初始化</h1><ul>
+<h1 id="40-野指针和悬空指针"><a href="#40-野指针和悬空指针" class="headerlink" title="40 野指针和悬空指针"></a>40 野指针和悬空指针</h1><p>都是指向无效内存区域(这里的无效指的是”不安全不可控”)的指针，访问行为将会导致未定义行为。</p>
+<ul>
+<li>野指针：指的是未初始化过的指针，未初始化就被调用<ul>
+<li>产生原因：指针变量未初始化</li>
+<li>解决方法：将指针变量初始化或者置空</li>
+</ul>
+</li>
+<li>悬空指针：指针最初指向的内存已经被释放的一种指针<ul>
+<li>产生原因：指针free或者delete之后没有及时置空，指针仍然保存着已经释放了的内存的地址</li>
+<li>解决方法：释放操作后立即置空</li>
+</ul>
+</li>
+</ul>
+<h1 id="41-静态变量什么时候初始化"><a href="#41-静态变量什么时候初始化" class="headerlink" title="41 静态变量什么时候初始化"></a>41 静态变量什么时候初始化</h1><ul>
 <li>全局变量、静态类成员变量在编译时进行前初始化；</li>
 <li>局部变量中的静态变量在第一次运行到对象定义语句时初始化，并且直到程序终止才被销毁，再次期间即使对象所在的函数执行结束也不会对它有影响。</li>
 </ul>
@@ -2346,10 +2344,23 @@
 <p><strong>shared_ptr自动释放相关联的内存</strong></p>
 <p>当动态对象不再被使用时，<code>shared_ptr</code>类会自动释放动态对象</p>
 <p><strong>引用计数存在哪里？</strong></p>
+<p>在堆中，原因是引用计数器的生命周期需要与它所管理的对象（也通常位于堆上）保持一致，而不受任何特定函数或作用域的限制。这样，多个指针就可以共同使用同一个引用计数器了。如果在栈上，就会有很多个引用计数器，相当于每创建一个指针，就多了一个引用计数器</p>
 <h2 id="unique-ptr类（独占指针）"><a href="#unique-ptr类（独占指针）" class="headerlink" title="unique_ptr类（独占指针）"></a>unique_ptr类（独占指针）</h2><p><strong>使用场景：</strong></p>
+<p>内存需要独享时。</p>
 <p><strong>注意事项：</strong></p>
+<ul>
+<li>由于一个<code>unique_ptr</code>独占它指向的对象，因此<code>unique_ptr</code>不支持普通的拷贝或赋值操作</li>
+</ul>
 <p><strong>独占指针怎么实现自动管理内存</strong></p>
+<ul>
+<li>普通裸指针在离开作用域时<strong>不会自动释放</strong>其所指向的内存。这是因为C++不会自动管理裸指针所指向的内存。当你使用<code>new</code>操作符动态分配内存时，你必须显式地使用<code>delete</code>操作符来释放这块内存，否则会导致内存泄漏。即使指针变量离开了它的作用域，它所指向的内存也不会被自动回收，除非显式地调用<code>delete</code>。</li>
+</ul>
+<p>对于独占指针，指针实例离开其作用域时（例如，函数返回或代码块结束），它的析构函数会自动被调用。这个析构函数会释放它所指向的内存，从而防止了内存泄漏。</p>
 <p><strong>既然数据不能共享，使用全局的变量不行吗？</strong></p>
+<ul>
+<li>全局变量的内存存在于整个程序运行。</li>
+<li>独占指针使用的内存，只在独占指针存在的期间占用内存。</li>
+</ul>
 <p><strong>含义：</strong>某个时刻只能有一个<code>unique_ptr</code>指向一个给定对象</p>
 <p><strong>特点：</strong></p>
 <ul>
@@ -2444,10 +2455,7 @@
 <p>不能直接通过weak_ptr来访问资源。那么如何通过weak_ptr来间接访问资源呢？</p>
 <p>在需要访问资源的时候weak_ptr为你生成一个shared_ptr，shared_ptr能够保证在shared_ptr没有被释放之前，其所管理的资源是不会被释放的。创建shared_ptr的方法就是lock()方法。</p>
 </blockquote>
-<h1 id="100-智能指针相关问题"><a href="#100-智能指针相关问题" class="headerlink" title="100 智能指针相关问题"></a>100 智能指针相关问题</h1><h2 id="1-讲一下这几种智能指针的区别和优缺点"><a href="#1-讲一下这几种智能指针的区别和优缺点" class="headerlink" title="1 讲一下这几种智能指针的区别和优缺点"></a>1 讲一下这几种智能指针的区别和优缺点</h2><ul>
-<li><code>unique_ptr</code>最主要的特点就是对资源是独占的，它不可以复制和用来拷贝。它<strong>通过在析构函数中释放资源来管理对象的生命周期</strong>，来自动管理资源。可以防止多个智能指针指向同一个对象，更加方便于管理。相比<code>shared_ptr</code>，它的优点是高效，避免了循环引用的问题</li>
-</ul>
-<h1 id="101-左值引用和右值引用"><a href="#101-左值引用和右值引用" class="headerlink" title="101 左值引用和右值引用"></a>101 左值引用和右值引用</h1><p><strong>区分左值和右值：</strong></p>
+<h1 id="100"><a href="#100" class="headerlink" title="100"></a>100</h1><h1 id="101-左值引用和右值引用"><a href="#101-左值引用和右值引用" class="headerlink" title="101 左值引用和右值引用"></a>101 左值引用和右值引用</h1><p><strong>区分左值和右值：</strong></p>
 <ul>
 <li>左值<ul>
 <li>可以在等号左边</li>
@@ -2857,7 +2865,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>August 7, 2024</div>
+          <div>August 13, 2024</div>
         </div>
       
       
