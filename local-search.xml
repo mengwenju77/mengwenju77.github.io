@@ -125,7 +125,7 @@
     <link href="/2024/01/31/hexo/"/>
     <url>/2024/01/31/hexo/</url>
     
-    <content type="html"><![CDATA[<hr><p><strong>生成及上传</strong></p><p>hexo clean<br>rm -rf .deploy_git&#x2F;<br>git config –global core.autocrlf false<br>hexo g<br>hexo d</p><p><strong>图片插入之后上传</strong></p><p>..&#x2F;..&#x2F;source&#x2F;imgs&#x2F;${fiilename}</p><p><img src="/../imgs/$%7Bfiilename%7D/image-20240201204311056.png" alt="image-20240201204311056"></p><p>主题：</p><p><a href="https://hexo.fluid-dev.com/docs/">https://hexo.fluid-dev.com/docs/</a></p><p><a href="https://www.erenship.com/posts/40222.html">https://www.erenship.com/posts/40222.html</a></p>]]></content>
+    <content type="html"><![CDATA[<hr><p><strong>生成及上传</strong></p><p>hexo clean<br>rm -rf .deploy_git&#x2F;<br>git config –global core.autocrlf false</p><ul><li>修改原始文件后生成：hexo g</li><li>随后输入命令上传：hexo d</li></ul><p><strong>图片插入之后上传</strong></p><p>..&#x2F;..&#x2F;source&#x2F;imgs&#x2F;${fiilename}</p><p><img src="/../imgs/$%7Bfiilename%7D/image-20240201204311056.png" alt="image-20240201204311056"></p><p>主题：</p><p><a href="https://hexo.fluid-dev.com/docs/">https://hexo.fluid-dev.com/docs/</a></p><p><a href="https://www.erenship.com/posts/40222.html">https://www.erenship.com/posts/40222.html</a></p>]]></content>
     
     
     
